@@ -1,0 +1,35 @@
+h3, p {
+    margin: 0;
+}
+.chat {
+    flex: 0.65;
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+}
+.chat__header {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+.chat__headerInfo {
+    flex: 1;
+    padding-left: 20px;
+}
+.chat__headerInfo > h3 {
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+.chat__headerInfo > p {
+    color: gray;
+}
+.chat__headerRight {
+    display: flex;
+    justify-content: space-between;
+    min-width: 100px;
+} 
+.chat__body {
+    flex: 1;
+    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+}
