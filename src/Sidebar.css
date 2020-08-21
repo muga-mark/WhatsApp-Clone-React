@@ -45,4 +45,9 @@
     background-color: white;
     flex: 1;
     overflow: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none; 
+}
+.sidebar__chats::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
 }

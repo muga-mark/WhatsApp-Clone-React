@@ -8,9 +8,9 @@
     background-color: #ebebeb;
 }
 .sidebarChat__info > p, h2, h3 {
-    margin: 0 0 0 15px!important;
+    margin: 0 0 0 15px;
 }
 .sidebarChat__info > h2 {
     font-size: 16px;
-    margin-bottom: 8px!important;
+    /* margin-bottom: 8px!important; */
 }
