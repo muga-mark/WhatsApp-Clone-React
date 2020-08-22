@@ -1,0 +1,39 @@
+.login {
+    background-color: #f8f8f8;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+}
+.login__container {
+    padding: 100px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0green, 0blue, 0.12), 0 1px;
+}
+.login__container > img {
+    object-fit: contain;
+    height: 120px;
+    margin-bottom: 20px;
+}
+.login__text {
+    margin-bottom: 60px;
+}
+.login__withGoogle{
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    background-color: white !important;
+}
+.login__withGoogle > img {
+    height: 25px !important;
+    margin-right: 5px;
+}
