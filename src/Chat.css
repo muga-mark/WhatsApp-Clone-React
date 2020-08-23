@@ -2,16 +2,19 @@ h3, p {
     margin: 0;
 }
 .chat {
-    flex: 0.65;
+    flex: 0.70;
     /* background-color: black; */
     display: flex;
     flex-direction: column;
 }
 .chat__header {
-    padding: 15px;
+    padding: 8px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid lightgray;
+}
+.chat__header > .MuiAvatar-root {
+    margin-left: 8px;
 }
 .chat__headerInfo {
     flex: 1;
@@ -43,7 +46,7 @@ h3, p {
     font-size: xx-small;
     font-weight: 800;
 }
-.chat__timestamp{
+.chat__timestamp {
     /* position: absolute; */
     margin-left: 10px;
     font-size: xx-small;
@@ -84,6 +87,9 @@ h3, p {
     border-radius: 15px;
     padding: 10px;
     border: none;
+}
+.chat__footer > form > input:focus{
+    outline: none;
 }
 .chat__footer > form > button {
     display: none;

@@ -14,3 +14,10 @@
     font-size: 16px;
     /* margin-bottom: 8px!important; */
 }
+.sidebarChat__info > p {
+    color: gray;
+}
+.sidebarChat__link{
+    text-decoration: none;
+    color: black;
+}

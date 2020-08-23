@@ -29,16 +29,16 @@ function Chat() {
           
           db.collection("rooms")
             .doc(roomId)
-            .collection("messages" )
+            .collection("messages")
             .orderBy("timestamp", "asc")
             .onSnapshot(snapshot => (
-                setMessages(snapshot.docs.map(doc => 
+                setMessages(snapshot.docs.map((doc) => 
                     doc.data()))
             ));
                
         }
     }, [roomId]);
-    console.log('MESSAGES in chat.js', messages[2]); 
+    console.log('MESSAGES in chat.js', messages); 
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000)); 
@@ -65,7 +65,9 @@ function Chat() {
                     <div className="chat__headerInfo">
                         <h3>{roomName}</h3>
                     <p>Last seen {" "}
-                    {/* {new Date(messages[messages.length-1].timestamp?.toDate()).toString()} */}
+                    {messages[messages.length-1]? (
+                    new Date(messages[messages.length-1]?.timestamp?.toDate()).toString()
+                    ): (" ")}
                     </p>
                     </div>
                 

@@ -7,19 +7,18 @@ import { Link } from 'react-router-dom';
 function SidebarChat({ id, name, addNewChat }) {
     const [seed, setSeed] = useState("");
     const [messages, setMessages] = useState("");
-    
+    // console.log("messagesInSidebar=>",messages[0]?.message);
     useEffect(() => {
         if(id){
-          db.collection("room")
+          db.collection("rooms")
             .doc(id)
             .collection("messages")
             .orderBy("timestamp", "desc")
-            .onSnapshot((snapshot) =>
+            .onSnapshot((snapshot) => (
                 setMessages(snapshot.docs.map((doc) =>
                 doc.data()))
-            );
+            ));
         }
-    
     }, [])
 
     useEffect(() => {
@@ -38,7 +37,7 @@ function SidebarChat({ id, name, addNewChat }) {
     }
 
     return !addNewChat ? (
-        <Link to={`/rooms/${id}`}>
+        <Link to={`/rooms/${id}`} className="sidebarChat__link">
             <div className="sidebarChat">
                 <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
                 <div className="sidebarChat__info">
