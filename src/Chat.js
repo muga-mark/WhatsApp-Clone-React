@@ -13,7 +13,7 @@ import firebase from 'firebase';
 
 function Chat() {
     const [input, setInput] = useState('');
-    const [seed, setSeed] = useState('');
+    // const [seed, setSeed] = useState('');
     const {roomId } = useParams();
     const [roomName, setRoomName] = useState("");
     const [{ user },  dispatch] = useStateValue();
@@ -40,9 +40,9 @@ function Chat() {
     }, [roomId]);
     console.log('MESSAGES in chat.js', messages); 
 
-    useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000)); 
-    }, [roomId]);
+    // useEffect(() => {
+    //     setSeed(Math.floor(Math.random() * 5000)); 
+    // }, [roomId]);
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -60,7 +60,7 @@ function Chat() {
     return (
         <div className="chat">
             <div className="chat__header">
-                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+                <Avatar src={`https://avatars.dicebear.com/api/human/${roomId}.svg`} />
 
                     <div className="chat__headerInfo">
                         <h3>{roomName}</h3>

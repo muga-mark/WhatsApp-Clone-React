@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import SidebarChat from './SidebarChat';
 import './Sidebar.css';
@@ -10,9 +11,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import db from './firebase';
 import { useStateValue } from './StateProvider';
 import Drawer from '@material-ui/core/Drawer';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EditIcon from '@material-ui/icons/Edit';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { auth } from './firebase';
 
 
@@ -35,12 +40,22 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function Sidebar() {
+    const history = useHistory();
     const [rooms, setRooms] = useState([]);
     const [{ user },  dispatch] = useStateValue();
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
     const [name, setName] = useState("");
     const [about, setAbout] = useState([]);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -50,6 +65,12 @@ function Sidebar() {
       setOpen(false);
     };
   
+    const logout = () => {
+        if(user){
+            auth.signOut();
+            history.push('/');
+        }
+    };
 
     useEffect(() => {
         const unsubscribe = db
@@ -177,9 +198,29 @@ function Sidebar() {
                     <IconButton>
                         <ChatIcon />
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "right"
+                        }}
+                        transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right"
+                        }}
+                        getContentAnchorEl={null}
+                    >
+                        <MenuItem onClick={handleDrawerOpen}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <MenuItem onClick={logout}>Logout</MenuItem>
+                    </Menu>
                 </div>
             </div>
 
