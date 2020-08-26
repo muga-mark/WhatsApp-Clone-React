@@ -1,5 +1,5 @@
-React
-Firebase Firestore Realtime db
+Created using Reactjs
+Datebase: Firebase Cloud Firestore
 Material UI
 React Router
 React Context API
