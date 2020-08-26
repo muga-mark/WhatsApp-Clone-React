@@ -123,12 +123,13 @@
     color: #666666;
     width: 100%;
 }
-.sidebar__header_drawerName > form > input:focus{
-    outline: none;
+.sidebar__header_drawerName > form > input:focus {
+   outline: 0 !important;
 }
-.sidebar__header_drawerName > span > .MuiSvgIcon-root {
+.sidebar__header_drawerName > form > .MuiSvgIcon-root {
     color: #919191;
     font-size: 20px !important;
+    cursor: pointer;
 }
 .sidebar__header_drawerNote{
     height: 50px;

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar } from '@material-ui/core';
-import './SidebarChat.css';
-import db from './firebase';
 import { Link } from 'react-router-dom';
+import {Avatar} from './material-ui';
+import db from '../firebase';
+import './SidebarChat.css';
 
 function SidebarChat({ id, name, addNewChat }) {
-    const [seed, setSeed] = useState("");
     const [messages, setMessages] = useState("");
-    // console.log("messagesInSidebar=>",messages[0]?.message);
+    
     useEffect(() => {
         if(id){
           db.collection("rooms")
@@ -19,10 +18,6 @@ function SidebarChat({ id, name, addNewChat }) {
                 doc.data()))
             ));
         }
-    }, [])
-
-    useEffect(() => {
-        setSeed(Math.floor(Math.random() * 5000)); 
     }, [])
 
     const createChat = () => {

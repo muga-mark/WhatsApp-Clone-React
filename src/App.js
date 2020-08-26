@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { auth } from './firebase';
-
-import Login from './Login';
-import Sidebar from './Sidebar';
-import Chat from './Chat';
-import './App.css';
 import { useStateValue } from './StateProvider';
+import { auth } from './firebase';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './Login';
+import Sidebar from '../src/components/Sidebar';
+import Chat from '../src/components/Chat';
+import './App.css';
 
 function App() {
   const [{ user },  dispatch] = useStateValue();

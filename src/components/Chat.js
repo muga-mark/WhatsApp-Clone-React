@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import './Chat.css';
-import { Avatar, IconButton } from '@material-ui/core';
-import MoreVert from '@material-ui/icons/MoreVert';
-import SearchOutlined from '@material-ui/icons/SearchOutlined';
-import AttachFile from '@material-ui/icons/AttachFile';
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import MicIcon from '@material-ui/icons/Mic';
 import { useParams } from 'react-router-dom';
-import db from './firebase';
-import { useStateValue } from './StateProvider';
+import { useStateValue } from '../StateProvider';
+import { IconButton, Avatar, NoEncryptionIcon, MoreVertIcon, SearchOutlinedIcon, 
+         AttachFileIcon, InsertEmoticonIcon, MicIcon } from './material-ui';
+import db from '../firebase';
 import firebase from 'firebase';
-import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
+import './Chat.css';
+
 
 function Chat() {
     const [input, setInput] = useState('');
@@ -82,21 +78,21 @@ function Chat() {
  
                 <div className="chat__headerRight">
                     <IconButton>
-                        <SearchOutlined />
+                        <SearchOutlinedIcon />
                     </IconButton>
                     <IconButton>
-                        <AttachFile />
+                        <AttachFileIcon />
                     </IconButton>
                     <IconButton>
-                        <MoreVert />
+                        <MoreVertIcon />
                     </IconButton>
                 </div>
             </div>
 
             <div className="chat__body">
-                    <p className="chat__message_reminder">
-                        <NoEncryptionIcon /> Messages are not encrpyted. This is for practice purposes only.
-                    </p>
+                <p className="chat__message_reminder">
+                    <NoEncryptionIcon /> Messages are not encrpyted. This is for practice purposes only.
+                </p>
                 {messages.map((message) => (
                     <p className={`chat__message ${ message.uid === user.uid && "chat__receiver"}`}>
                         <span className="chat__name">
