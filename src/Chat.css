@@ -27,18 +27,34 @@ h3, p {
 .chat__headerInfo > p {
     color: gray;
 }
+.chat__message_reminder {
+    background-color: #FDF4C4;
+    font-size: 16px;
+    padding: 5px 10px 5px 10px ;
+    border-radius: 10px;
+    width: fit-content ;
+    margin-bottom: 70px !important;
+    /* align-content: center; */
+    margin: auto;
+}
+.chat__message_reminder > .MuiSvgIcon-root {
+    color: #4a4a4a;
+    font-size: small;
+}
 .chat__message {
     position: relative;
     font-size: 16px;
-    padding: 10px;
+    padding: 5px 10px 5px 10px ;
     border-radius: 10px;
     width: fit-content ;
     background-color: #ffffff;
     margin-bottom: 30px;
+    color: #4a4a4a;
 }
 .chat__receiver{ 
     background-color: #DCF8C6;
     margin-left: auto;
+    color: #4a4a4a;
 }
 .chat__name {
     position: absolute;
@@ -63,7 +79,7 @@ h3, p {
     background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
     background-repeat: repeat;
     background-position: center;
-    padding: 30px;
+    padding: 60px 90px 60px 90px;
     overflow: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none; 

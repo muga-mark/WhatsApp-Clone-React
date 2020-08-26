@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import db from './firebase';
 import { useStateValue } from './StateProvider';
 import firebase from 'firebase';
+import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 
 function Chat() {
     const [input, setInput] = useState('');
@@ -86,6 +87,9 @@ function Chat() {
             </div>
 
             <div className="chat__body">
+                    <p className="chat__message_reminder">
+                        <NoEncryptionIcon /> Messages are not encrpyted. This is for practice purposes only.
+                    </p>
                 {messages.map((message) => (
                     <p className={`chat__message ${ message.uid === user.uid && "chat__receiver"}`}>
                         <span className="chat__name">
