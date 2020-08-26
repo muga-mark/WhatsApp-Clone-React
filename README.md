@@ -1,10 +1,10 @@
-Created using Reactjs
-Datebase: Firebase Cloud Firestore
-Material UI
-React Router
-React Context API
-Google Authentication
-Delpoyed using Firebase hosting
+Created using Reactjs <br />
+Datebase: Firebase Cloud Firestore <br />
+Material UI <br />
+React Router <br />
+React Context API <br />
+Google Authentication <br />
+Delpoyed using Firebase hosting <br />
 
 # whatsapp-clone-2020
 
