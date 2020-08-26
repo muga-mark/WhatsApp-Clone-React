@@ -67,8 +67,15 @@ function Chat() {
                         <h3>{roomName}</h3>
                     <p>Last seen {" "}
                     {messages[messages.length-1]? (
-                    new Date(messages[messages.length-1]?.timestamp?.toDate()).toString()
-                    ): (" ")}
+                    new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleTimeString([], { 
+                        weekday: "long",
+                        year: "numeric",
+                        month:"long",
+                        day:"numeric",
+                        hour: 'numeric', 
+                        hour12: true, 
+                        minute: 'numeric'
+                        })): (" ")}
                     </p>
                     </div>
                 

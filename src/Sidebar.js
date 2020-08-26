@@ -92,14 +92,14 @@ function Sidebar() {
 
     useEffect(() => {
         if(user.uid) {
-          
           db.collection("users")
             .doc(user.uid)
             .onSnapshot(snapshot => (
-                setAbout(snapshot.data().about)
+                setAbout(snapshot.data()?.about)
             ));
-               
+
         }
+       
     }, [user.uid]);
 
     console.log("sidebar about =>",about);
@@ -117,6 +117,12 @@ function Sidebar() {
     const updateAbout = (e) => {
         e.preventDefault();
         console.log("You typed >>", about);
+         
+        if(user.uid) {
+            db.collection("users").doc(user.uid).set({
+                about: about,
+            })
+        }
         
         
     };
@@ -186,6 +192,7 @@ function Sidebar() {
                             />
                             <EditIcon onClick={updateAbout} />
                         </form>
+                        
                     </div>
 
                     </div>
@@ -218,7 +225,6 @@ function Sidebar() {
                         getContentAnchorEl={null}
                     >
                         <MenuItem onClick={handleDrawerOpen}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
                         <MenuItem onClick={logout}>Logout</MenuItem>
                     </Menu>
                 </div>

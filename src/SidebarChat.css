@@ -9,15 +9,19 @@
 }
 .sidebarChat__info > p, h2, h3 {
     margin: 0 0 0 15px;
+    color: #4a4a4a;
 }
 .sidebarChat__info > h2 {
     font-size: 16px;
     /* margin-bottom: 8px!important; */
 }
 .sidebarChat__info > p {
-    color: gray;
+    color: #4a4a4a;
 }
 .sidebarChat__link{
     text-decoration: none;
     color: black;
+}
+.sidebarChat > div >h3 {
+    text-align: center;
 }

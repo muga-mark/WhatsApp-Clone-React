@@ -25,7 +25,7 @@ h3, p {
     font-weight: 500;
 }
 .chat__headerInfo > p {
-    color: gray;
+    color: #4a4a4a;
 }
 .chat__message_reminder {
     background-color: #FDF4C4;
