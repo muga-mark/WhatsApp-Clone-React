@@ -28,13 +28,13 @@ function Sidebar() {
     const history = useHistory();
     const [rooms, setRooms] = useState([]);
     const [{ user },  dispatch] = useStateValue();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const classes = useStyles();
     const [name, setName] = useState("");
     const [about, setAbout] = useState([]);
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [showEditName, setShowEditName] = React.useState(false);
-    const [showEditAbout, setShowEditAbout] = React.useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [showEditName, setShowEditName] = useState(false);
+    const [showEditAbout, setShowEditAbout] = useState(false);
     
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -216,6 +216,7 @@ function Sidebar() {
                     <IconButton onClick={handleClick}>
                         <MoreVertIcon />
                     </IconButton>
+
                     <Menu id="simple-menu"
                         anchorEl={anchorEl}
                         keepMounted
@@ -232,7 +233,7 @@ function Sidebar() {
                         getContentAnchorEl={null}
                         >
                         <MenuItem onClick={handleDrawerOpen}>
-                            Profile
+                            Profile 
                         </MenuItem>
                         <MenuItem onClick={logout}>
                             Logout
