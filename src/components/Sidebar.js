@@ -2,25 +2,33 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useStateValue } from '../StateProvider';
-import { IconButton, Avatar, Menu, MenuItem, Drawer, ArrowBackIcon, EditIcon, 
-         SearchOutlinedIcon, DonutLargeIcon, ChatIcon, MoreVertIcon, CheckIcon } from './material-ui';
+import { IconButton, Avatar, Menu, MenuItem, 
+         SearchOutlinedIcon, DonutLargeIcon, ChatIcon, MoreVertIcon, Tooltip,
+         Button,
+         TextField,
+         Dialog,
+         DialogActions,
+         DialogContent,
+         DialogContentText,
+         DialogTitle } from './material-ui';
 import { auth } from '../firebase';
 import db from '../firebase';
 import SidebarChat from './SidebarChat';
 import './Sidebar.css';
+import DrawerLeft from './DrawerLeft';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      display: 'flex',
+        display: 'flex',
     },
     hide: {
-      display: 'none',
+        display: 'none',
     },
     drawer: {
-      width: 415,
+        // width: '30vw',
     },
     drawerPaper: {
-      width: 415,
+        width: '30vw',
     },
 }));
 
@@ -28,13 +36,10 @@ function Sidebar() {
     const history = useHistory();
     const [rooms, setRooms] = useState([]);
     const [{ user },  dispatch] = useStateValue();
-    const [open, setOpen] = useState(false);
+    const [openForm, setOpenForm] = useState(false);
     const classes = useStyles();
-    const [name, setName] = useState("");
-    const [about, setAbout] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [showEditName, setShowEditName] = useState(false);
-    const [showEditAbout, setShowEditAbout] = useState(false);
+    const [roomName, setRoomName] = useState("");
     
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -45,14 +50,17 @@ function Sidebar() {
     };
 
     const handleDrawerOpen = () => {
-      setOpen(true);
+        dispatch({
+            type: 'SET_DRAWER_LEFT',
+            drawerLeft: true,
+        })
     };
   
-    const handleDrawerClose = () => {
-      setOpen(false);
-      setShowEditName(false);
-      setShowEditAbout(false);
-    };
+    // const handleDrawerClose = () => {
+    //   setOpen(false);
+    //   setShowEditName(false);
+    //   setShowEditAbout(false);
+    // };
   
     const logout = () => {
         if(user){
@@ -79,46 +87,27 @@ function Sidebar() {
 
     }, []);
 
-    useEffect(() => {
-        if(user.uid) {
-          db.collection("users")
-            .doc(user.uid)
-            .onSnapshot(snapshot => (
-                setAbout(snapshot.data()?.about)
-            ));
-
-        }
-       
-    }, [user.uid]);
-
-    const updateName = (e) => {
-        e.preventDefault();
-        
-        auth.currentUser.updateProfile({
-            displayName: name,
-        });
-
-        setShowEditName(false);
+    const handleClickOpenForm = () => {
+        setOpenForm(true);
+    };
+    
+    const handleClickCloseForm = () => {
+        setOpenForm(false);
+        setRoomName("");
     };
 
-    const updateAbout = (e) => {
+    const createChat = (e) => {
+        // const roomName = prompt("Please enter name for chat");
         e.preventDefault();
-         
-        if(user.uid) {
-            db.collection("users").doc(user.uid).set({
-                about: about,
+        console.log("You typed >>", roomName);
+
+        if(roomName) {
+          db.collection('rooms')
+            .add({
+                name: roomName,
             })
         }
-        setShowEditAbout(false);
-    };
-
-    const editName = () => {
-        setShowEditName(true);
-    };
-
-    const editAbout = () => {
-        setShowEditAbout(true);
-    };
+    }
 
     return (
         <div className="sidebar">
@@ -127,96 +116,31 @@ function Sidebar() {
                     src={user.photoURL} 
                     onClick={handleDrawerOpen}
                 />
-                
-                <Drawer
-                    className={classes.drawer}
-                    anchor="left"
-                    open={open}
-                    classes={{ paper: classes.drawerPaper }}
-                    >
-                    <div className="sidebar__header_drawerHeader">
-                        <div className="sidebar__header_drawerHeader_container">
-                            <IconButton onClick={handleDrawerClose}>
-                                <ArrowBackIcon /> 
-                            </IconButton>
-                            <p>Profile</p>
-                        </div>
-                    </div>
-                    
-                    <div className="sidebar__header_drawerContent">
-                        <div className="sidebar__header_drawerPhoto">
-                            <Avatar src={user.photoURL} />
-                        </div>
 
-                        <div className="sidebar__header_drawerName">
-                            <p>Your Name</p>
-                            { showEditName ? 
-                                <form>
-                                    <input 
-                                        value={name} 
-                                        onChange={e => setName(e.target.value)} 
-                                        placeholder={user.displayName} 
-                                        type="text"
-                                    />
-                                    <CheckIcon onClick={updateName} /> 
-                                </form>
-                                :   
-                                <form>
-                                    <input 
-                                        value={user.displayName} 
-                                        // onChange={e => setName(e.target.value)} 
-                                        // placeholder={user.displayName} 
-                                        // type="text" 
-                                    />
-                                    <EditIcon onClick={editName}/> 
-                                </form>
-                            }        
-                        </div>
-
-                        <div className="sidebar__header_drawerNote">
-                            <span>
-                                This is not your username or pin. This name will be visible to your WhatsApp contacts.
-                            </span>
-                        </div>
-
-                        <div className="sidebar__header_drawerName">
-                            <p>About</p>
-                            { showEditAbout ? 
-                                <form>
-                                    <input 
-                                        value={about} 
-                                        onChange={e => setAbout(e.target.value)} 
-                                        placeholder={about}
-                                        type="text" 
-                                    />
-                                    <CheckIcon onClick={updateAbout} /> 
-                                </form>
-                                :   
-                                <form>
-                                    <input 
-                                        value={about} 
-                                        // onChange={e => setAbout(e.target.value)} 
-                                        // placeholder={about}
-                                        // type="text" 
-                                    />
-                                    <EditIcon onClick={editAbout} />
-                                </form>
-                            } 
-                        </div>
-                    </div>
-                </Drawer>
+                <DrawerLeft />
 
                 <div className="sidebar__headerRight">
-                    <IconButton>
-                        <DonutLargeIcon />
-                    </IconButton>
-                    <IconButton>
-                        <ChatIcon />
-                    </IconButton>
-                    <IconButton onClick={handleClick}>
-                        <MoreVertIcon />
-                    </IconButton>
-
+                    <Tooltip title={<span style={{fontSize: '14px', 
+                        padding: '8px 5px 8px 5px'}}>Status</span>} 
+                        placement="bottom-end">
+                        <IconButton>
+                            <DonutLargeIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={<span style={{fontSize: '14px', 
+                        padding: '8px 5px 8px 5px'}}>New Chat</span>} 
+                        placement="bottom-end">
+                        <IconButton onClick={handleClickOpenForm}>
+                            <ChatIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={<span style={{fontSize: '14px', 
+                        padding: '8px 5px 8px 5px'}}>Menu</span>} 
+                        placement="bottom-end">
+                        <IconButton onClick={handleClick}>
+                            <MoreVertIcon />
+                        </IconButton>
+                    </Tooltip>
                     <Menu id="simple-menu"
                         anchorEl={anchorEl}
                         keepMounted
@@ -242,17 +166,44 @@ function Sidebar() {
                 </div>
             </div>
 
+            <Dialog open={openForm} onClose={handleClickCloseForm} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Create Room Name</DialogTitle>
+                <DialogContent>
+                {/* <DialogContentText>
+                    To subscribe to this website, please enter your email address here. We will send updates
+                    occasionally.
+                </DialogContentText> */}
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    label="Room Name"
+                    type="text"
+                    fullWidth
+                    value={roomName}
+                    onChange={e => setRoomName(e.target.value)}
+                />
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClickCloseForm} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={createChat} color="primary">
+                    Create
+                </Button>
+                </DialogActions>
+            </Dialog>
+
             <div className="sidebar__search">
                 <div className="sidebar__searchContainer">
                     <SearchOutlinedIcon />
                     <input type="text" placeholder="Search or start new chat" />
                 </div>
-                
             </div>
 
             <div className="sidebar__chats">
                 <div className="sidebar__chatsContainer">
-                    <SidebarChat addNewChat />
+                    {/* <SidebarChat addNewChat /> */}
                     {rooms.map(room => (
                         <SidebarChat key={room.id} id={room.id} name={room.data.name} />
                     ))}

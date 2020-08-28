@@ -4,6 +4,13 @@ import Fab from '@material-ui/core/Fab';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 //Data Displays
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
@@ -25,6 +32,9 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import PersonIcon from '@material-ui/icons/Person';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
+import SendIcon from '@material-ui/icons/Send';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 //Utils
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Slide from '@material-ui/core/Slide';
@@ -32,4 +42,11 @@ import Slide from '@material-ui/core/Slide';
 export { Fab, Menu, MenuItem, Drawer, IconButton, Avatar, NoEncryptionIcon, MoreVertIcon, 
          SearchOutlinedIcon, AttachFileIcon, InsertEmoticonIcon, MicIcon, ArrowBackIcon, 
          EditIcon, DonutLargeIcon, ChatIcon, CheckIcon, InsertDriveFileIcon, PhotoIcon, 
-         CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, CloseIcon };
+         CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, CloseIcon,
+         AddIcon, SendIcon, PhotoCameraIcon,Button,
+         TextField,
+         Dialog,
+         DialogActions,
+         DialogContent,
+         DialogContentText,
+         DialogTitle };

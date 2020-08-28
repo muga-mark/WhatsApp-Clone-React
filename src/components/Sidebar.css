@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     flex: 0.30 !important;
+    width: 30vw;
 }
 .sidebar__search {
     display: flex;
@@ -20,6 +21,7 @@
 .sidebar__searchContainer > input {
     border: none;
     margin-left: 10px;
+    outline: 0;
 }
 .sidebar__searchContainer > .MuiSvgIcon-root {
     color: grey;
@@ -56,87 +58,3 @@
     display: none;  /* Safari and Chrome */
 }
 
-.sidebar__header_drawerHeader { 
-    background-color: #00BFA5;
-    height: 115px;
-    padding-left: 15px;
-}
-.sidebar__header_drawerHeader_container {
-    display: flex;
-    align-items: center;
-    margin-top: 50px;
-}
-.sidebar__header_drawerHeader_container > .MuiIconButton-root { 
-    color: white;
-    font-size: 18px;
-}
-.sidebar__header_drawerHeader_container > p { 
-    color: white;
-    font-weight: 600;
-    font-size: 18px;
-    margin-left: 10px;
-}
-.sidebar__header_drawerContent {
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none; 
-    background-color: #EDEDED;
-}
-.sidebar__header_drawerContent::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-}
-.sidebar__header_drawerPhoto {
-    height: 180px;
-    /* align-items: center; */
-    padding: 8px 112px 50px 112px;
-
-}
-.sidebar__header_drawerPhoto > .MuiAvatar-root {
-    height: 200px;
-    width: 200px;
-}
-.sidebar__header_drawerName {
-    height: 85px;
-    padding: 14px 35px 15px 30px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    margin-bottom: 20px;
-   
-}
-.sidebar__header_drawerName > p {
-    color: #57BAB1;
-    margin-bottom: 25px;
-    font-size: 14px;
-    font-weight: 600;
-}
-.sidebar__header_drawerName > form {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.sidebar__header_drawerName > form > input {
-    border: none;
-    font-size: 17px;
-    color: #666666;
-    width: 100%;
-}
-.sidebar__header_drawerName > form > input:focus {
-   outline: 0 !important;
-}
-.sidebar__header_drawerName > form > .MuiSvgIcon-root {
-    color: #919191;
-    font-size: 20px !important;
-    cursor: pointer;
-}
-.sidebar__header_drawerNote{
-    height: 50px;
-    background-color: #EDEDED;
-    padding: 0 40px 28px 30px;
-}
-.sidebar__header_drawerNote > span {
-    font-size: 14px;
-    color: #ADADAD;
-}

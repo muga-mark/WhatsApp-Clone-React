@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -10,18 +10,24 @@ import db from '../firebase';
 import { storage } from '../firebase';
 import firebase from 'firebase';
 import './Chat.css';
+import DrawerBottom from './DrawerBottom';
+import DrawerRight from './DrawerRight';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) => ({
-    drawer: {
-        // width: '90vw',
-        width: '100%',
-    },
     drawerPaper: {
-        // width: '90vw',
         height: '90vh',
-        // marginLeft: '410px',
-        width: '100%',
+        width: '70vw',
     },
+    paperAnchorBottom: {
+        top: 65,
+        left: 'auto',
+        right: 0,
+        bottom: 0,
+        maxHeight: '100%',
+        // marginLeft: 'auto',
+    }
 }));
 
 function Chat() {
@@ -29,30 +35,34 @@ function Chat() {
     const [input, setInput] = useState('');
     const {roomId } = useParams();
     const [roomName, setRoomName] = useState("");
-    const [{ user },  dispatch] = useStateValue();
+    const [{ user, drawerBottom },  dispatch] = useStateValue();
     const [messages, setMessages] = useState([]);
     const [showAttachFile, setShowAttachFile] = useState(false);
-    const [image, setImage] = useState(null);
     const [fileUrl, setFileUrl] = React.useState(null);
-    const [open, setOpen] = useState(false);
+    const messagesEndRef = useRef(null);
+    const toastId = useRef(null);
+    
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [messages]);
 
     const onFileChange = async (e) => {
+        console.log("photo attach clicked");
         const file = e.target.files[0];
         const storageRef = storage.ref();
         const fileRef = storageRef.child(file.name);
         await fileRef.put(file);
         setFileUrl(await fileRef.getDownloadURL());
-        setOpen(true);
+
+        dispatch({
+            type: 'SET_DRAWER_BOTTOM',
+            drawerBottom: true,
+        })
     };
 
-    const handleUpload = () => {
-        db.collection("rooms").doc(roomId).collection('messages').add({
-            photo: fileUrl,
-            name: user.displayName,
-            uid: user.uid,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-    }
+    // console.log("chat file url=>",fileUrl);
     
     const attachFileLists = [
         {
@@ -126,20 +136,27 @@ function Chat() {
         setShowAttachFile(false);
     };
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-        console.log("drawer open", open);
-    };
-    
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const searchMessage = () => {
+        if(! toast.isActive(toastId.current)) {
+            toastId.current =
+            toast.info("Search function is not available!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                }
+            );
+        }
 
+        dispatch({
+            type: 'SET_DRAWER_RIGHT',
+            drawerRight: true,
+        })
+    }
     
-
-    // const attachDocument = () => {
-        
-    // }
 
     return (
         <div className="chat">
@@ -163,7 +180,16 @@ function Chat() {
                 
                 <div className="chat__headerRight">
                     <IconButton>
-                        <SearchOutlinedIcon onClick={handleDrawerOpen}/>
+                        <SearchOutlinedIcon onClick={searchMessage}/>
+                        <ToastContainer 
+                            position="top-center"
+                            autoClose={5000}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                        />
                     </IconButton>
                     <div>
                         <IconButton onClick={attachFile}>
@@ -185,49 +211,13 @@ function Chat() {
                                                         <label for="file-input">
                                                             {attachFileList.icon}
                                                         </label>
-                                                        <input id="file-input" type="file" onChange={onFileChange} />
+                                                        <input id="file-input" type="file" onChange={onFileChange} accept="video/*,image/*"/>
                                                     {/* </form> */}
                                                 </div>
                                             </Fab>
                                         </Tooltip>
                                     </Slide>
                                     )}
-
-                                    {/* <Slide direction="down" in={attachFile} mountOnEnter unmountOnExit>
-                                        <Tooltip title="Photos & Videos" placement="left">
-                                            <Fab color="primary" aria-label="photo">
-                                                <PhotoIcon />
-                                            </Fab>
-                                        </Tooltip>
-                                    </Slide>
-                                    <Slide direction="down" in={attachFile} mountOnEnter unmountOnExit>
-                                        <Tooltip title="Camera" placement="left">
-                                            <Fab color="primary" aria-label="camera">
-                                                <CameraAltIcon />
-                                            </Fab>
-                                        </Tooltip>
-                                    </Slide>
-                                    <Slide direction="down" in={attachFile} mountOnEnter unmountOnExit>
-                                        <Tooltip title="Document" placement="left">
-                                            <Fab color="primary" aria-label="insertdrivefile">
-                                                <InsertDriveFileIcon />
-                                            </Fab>
-                                        </Tooltip>
-                                    </Slide>
-                                    <Slide direction="down" in={attachFile} mountOnEnter unmountOnExit>
-                                        <Tooltip title="Contact" placement="left">
-                                            <Fab color="primary" aria-label="person">
-                                                <PersonIcon />
-                                            </Fab>
-                                        </Tooltip>
-                                    </Slide>
-                                    <Slide direction="down" in={attachFile} mountOnEnter unmountOnExit>
-                                        <Tooltip title="Room" placement="left">
-                                            <Fab color="primary" aria-label="videocall">
-                                                <VideoCallIcon />
-                                            </Fab>
-                                        </Tooltip>
-                                    </Slide> */}
                                 </div>
                             </ClickAwayListener>
                             ) : null }
@@ -239,52 +229,45 @@ function Chat() {
                 </div>
             </div>
 
-            
-            <Drawer
-                className={classes.drawer}
-                anchor="bottom"
-                open={open}
-                classes={{ paper: classes.drawerPaper }}
-                >
-                <div className="chat__attachFile_drawerHeader">
-                    <div className="chat__attachFile_drawerHeader_container">
-                        <IconButton onClick={handleDrawerClose}>
-                            <CloseIcon /> 
-                        </IconButton>
-                        <p>Preview</p>
-                    </div>
-                </div>
-                
-                <div className="chat__attachFile_drawerContent">
-                    <div className="chat__attachFile_drawerContent_photo">
-                        <img src={user.photoURL} alt="" />
-                    </div>
-                    {/* <div className="chat__attachFile_drawerContent_fileCaption">
-                        <input type="text" />
-                    </div> */}
-                </div>
-                
-            </Drawer>
-            
-
+            <DrawerBottom fileUrl={fileUrl} roomId={roomId} />   
+            <DrawerRight roomId={roomId} />    
+                            
             <div className="chat__body">
                 <p className="chat__message_reminder">
-                    <NoEncryptionIcon /> Messages are not encrpyted. This is for practice purposes only.
+                    <NoEncryptionIcon /> Messages are not encrpyted. This is For Development Purposes Only
                 </p>
+               
                 {messages.map((message) => (
-                    <p className={`chat__message ${ message.uid === user.uid && "chat__receiver"}`}>
-                        <span className="chat__name">
+                    <div className={`chat__message ${ message.uid === user.uid && "chat__receiver"}`}>
+                        <span className={`chat__name ${ message.uid === user.uid && "chat__name_sender"}`}>
                             {message.name}
                         </span>
-                        {message.message}
-                        {message.photo? <img src={message.photo} alt=""/>: null}
-                        <span className="chat__timestamp">
-                            {/* {new Date(message.timestamp?.toDate()).toString()} */}
-                            {new Date(message.timestamp?.toDate()).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' })}
-                            {/* {new Date(message.timestamp?.toDate()).toUTCString()} */}
-                        </span>
-                    </p>
+                        
+                        <div className="chat__body_image_container">
+                            {message.photo? 
+                                <img className="chat__body_image"src={message.photo} alt=""/>
+                            : null}
+                        </div>  
+
+                        <div className="chat__message_box">
+                            <div>
+                                {message.message}
+                                {message.caption}
+                            </div>
+                            
+                            
+                            <div className="chat__timestamp_container">
+                                <span className="chat__timestamp">
+                                    {/* {new Date(message.timestamp?.toDate()).toString()} */}
+                                    {new Date(message.timestamp?.toDate()).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' })}
+                                    {/* {new Date(message.timestamp?.toDate()).toUTCString()} */}
+                                </span>
+                            </div>
+
+                        </div>   
+                    </div>
                 ))}
+                <div ref={messagesEndRef} />
             </div>
 
             <div className="chat__footer">

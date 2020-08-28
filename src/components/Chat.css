@@ -3,10 +3,11 @@ h3, p {
 }
 .chat {
     flex: 0.70;
-    /* background-color: black; */
     display: flex;
     flex-direction: column;
 }
+
+/* Start: Chat Header */
 .chat__header {
     padding: 8px;
     display: flex;
@@ -46,6 +47,9 @@ h3, p {
 .chat__icon > input {
     display: none;
 }
+/* End: Chat Header */
+
+/* Chat Body */
 .chat__message_reminder {
     background-color: #FDF4C4;
     font-size: 16px;
@@ -63,7 +67,7 @@ h3, p {
 .chat__message {
     position: relative;
     font-size: 16px;
-    padding: 5px 10px 5px 10px ;
+    padding: 5px 10px 2px 10px ;
     border-radius: 10px;
     width: fit-content ;
     background-color: #ffffff;
@@ -80,13 +84,21 @@ h3, p {
     top: -15px;
     font-size: xx-small;
     font-weight: 800;
+    white-space: nowrap;
+}
+.chat__name_sender {
+    right: 10px;
+}
+.chat__timestamp_container {
+    margin-left: auto;
+    /* margin-top: 10px; */
 }
 .chat__timestamp {
-    /* position: absolute; */
     margin-left: 10px;
     font-size: xx-small;
     margin-top: 22px;
     color: gray;
+    /* width: fit-content; */
 }
 .chat__headerRight {
     display: flex;
@@ -98,13 +110,24 @@ h3, p {
     background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
     background-repeat: repeat;
     background-position: center;
-    padding: 60px 90px 60px 90px;
+    padding: 40px 90px 0px 90px;
     overflow: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none; 
 }
 .chat__body::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
+}
+.chat__body_image {
+    max-height: 186px;
+    max-width: 330px;
+    border-radius: 8px;
+    /* margin-top: 10px; */
+}
+.chat__body_image_container {
+    display: flex;
+    flex-direction: column;
+    margin: 0px -5px 0 -5px;
 }
 .chat__footer {
     display: flex;
@@ -133,7 +156,6 @@ h3, p {
     padding: 10px;
     color: gray;
 }
-
 .chat__attachFile_drawerHeader {
     background-color: #00BFA5;
 }
@@ -162,4 +184,14 @@ h3, p {
 }
 .chat__attachFile_drawerContent_photo > img {
     height: 244px;
+}
+.chat__message_box {
+    display: flex;
+    /* flex-direction: column; */
+}
+.Toastify__toast {
+    font-size: 14px;
+    /* padding: 0; */
+    min-height: 30px!important;
+    max-height: 50px!important;
 }

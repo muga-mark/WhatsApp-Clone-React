@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import {Avatar} from './material-ui';
+import { Avatar, PhotoCameraIcon} from './material-ui';
 import db from '../firebase';
 import './SidebarChat.css';
 
 function SidebarChat({ id, name, addNewChat }) {
     const [messages, setMessages] = useState("");
-    
+
     useEffect(() => {
         if(id){
           db.collection("rooms")
@@ -38,6 +38,11 @@ function SidebarChat({ id, name, addNewChat }) {
                 <div className="sidebarChat__info">
                     <h2>{name}</h2> 
                     <p>{messages[0]?.message}</p>
+                    {messages[0]?.caption?
+                        <div className="sideChat__photo">
+                            <PhotoCameraIcon /> <span>Photo</span>
+                        </div>
+                    :null}
                 </div>
             </div>
         </Link>

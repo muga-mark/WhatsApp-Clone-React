@@ -16,12 +16,26 @@
     /* margin-bottom: 8px!important; */
 }
 .sidebarChat__info > p {
-    color: #4a4a4a;
+    color: #A4A4A4;;
+}
+.sideChat__photo {
+    margin: 0 0 0 15px;
+    /* justify-content: space-between; */
+    align-items: center;
+    display: flex;
+}
+.sideChat__photo > .MuiSvgIcon-root {
+    color: #A4A4A4;
+    font-size: 16px;
+}
+.sideChat__photo > span {
+    margin-left: 5px;
+    color: #A4A4A4;
 }
 .sidebarChat__link{
     text-decoration: none;
     color: black;
 }
-.sidebarChat > div >h3 {
+.sidebarChat > div > h3 {
     text-align: center;
 }
