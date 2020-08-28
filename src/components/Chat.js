@@ -114,13 +114,14 @@ function Chat() {
     const sendMessage = (e) => {
         e.preventDefault();
         console.log("You typed >>", input);
-        db.collection("rooms").doc(roomId).collection('messages').add({
-            message: input,
-            name: user.displayName,
-            uid: user.uid,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-
+        if(input){
+            db.collection("rooms").doc(roomId).collection('messages').add({
+                message: input,
+                name: user.displayName,
+                uid: user.uid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+        }
         setInput("");
     };
 

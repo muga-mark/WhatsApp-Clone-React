@@ -73,19 +73,17 @@ function DrawerBottom( fileUrl ) {
     const handleUpload = (e) => {
         e.preventDefault();
         // console.log("You typed in caption >>", caption);
-        if(caption){
-            db.collection("rooms").doc(roomId).collection('messages').add({
-                photo: fileUrl.fileUrl,
-                name: user.displayName,
-                uid: user.uid,
-                caption: caption,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            })
-            dispatch({
-                type: 'SET_DRAWER_BOTTOM',
-                drawerBottom: false,
-            })
-        }
+        db.collection("rooms").doc(roomId).collection('messages').add({
+            photo: fileUrl.fileUrl,
+            name: user.displayName,
+            uid: user.uid,
+            caption: caption,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        dispatch({
+            type: 'SET_DRAWER_BOTTOM',
+            drawerBottom: false,
+        })
         
         setCaption("");
     }
