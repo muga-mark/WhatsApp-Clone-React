@@ -234,7 +234,7 @@ function Chat() {
                             
             <div className="chat__body">
                 <p className="chat__message_reminder">
-                    <NoEncryptionIcon /> Messages are not encrpyted. This is For Development Purposes Only
+                    <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
                 </p>
                
                 {messages.map((message) => (
