@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Avatar, PhotoCameraIcon } from '../shared/material-ui';
+import Avatar from '@material-ui/core/Avatar';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import db from '../firebase';
 import './SidebarChat.css';
 

@@ -1,11 +1,24 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { Fab, IconButton, Avatar, NoEncryptionIcon, MoreVertIcon, SearchOutlinedIcon, 
-         AttachFileIcon, InsertEmoticonIcon, MicIcon, InsertDriveFileIcon, PhotoIcon, 
-         CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, 
-         Drawer, ArrowBackIcon
-        } from '../shared/material-ui';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import MicIcon from '@material-ui/icons/Mic';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import PhotoIcon from '@material-ui/icons/Photo';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import VideoCallIcon from '@material-ui/icons/VideoCall';
+import PersonIcon from '@material-ui/icons/Person';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Slide from '@material-ui/core/Slide';
+import Tooltip from '@material-ui/core/Tooltip';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link } from 'react-router-dom';
 import { setDrawerBottom } from '../actions/drawerAction';
 import { setDrawerRight } from '../actions/drawerAction';
@@ -16,8 +29,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import db from '../firebase';
 import { storage } from '../firebase';
 import firebase from 'firebase';
-//material-ui
-
 import './Chat.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -121,20 +132,7 @@ function Chat() {
         } else {
             setShowAttachFile(false);
         }
-        // if(! toast.isActive(toastId.current)) {
-        //     toastId.current =
-        //     toast.info("All icons have same functions, you can only upload image!", {
-        //         position: "top-center",
-        //         autoClose: 5000,
-        //         hideProgressBar: true,
-        //         closeOnClick: true,
-        //         pauseOnHover: true,
-        //         draggable: true,
-        //         progress: undefined,
-        //         }
-        //     );
-        // }
-        
+      
             toast.info("All icons have the same functions, you can only upload image!", {
                 toastId: attachToastId,
                 position: "bottom-right",
@@ -230,14 +228,14 @@ function Chat() {
                 
                 <div className="chat__headerRight">
                     <ToastContainer 
-                                position="bottom-right"
-                                autoClose={5000}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                            />
+                        position="bottom-right"
+                        autoClose={5000}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                    />
                     <Hidden only={['xs']}>
                         <IconButton>
                             <SearchOutlinedIcon onClick={searchMessage}/>
