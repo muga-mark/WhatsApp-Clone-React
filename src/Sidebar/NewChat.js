@@ -32,7 +32,7 @@ function NewChat() {
                 name: roomName,
             })
         }
-        
+        setOpen(false);
     }
 
 

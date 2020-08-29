@@ -103,6 +103,34 @@ h3, p {
     color: #4a4a4a;
     font-size: small;
 }
+
+.chat__body {
+    flex: 1;
+    background-image: url('../image/whatsapp-chat-bg.png');
+    background-repeat: repeat;
+    background-position: center;
+    padding: 40px 90px 0px 90px;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none; 
+}
+.chat__body::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.chat__body_image {
+    max-height: 186px;
+    max-width: 330px;
+    border-radius: 8px;
+    /* margin-top: 10px; */
+}
+.chat__body_image_container {
+    display: flex;
+    flex-direction: column;
+    margin: 0px -5px 0 -5px;
+}
+.chat__message_box {
+    display: flex;
+}
 .chat__message {
     position: relative;
     font-size: 16px;
@@ -144,33 +172,6 @@ h3, p {
     justify-content: space-between;
     min-width: 100px;
 } 
-.chat__body {
-    flex: 1;
-    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
-    background-repeat: repeat;
-    background-position: center;
-    padding: 40px 90px 0px 90px;
-    overflow: scroll;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none; 
-}
-.chat__body::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-}
-.chat__body_image {
-    max-height: 186px;
-    max-width: 330px;
-    border-radius: 8px;
-    /* margin-top: 10px; */
-}
-.chat__body_image_container {
-    display: flex;
-    flex-direction: column;
-    margin: 0px -5px 0 -5px;
-}
-.chat__message_box {
-    display: flex;
-}
 /* End: Chat Body */
 
 
