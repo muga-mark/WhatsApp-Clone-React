@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
+import { setDrawerRight } from '../actions/drawerAction';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Drawer from '@material-ui/core/Drawer';
@@ -27,10 +28,7 @@ function DrawerRight() {
     // const [searchedMessage, setSearchedMessage] = useState("");
     
     const handleDrawerClose = () => {
-        dispatch({
-            type: 'SET_DRAWER_RIGHT',
-            drawerRight: false,
-        })
+        dispatch(setDrawerRight(false))
     };
     
     return (

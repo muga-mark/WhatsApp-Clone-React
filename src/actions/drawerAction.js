@@ -12,7 +12,7 @@ export function setDrawerBottom(open) {
     };
 }
 
-export function setDrawerRightOpen(open) {
+export function setDrawerRight(open) {
     return{
         type: "SET_DRAWER_RIGHT",
         drawerRight: open,

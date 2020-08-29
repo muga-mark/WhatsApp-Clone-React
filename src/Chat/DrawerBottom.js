@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
+import { setDrawerBottom } from '../actions/drawerAction';
 import firebase from 'firebase';
 import db from '../firebase';
 import Fab from '@material-ui/core/Fab';
@@ -10,6 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
 import './DrawerBottom.css';
+
 
 // import Slider from "react-slick";
 // import "slick-carousel/slick/slick.css";
@@ -34,7 +36,7 @@ function DrawerBottom( fileUrl ) {
     const [{ user, drawerBottom },  dispatch] = useStateValue();
     const [caption, setCaption] = useState([]); 
     const [anotherFileUrl, setAnotherFileUrl] = useState([]);
-    const {roomId } = useParams();
+    const { roomId } = useParams();
 
     const settings = {
         dots: true,
@@ -84,19 +86,12 @@ function DrawerBottom( fileUrl ) {
             caption: caption,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
-        dispatch({
-            type: 'SET_DRAWER_BOTTOM',
-            drawerBottom: false,
-        })
-        
+        dispatch(setDrawerBottom(false));
         setCaption("");
     }
 
     const handleDrawerClose = () => {
-        dispatch({
-            type: 'SET_DRAWER_BOTTOM',
-            drawerBottom: false,
-          })
+        dispatch(setDrawerBottom(false));
     };
 
     return (

@@ -6,6 +6,8 @@ import { Fab, IconButton, Avatar, NoEncryptionIcon, MoreVertIcon, SearchOutlined
          CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, Drawer, 
          CloseIcon } from '../shared/material-ui';
 
+import { setDrawerBottom } from '../actions/drawerAction';
+import { setDrawerRight } from '../actions/drawerAction';
 import DrawerBottom from './DrawerBottom';
 import DrawerRight from './DrawerRight';
 import { ToastContainer, toast } from 'react-toastify';
@@ -58,10 +60,7 @@ function Chat() {
         await fileRef.put(file);
         setFileUrl(await fileRef.getDownloadURL());
 
-        dispatch({
-            type: 'SET_DRAWER_BOTTOM',
-            drawerBottom: true,
-        })
+        dispatch(setDrawerBottom(true));
     };
 
     // console.log("chat file url=>",fileUrl);
@@ -155,10 +154,7 @@ function Chat() {
             );
         }
 
-        dispatch({
-            type: 'SET_DRAWER_RIGHT',
-            drawerRight: true,
-        })
+        dispatch(setDrawerRight(true));
     }
     
 
