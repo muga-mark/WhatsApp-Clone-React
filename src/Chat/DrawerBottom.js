@@ -17,10 +17,21 @@ import './DrawerBottom.css';
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles ((theme) => ({
     drawerPaper: {
         height: '90vh',
-        width: '70vw',
+        [theme.breakpoints.up('xs')]: {
+            width: '100vw',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '70vw',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '70vw',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '70vw',
+        },
     },
     paperAnchorBottom: {
         top: 65,
@@ -29,7 +40,7 @@ const useStyles = makeStyles({
         bottom: 0,
         maxHeight: '100%',
     }
-});
+}));
 
 function DrawerBottom( fileUrl ) {
     const classes = useStyles();

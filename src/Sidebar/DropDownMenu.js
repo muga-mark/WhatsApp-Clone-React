@@ -61,8 +61,23 @@ function DropDownMenu() {
                 }}
                 getContentAnchorEl={null}
                 >
+                <MenuItem>
+                    New Group     
+                </MenuItem>
+                <MenuItem>
+                    Create a room   
+                </MenuItem>
                 <MenuItem onClick={handleDrawerLeftOpen}>
                     Profile 
+                </MenuItem>
+                <MenuItem>
+                    Archived    
+                </MenuItem>
+                <MenuItem>
+                    Starred   
+                </MenuItem>
+                <MenuItem>
+                    Settings  
                 </MenuItem>
                 <MenuItem onClick={logout}>
                     Logout

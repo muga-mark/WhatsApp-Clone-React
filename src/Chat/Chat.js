@@ -3,53 +3,41 @@ import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import { Fab, IconButton, Avatar, NoEncryptionIcon, MoreVertIcon, SearchOutlinedIcon, 
          AttachFileIcon, InsertEmoticonIcon, MicIcon, InsertDriveFileIcon, PhotoIcon, 
-         CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, Drawer, 
-         CloseIcon } from '../shared/material-ui';
-
+         CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, 
+         Drawer, ArrowBackIcon
+        } from '../shared/material-ui';
+import { Link } from 'react-router-dom';
 import { setDrawerBottom } from '../actions/drawerAction';
 import { setDrawerRight } from '../actions/drawerAction';
 import DrawerBottom from './DrawerBottom';
 import DrawerRight from './DrawerRight';
+import Hidden from '@material-ui/core/Hidden';
 import { ToastContainer, toast } from 'react-toastify';
 import db from '../firebase';
 import { storage } from '../firebase';
 import firebase from 'firebase';
 //material-ui
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import './Chat.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-const useStyles = makeStyles((theme) => ({
-    drawerPaper: {
-        height: '90vh',
-        width: '70vw',
-    },
-    paperAnchorBottom: {
-        top: 65,
-        left: 'auto',
-        right: 0,
-        bottom: 0,
-        maxHeight: '100%',
-    }
-}));
 
 function Chat() {
-    const classes = useStyles();
     const [input, setInput] = useState('');
     const {roomId } = useParams();
     const [roomName, setRoomName] = useState("");
-    const [{ user, drawerBottom },  dispatch] = useStateValue();
+    const [{ user },  dispatch] = useStateValue();
     const [messages, setMessages] = useState([]);
     const [showAttachFile, setShowAttachFile] = useState(false);
     const [fileUrl, setFileUrl] = React.useState(null);
     const messagesEndRef = useRef(null);
-    const toastId = useRef(null);
-    
+    const searchToastId = "search";
+    const attachToastId = "attach";
+    const menuToastId = "menu"
+
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
     }
-
     useEffect(scrollToBottom, [messages]);
 
     const onFileChange = async (e) => {
@@ -133,17 +121,23 @@ function Chat() {
         } else {
             setShowAttachFile(false);
         }
-    };
-    
-    const handleClickAway = ()  => {
-        setShowAttachFile(false);
-    };
-
-    const searchMessage = () => {
-        if(! toast.isActive(toastId.current)) {
-            toastId.current =
-            toast.info("Search function is not available!", {
-                position: "top-center",
+        // if(! toast.isActive(toastId.current)) {
+        //     toastId.current =
+        //     toast.info("All icons have same functions, you can only upload image!", {
+        //         position: "top-center",
+        //         autoClose: 5000,
+        //         hideProgressBar: true,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //         }
+        //     );
+        // }
+        
+            toast.info("All icons have the same functions, you can only upload image!", {
+                toastId: attachToastId,
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: true,
                 closeOnClick: true,
@@ -152,15 +146,71 @@ function Chat() {
                 progress: undefined,
                 }
             );
-        }
+    };
+    
+    const handleClickAway = ()  => {
+        setShowAttachFile(false);
+    };
+
+    const searchMessage = () => {
+        // if(! toast.isActive(toastId.current)) {
+        //     toastId.current =
+        //     toast.info("Search function is not available!", {
+        //         position: "top-center",
+        //         autoClose: 5000,
+        //         hideProgressBar: true,
+        //         closeOnClick: true,
+        //         pauseOnHover: true,
+        //         draggable: true,
+        //         progress: undefined,
+        //         }
+        //     );
+        // }
+
+    
+        toast.info("Search function is not available!", {
+            toastId: searchToastId,
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            }
+        );
 
         dispatch(setDrawerRight(true));
     }
     
+    const menu = () => { 
+        toast.info("Menu function is not available!", {
+            toastId: menuToastId,
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            }
+        );
+    }
 
     return (
         <div className="chat">
             <div className="chat__header">
+                
+                <Hidden smUp>
+                    <Link to='/'>
+                        <div className="chat__back_button">
+                            <IconButton>
+                                <ArrowBackIcon /> 
+                            </IconButton>
+                        </div>
+                    </Link>
+                </Hidden>
+
                 <Avatar src={`https://avatars.dicebear.com/api/human/${roomId}.svg`} />
                     <div className="chat__headerInfo">
                         <h3>{roomName}</h3>
@@ -179,18 +229,20 @@ function Chat() {
                     </div>
                 
                 <div className="chat__headerRight">
-                    <IconButton>
-                        <SearchOutlinedIcon onClick={searchMessage}/>
-                        <ToastContainer 
-                            position="top-center"
-                            autoClose={5000}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                        />
-                    </IconButton>
+                    <ToastContainer 
+                                position="bottom-right"
+                                autoClose={5000}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                            />
+                    <Hidden only={['xs']}>
+                        <IconButton>
+                            <SearchOutlinedIcon onClick={searchMessage}/>
+                        </IconButton>
+                    </Hidden>                                                    
                     <div>
                         <IconButton onClick={attachFile}>
                             <AttachFileIcon />
@@ -223,7 +275,7 @@ function Chat() {
                             ) : null }
 
                     </div>
-                    <IconButton>
+                    <IconButton onClick={menu}>
                         <MoreVertIcon />
                     </IconButton>
                 </div>

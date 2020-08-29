@@ -12,7 +12,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import { makeStyles } from '@material-ui/core/styles';
 import './DrawerLeft.css';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles ((theme) => ({
     root: {
         display: 'flex',
     },
@@ -20,9 +20,21 @@ const useStyles = makeStyles({
         display: 'none',
     },
     drawerPaper: {
-        width: '30vw',
+        
+        [theme.breakpoints.up('xs')]: {
+            width: '100vw',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '30vw',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '30vw',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '30vw',
+        },
     },
-});
+}));
 
 function DrawerLeft() {
     const classes = useStyles();

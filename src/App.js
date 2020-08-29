@@ -2,9 +2,11 @@ import React, { useEffect } from 'react'
 import { useStateValue } from './StateProvider';
 import { auth } from './firebase';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { setUser } from './actions/userAction';
 import Login from './Login';
 import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';
+import Hidden from '@material-ui/core/Hidden';
 import './App.css';
 
 function App() {
@@ -13,15 +15,9 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if(authUser){
-        dispatch({
-          type: 'SET_USER',
-          user: authUser,
-        })
+        dispatch(setUser(authUser))
       }else{
-        dispatch({
-          type: 'SET_USER',
-          user: null,
-        })
+        dispatch(setUser(null))
       }
     });
 
@@ -38,17 +34,19 @@ function App() {
       ) : (
         <div className="app__body">
           <Router>
-            <Sidebar />
             <Switch>
-
               <Route path="/rooms/:roomId">  
+                <Hidden only={['xs']}>
+                  <Sidebar />
+                </Hidden>
                 <Chat />
               </Route>
-
-              <Route path="/">
-                <Chat />
+              <Route exact path="/">
+                <Sidebar />
+                <Hidden only={['xs']}>
+                  <Chat />
+                </Hidden>
               </Route>
-
             </Switch>
           </Router>        
         </div>

@@ -6,6 +6,13 @@ h3, p {
     display: flex;
     flex-direction: column;
 }
+.Toastify__toast {
+    font-size: 14px;
+    /* padding: 0; */
+    min-height: 30px!important;
+    max-height: 50px!important;
+    /* margin-bottom: 70px!important; */
+}
 
 /* Start: Chat Header */
 .chat__header {
@@ -47,9 +54,40 @@ h3, p {
 .chat__icon > input {
     display: none;
 }
+
+.chat__attachFile_drawerHeader {
+    background-color: #00BFA5;
+}
+.chat__attachFile_drawerHeader_container {
+    display: flex;
+    align-items: center;
+}
+.chat__attachFile_drawerHeader_container > p{
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+.chat__attachFile_drawerHeader_container > .MuiIconButton-root {
+    color: white !important;
+    margin: 0 10px 0 10px;
+}
+.chat__attachFile_drawerContent {
+    background-color: #E6E6E6;
+    height: 100%;
+}
+.chat__attachFile_drawerContent_photo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat__attachFile_drawerContent_photo > img {
+    height: 244px;
+}
 /* End: Chat Header */
 
-/* Chat Body */
+
+/* Start: Chat Body */
 .chat__message_reminder {
     background-color: #FDF4C4;
     font-size: 16px;
@@ -129,6 +167,13 @@ h3, p {
     flex-direction: column;
     margin: 0px -5px 0 -5px;
 }
+.chat__message_box {
+    display: flex;
+}
+/* End: Chat Body */
+
+
+/* Start: Chat Footer */
 .chat__footer {
     display: flex;
     justify-content: space-between;
@@ -156,42 +201,91 @@ h3, p {
     padding: 10px;
     color: gray;
 }
-.chat__attachFile_drawerHeader {
-    background-color: #00BFA5;
-}
-.chat__attachFile_drawerHeader_container {
-    display: flex;
-    align-items: center;
-}
-.chat__attachFile_drawerHeader_container > p{
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-}
-.chat__attachFile_drawerHeader_container > .MuiIconButton-root {
-    color: white !important;
-    margin: 0 10px 0 10px;
-}
-.chat__attachFile_drawerContent {
-    background-color: #E6E6E6;
-    height: 100%;
-}
-.chat__attachFile_drawerContent_photo {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.chat__attachFile_drawerContent_photo > img {
-    height: 244px;
-}
-.chat__message_box {
-    display: flex;
-    /* flex-direction: column; */
-}
-.Toastify__toast {
-    font-size: 14px;
-    /* padding: 0; */
-    min-height: 30px!important;
-    max-height: 50px!important;
+/* End: Chat Footer */
+
+@media screen and (max-width: 600px) {
+    .chat {
+        flex: 1;
+    }  
+    .Toastify__toast {
+        font-size: 12px;
+        /* padding: 0; */
+        min-height: 30px!important;
+        max-height: 50px!important;
+        max-width: 80vw;
+        margin-bottom: 80px !important;
+        margin-left: 50px;
+        /* margin: 0 auto; */
+        /* position: sticky; */
+        /* bottom: 0 !important; */
+    }
+
+    /* Start: Header */
+    .chat__header {
+        padding: 4px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: #EDEDED;
+    }
+    .chat__headerRight {
+        min-width: 80px;
+    }
+    .chat__headerInfo {
+        padding-left: 6px;
+    }
+    .chat__headerInfo > p {
+        font-size: 12px;
+    }
+    .MuiIconButton-root {
+        padding: 5px!important;
+    }
+    /* End: Header */
+
+    /* Start: Chat Body */
+    .chat__body {
+        padding: 40px 12px 0px 12px;
+    }
+    .chat__message_reminder {
+        
+        font-size: 12px;
+        padding: 5px 10px 5px 10px ;
+        border-radius: 10px;
+        width: fit-content ;
+        margin-bottom: 70px !important;
+        margin: 0 auto;
+    }
+    .chat__message_reminder > .MuiSvgIcon-root {
+        color: #4a4a4a;
+        font-size: small;
+    }
+    .chat__message {
+        font-size: 12px;
+        padding: 5px 10px 2px 10px ;
+        border-radius: 10px;
+        width: fit-content ;
+        background-color: #ffffff;
+        margin-bottom: 30px;
+        color: #4a4a4a;
+    }
+    .chat__receiver{ 
+        background-color: #DCF8C6;
+        margin-left: auto;
+        color: #4a4a4a;
+    }
+    .chat__body_image {
+        max-height: 150px;
+        max-width: 200px;
+        border-radius: 8px;
+    }
+    /* End: Chat Body */
+
+    /* Start: Chat Footer */
+    .chat__footer { 
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+        background-color: #EDEDED;
+    }
+    /* End: Chat Footer */
 }

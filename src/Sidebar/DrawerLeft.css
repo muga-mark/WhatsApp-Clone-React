@@ -82,3 +82,15 @@
     font-size: 14px;
     color: #ADADAD;
 }
+
+@media screen and (max-width: 425px) {
+    .drawerLeft__content_photo {
+        height: 180px;
+        padding: 10px 50px 50px 50px;
+    }
+    .drawerLeft__content_photo > .MuiAvatar-root {
+        height: 200px;
+        width: 200px;
+        margin: 0 auto;
+    }
+}

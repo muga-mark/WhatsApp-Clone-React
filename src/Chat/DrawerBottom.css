@@ -66,3 +66,21 @@
     margin: 0 auto;
     max-height: 78px;
 }
+
+@media screen and (max-width: 600px) {
+    .drawerBottom__content_photo > img {
+        max-height: 150px;
+        margin: 20px 0 20px 0;
+    }
+    .drawerBottom__content_caption {
+        margin: 20px 40px 20px 20px;
+    }
+    .drawerBottom__content {
+        background-color: #E6E6E6;
+        height: 100vh;
+    }
+    .drawerBottom__footer {
+        height: 130px;
+        padding: 20px 50px 20px 50px;
+    }
+}
