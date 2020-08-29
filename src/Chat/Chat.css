@@ -11,6 +11,7 @@ h3, p {
     /* padding: 0; */
     min-height: 30px!important;
     max-height: 50px!important;
+    margin-bottom: 80px !important;
     /* margin-bottom: 70px!important; */
 }
 
@@ -206,6 +207,8 @@ h3, p {
 @media screen and (max-width: 600px) {
     .chat {
         flex: 1;
+        height: 100vh;
+        width: 100vw;
     }  
     .Toastify__toast {
         font-size: 12px;
@@ -222,11 +225,11 @@ h3, p {
 
     /* Start: Header */
     .chat__header {
-        padding: 4px;
+        padding: 6px;
         position: sticky;
         top: 0;
         z-index: 100;
-        background-color: #EDEDED;
+        background-color: #045E54;
     }
     .chat__headerRight {
         min-width: 80px;
@@ -234,11 +237,18 @@ h3, p {
     .chat__headerInfo {
         padding-left: 6px;
     }
+    .chat__headerInfo > h3 {
+        color: white;
+    }
     .chat__headerInfo > p {
         font-size: 12px;
+        color: white;
     }
     .MuiIconButton-root {
         padding: 5px!important;
+    }
+    .MuiIconButton-root {
+        color: white !important;
     }
     /* End: Header */
 

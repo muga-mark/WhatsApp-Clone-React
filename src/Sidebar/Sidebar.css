@@ -39,6 +39,7 @@
     .sidebar {
         flex: 1 !important;
         width: 100vw;
+        background-color: #045E54;
     }
     .sidebar__headerRight {
         min-width: 40vw;
