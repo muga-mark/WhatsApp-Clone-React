@@ -3,8 +3,8 @@ import { useStateValue } from './StateProvider';
 import { auth } from './firebase';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './Login';
-import Sidebar from '../src/components/Sidebar';
-import Chat from '../src/components/Chat';
+import Sidebar from '../src/Sidebar/Sidebar';
+import Chat from '../src/Chat/Chat';
 import './App.css';
 
 function App() {

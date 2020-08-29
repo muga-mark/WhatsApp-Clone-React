@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useStateValue } from '../StateProvider';
-import { IconButton, Avatar, Menu, MenuItem, Drawer, ArrowBackIcon, EditIcon, 
-    SearchOutlinedIcon, DonutLargeIcon, ChatIcon, MoreVertIcon, CheckIcon } from './material-ui';
-import { makeStyles } from '@material-ui/core/styles';
-import db from '../firebase';
+import { setDrawerLeft } from '../actions/drawerAction';
 import { auth } from '../firebase';
-import './Drawer.css';
+import db from '../firebase';
+import Drawer from '@material-ui/core/Drawer';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
+import { makeStyles } from '@material-ui/core/styles';
+import './DrawerLeft.css';
 
 const useStyles = makeStyles({
     root: {
@@ -14,9 +19,6 @@ const useStyles = makeStyles({
     hide: {
         display: 'none',
     },
-    drawer: {
-        // width: '30vw',
-    },
     drawerPaper: {
         width: '30vw',
     },
@@ -24,11 +26,11 @@ const useStyles = makeStyles({
 
 function DrawerLeft() {
     const classes = useStyles();
-    const [{ user, drawerLeft },  dispatch] = useStateValue();
     const [name, setName] = useState("");
-    const [about, setAbout] = useState([]);
+    const [about, setAbout] = useState("");
     const [showEditName, setShowEditName] = useState(false);
     const [showEditAbout, setShowEditAbout] = useState(false);
+    const [{ user, drawerLeft },  dispatch] = useStateValue();
 
     const updateName = (e) => {
         e.preventDefault();
@@ -60,10 +62,7 @@ function DrawerLeft() {
     };
 
     const handleDrawerClose = () => {
-        dispatch({
-            type: 'SET_DRAWER_LEFT',
-            drawerLeft: false,
-        })
+        dispatch(setDrawerLeft(false));
         setShowEditName(false);
         setShowEditAbout(false);
     };
@@ -83,12 +82,12 @@ function DrawerLeft() {
     return (
         <div>
             <Drawer
-                // className={classes.drawer}
                 anchor="left"
                 variant="persistent"
                 open={drawerLeft}
                 classes={{ paper: classes.drawerPaper }}
                 >
+                    
                 <div className="drawerLeft__header">
                     <div className="drawerLeft__header_container">
                         <IconButton onClick={handleDrawerClose}>

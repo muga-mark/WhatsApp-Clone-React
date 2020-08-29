@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import './Login.css';
 import { auth, provider } from './firebase';
-import { actionTypes } from './reducer';
+// import { actionTypes } from './reducer';
 import { useStateValue } from './StateProvider';
+import { setUser } from './actions/userAction';
 
 function Login() {
     const [ { user }, dispatch] = useStateValue();
@@ -11,10 +12,7 @@ function Login() {
       auth
         .signInWithPopup(provider)
         .then(result => {
-            dispatch({
-                type: actionTypes.SET_USER,
-                user: result.user,
-            })
+            dispatch(setUser(result.action))
         })
         .catch((error) => alert(error.message));
     };

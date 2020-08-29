@@ -1,0 +1,68 @@
+.drawerBottom__header {
+    background-color: #00BFA5;
+}
+.drawerBottom__header_container {
+    display: flex;
+    align-items: center;
+}
+.drawerBottom__header_container > p {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+.drawerBottom__header_container > .MuiIconButton-root {
+    color: white !important;
+    margin: 0 10px 0 10px;
+}
+.drawerBottom__content {
+    background-color: #E6E6E6;
+    height: 100%;
+}
+.drawerBottom__content_photo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.drawerBottom__content_photo > img {
+    height: 244px;
+    margin: 20px 0 20px 0;
+}
+.drawerBottom__content_caption {
+    margin: 20px 120px 20px 120px;
+}
+.drawerBottom__content_caption > .MuiFab-root {
+    position: absolute;
+    right: 45px;
+    bottom: 110px;
+    background-color: #09E85E;
+}
+.drawerBottom__content_caption > .MuiFab-root:hover {
+    background-color: #09E85E;
+}
+.drawerBottom__content_caption > input {
+    width: 100%;
+    background-color: #E6E6E6;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #00BFA5;
+    padding: 5px 0 5px 0;
+    font-size: 14px;
+    color: gray;
+}
+.drawerBottom__footer {
+    align-items: center;
+    align-content: center;
+    /* width: fill; */
+    height: 140px;
+    background-color: #D9D9D9;
+    padding: 20px 50px 20px 50px;
+    text-align: center;
+}
+.drawerBottom__footer > div {
+    align-content: center;
+}
+.drawerBottom__footer > div > img {
+    margin: 0 auto;
+    max-height: 78px;
+}

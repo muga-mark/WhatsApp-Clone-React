@@ -4,29 +4,6 @@
     flex: 0.30 !important;
     width: 30vw;
 }
-.sidebar__search {
-    display: flex;
-    align-items: center;
-    background-color: #f6f6f6;
-    height: 39px;
-    padding: 10px;
-}
-.sidebar__searchContainer {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    width: 100%;
-    border-radius: 20px;
-}
-.sidebar__searchContainer > input {
-    border: none;
-    margin-left: 10px;
-    outline: 0;
-}
-.sidebar__searchContainer > .MuiSvgIcon-root {
-    color: grey;
-    padding: 10px;
-}
 .sidebar__header {
     display: flex;
     justify-content: space-between;

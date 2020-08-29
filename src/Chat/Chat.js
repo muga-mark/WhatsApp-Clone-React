@@ -1,18 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Fab, IconButton, Avatar, NoEncryptionIcon, MoreVertIcon, SearchOutlinedIcon, 
          AttachFileIcon, InsertEmoticonIcon, MicIcon, InsertDriveFileIcon, PhotoIcon, 
          CameraAltIcon, VideoCallIcon, PersonIcon, ClickAwayListener, Slide, Tooltip, Drawer, 
-         CloseIcon } from './material-ui';
-import db from '../firebase';
-import { storage } from '../firebase';
-import firebase from 'firebase';
-import './Chat.css';
+         CloseIcon } from '../shared/material-ui';
+
 import DrawerBottom from './DrawerBottom';
 import DrawerRight from './DrawerRight';
 import { ToastContainer, toast } from 'react-toastify';
+import db from '../firebase';
+import { storage } from '../firebase';
+import firebase from 'firebase';
+//material-ui
+
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import './Chat.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
         right: 0,
         bottom: 0,
         maxHeight: '100%',
-        // marginLeft: 'auto',
     }
 }));
 
@@ -114,6 +116,7 @@ function Chat() {
     const sendMessage = (e) => {
         e.preventDefault();
         console.log("You typed >>", input);
+        
         if(input){
             db.collection("rooms").doc(roomId).collection('messages').add({
                 message: input,
@@ -231,8 +234,8 @@ function Chat() {
             </div>
 
             <DrawerBottom fileUrl={fileUrl} roomId={roomId} />   
-            <DrawerRight roomId={roomId} />    
-                            
+            <DrawerRight roomId={roomId} />   
+
             <div className="chat__body">
                 <p className="chat__message_reminder">
                     <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
@@ -275,6 +278,7 @@ function Chat() {
                 <InsertEmoticonIcon />
                 <form>
                     <input 
+                        required 
                         value={input} 
                         onChange={e => setInput(e.target.value)} 
                         placeholder="Type a message" type="text" 

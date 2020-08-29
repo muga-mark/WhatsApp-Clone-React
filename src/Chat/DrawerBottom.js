@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IconButton, Drawer, CloseIcon, AddIcon, SendIcon, Fab } from './material-ui';
 import { useStateValue } from '../StateProvider';
-import { makeStyles } from '@material-ui/core/styles';
-import { storage } from '../firebase';
 import firebase from 'firebase';
 import db from '../firebase';
-import './Drawer.css';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
+import CloseIcon from '@material-ui/icons/Close';
+import SendIcon from '@material-ui/icons/Send';
+import { makeStyles } from '@material-ui/core/styles';
+import './DrawerBottom.css';
+
 // import Slider from "react-slick";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
