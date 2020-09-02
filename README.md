@@ -6,5 +6,4 @@ React Context API <br />
 Google Authentication <br />
 Delpoyed using Firebase hosting <br />
 
-# whatsapp-clone-2020
 
