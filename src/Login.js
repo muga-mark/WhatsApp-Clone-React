@@ -1,20 +1,34 @@
 import React from 'react';
 import './Login.css';
 import { auth, provider } from './firebase';
-// import { actionTypes } from './reducer';
 import { useStateValue } from './StateProvider';
 import { setUser } from './actions/userAction';
+import { setMenuSidebar, setMenuChat } from './actions/drawerAction';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 function Login() {
     const [ { user }, dispatch] = useStateValue();
 
     const signInGoogle = () => {
-      auth
-        .signInWithPopup(provider)
-        .then(result => {
-            dispatch(setUser(result.action))
-        })
-        .catch((error) => alert(error.message));
+        auth
+            .signInWithPopup(provider)
+            .then(result => {
+                dispatch(setUser(result.action));
+            })
+            .catch((error) => alert(error.message));
+            dispatch(setMenuSidebar(null));
+            dispatch(setMenuChat(null));
+    };
+
+    const loginAnonymously = () => {
+        auth
+            .signInAnonymously()
+            .then((result) =>{
+                dispatch(setUser(result.action));
+            })
+            .catch((error) => alert(error.message)); 
+            dispatch(setMenuSidebar(null));
+            dispatch(setMenuChat(null));
     };
 
     return (
@@ -34,8 +48,12 @@ function Login() {
                     src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
                     alt="Google Logo" 
                 />
-                Sign in with Google
-                
+                <span>Sign in with Google</span>
+            </div>
+
+            <div className="login__withGoogle login__Anonymously" onClick={loginAnonymously}>
+                <PermIdentityIcon />
+                <span>Login Anonymously</span>
             </div>
     
             </div>

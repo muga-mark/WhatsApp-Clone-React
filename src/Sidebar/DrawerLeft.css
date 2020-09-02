@@ -83,7 +83,7 @@
     color: #ADADAD;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 600px) {
     .drawerLeft__content_photo {
         height: 180px;
         padding: 10px 50px 50px 50px;

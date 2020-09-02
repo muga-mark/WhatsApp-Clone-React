@@ -51,6 +51,12 @@ function DrawerLeft() {
             displayName: name,
         });
 
+        if(user.uid) {
+            db.collection("users").doc(user.uid).set({
+                name: name,
+            },{ merge: true });
+        }
+
         setShowEditName(false);
     };
 
@@ -60,7 +66,7 @@ function DrawerLeft() {
         if(user.uid) {
             db.collection("users").doc(user.uid).set({
                 about: about,
-            })
+            },{ merge: true });
         }
         setShowEditAbout(false);
     };
@@ -80,16 +86,23 @@ function DrawerLeft() {
     };
 
     useEffect(() => {
+        setName(user.displayName);
+
         if(user.uid) {
           db.collection("users")
             .doc(user.uid)
             .onSnapshot(snapshot => (
                 setAbout(snapshot.data()?.about)
-            ));
+            ));  
         }
-       
-    }, [user.uid]);
 
+        if(user.isAnonymous == true) {
+            db.collection("users").doc(user.uid).set({
+                name: user.displayName,
+            },{ merge: true });
+        }
+        
+    }, [user.uid]);
 
     return (
         <div>
@@ -121,7 +134,7 @@ function DrawerLeft() {
                                 <input 
                                     value={name} 
                                     onChange={e => setName(e.target.value)} 
-                                    placeholder={user.displayName} 
+                                    // placeholder={user.displayName} 
                                     type="text"
                                 />
                                 <CheckIcon onClick={updateName} /> 
@@ -129,9 +142,9 @@ function DrawerLeft() {
                             :   
                             <form>
                                 <input 
-                                    value={user.displayName} 
+                                    value={name} 
                                     // onChange={e => setName(e.target.value)} 
-                                    // placeholder={user.displayName} 
+                                    placeholder={user.displayName} 
                                     // type="text" 
                                 />
                                 <EditIcon onClick={editName}/> 
@@ -152,7 +165,7 @@ function DrawerLeft() {
                                 <input 
                                     value={about} 
                                     onChange={e => setAbout(e.target.value)} 
-                                    placeholder={about}
+                                    // placeholder={about}
                                     type="text" 
                                 />
                                 <CheckIcon onClick={updateAbout} /> 

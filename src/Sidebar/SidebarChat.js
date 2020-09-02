@@ -25,7 +25,8 @@ function SidebarChat({ id, name }) {
     return (
         <Link to={`/rooms/${id}`} className="sidebarChat__link">
             <div className="sidebarChat">
-                <Avatar src={`https://avatars.dicebear.com/api/human/${id}.svg`}/>
+                {/* <Avatar src={`https://avatars.dicebear.com/api/human/${id}.svg`}/> */}
+                <Avatar>{name[0]}</Avatar>
                 <div className="sidebarChat__info">
                     <h2>{name}</h2> 
                     <p>{messages[0]?.message}</p>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStateValue } from '../StateProvider';
-import { setMenuSidebar } from '../actions/drawerAction';
+import { setMenuChat } from '../actions/drawerAction';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -8,19 +8,18 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 
 
-function DropDownMenu( { menuLists }) {
-    const [{ user, menuSidebar },  dispatch] = useStateValue();
+function DropDownMenu( { menuChatLists }) {
+    const [{ user, menuChat },  dispatch] = useStateValue();
     
-
-    console.log("menuSidebar => ",menuSidebar);
+    console.log("menuSidebar => ",menuChat);
 
     const handleCloseDropDownMenu = () => {
-        dispatch(setMenuSidebar(null));
+        dispatch(setMenuChat(null));
     };
 
 
     const handleClickDropDownMenu = (event) => {
-        dispatch(setMenuSidebar(event.currentTarget));
+        dispatch(setMenuChat(event.currentTarget));
     };
 
     return (
@@ -33,10 +32,11 @@ function DropDownMenu( { menuLists }) {
                 </IconButton>
             </Tooltip>
 
+           
             <Menu id="simple-menu"
-                anchorEl={menuSidebar}
+                anchorEl={menuChat}
                 keepMounted
-                open={Boolean(menuSidebar)}
+                open={Boolean(menuChat)}
                 onClose={handleCloseDropDownMenu}
                 anchorOrigin={{
                     vertical: "bottom",
@@ -49,12 +49,14 @@ function DropDownMenu( { menuLists }) {
                 getContentAnchorEl={null}
                 >
                 
-                {menuLists.map((menuList) =>
-                    <MenuItem onClick={menuList.onClick}>
-                        {menuList.title}
+                {menuChatLists.map((menuChatList) =>
+                    <MenuItem onClick={menuChatList.onClick}>
+                        {menuChatList.title}
                     </MenuItem>
                 )}
             </Menu>
+            
+            
                 
         </div>
     )

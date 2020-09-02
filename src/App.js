@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useStateValue } from './StateProvider';
 import { auth } from './firebase';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -8,16 +8,23 @@ import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';
 import Hidden from '@material-ui/core/Hidden';
 import './App.css';
+import db from './firebase';
 
 function App() {
   const [{ user },  dispatch] = useStateValue();
+  const [rooms, setRooms] = useState([]);
  
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if(authUser){
-        dispatch(setUser(authUser))
+        dispatch(setUser(authUser));
+        if(authUser.isAnonymous == true){
+          auth.currentUser.updateProfile({
+            displayName: "Anonymous" + " " + Math.floor(Math.random() * 1000000),
+          });
+        }
       }else{
-        dispatch(setUser(null))
+        dispatch(setUser(null));
       }
     });
 
@@ -27,6 +34,25 @@ function App() {
 
   }, [dispatch]);
 
+  useEffect(() => {
+    const unsubscribe = db
+        .collection("rooms")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => 
+        setRooms(snapshot.docs.map(doc => 
+                ({
+                    id: doc.id,
+                    data: doc.data(),
+                }))
+            )
+        );
+
+    return () => {
+        unsubscribe();
+    }
+
+}, []);
+
   return (
     <div className="app">
       {!user ? (
@@ -35,18 +61,21 @@ function App() {
         <div className="app__body">
           <Router>
             <Switch>
-              <Route path="/rooms/:roomId">  
-                <Hidden only={['xs']}>
-                  <Sidebar />
-                </Hidden>
-                <Chat />
-              </Route>
+
               <Route exact path="/">
-                <Sidebar />
+                <Sidebar rooms={rooms} />
                 <Hidden only={['xs']}>
                   <Chat />
                 </Hidden>
               </Route>
+
+              <Route path="/rooms/:roomId">  
+                <Hidden only={['xs']}>
+                  <Sidebar rooms={rooms} />
+                </Hidden>
+                <Chat />
+              </Route>
+
             </Switch>
           </Router>        
         </div>

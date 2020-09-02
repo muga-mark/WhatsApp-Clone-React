@@ -9,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChatIcon from '@material-ui/icons/Chat';
+import { firebase } from '../firebase';
 
 function NewChat() {
     const [roomName, setRoomName] = useState("");
@@ -30,9 +31,11 @@ function NewChat() {
           db.collection('rooms')
             .add({
                 name: roomName,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
         }
         setOpen(false);
+        setRoomName("");
     }
 
 

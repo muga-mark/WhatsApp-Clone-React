@@ -2,12 +2,19 @@ import React from 'react';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import './SearchBar.css';
 
-function SearchBar(props) {
+function SearchBar( { placeholder, setSearch, search, searchRoom } ) {
+
     return (
         <div className="search">
             <div className="search__container">
-                <SearchOutlinedIcon />
-                <input type="text" placeholder={props.placeholder} />
+                <SearchOutlinedIcon onClick={searchRoom}/>
+                    <input 
+                        value={search} 
+                        onChange={e => setSearch(e.target.value)} 
+                        type="text" 
+                        placeholder={placeholder} 
+                        required
+                    />
             </div>
         </div>
     )

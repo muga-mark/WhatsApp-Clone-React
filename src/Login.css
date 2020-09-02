@@ -6,11 +6,12 @@
     place-items: center;
 }
 .login__container {
-    padding: 100px;
+    padding: 70px;
     text-align: center;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0green, 0blue, 0.12), 0 1px;
+    box-shadow: 10px 10px 18px #cbced1,
+                -10px -10px 18px #ffffff;
 }
 .login__container > img {
     object-fit: contain;
@@ -35,5 +36,37 @@
 }
 .login__withGoogle > img {
     height: 25px !important;
-    margin-right: 5px;
+    margin-right: 10px;
+}
+.login__Anonymously {
+    margin-top: 10px;
+}
+.login__Anonymously > .MuiSvgIcon-root {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .login__container > img {
+        height: 80px;
+    }
+    .login__container {
+        padding: 30px;
+    }
+    .login__text > h1 {
+        font-size: 20px;
+    }
+    .login__withGoogle > span {
+        font-size: 12px;
+    }
+    .login__withGoogle > img {
+        height: 15px !important;
+        margin-right: 5px;
+    }
+    .login__Anonymously {
+        margin-top: 10px;
+    }
+    .login__Anonymously > .MuiSvgIcon-root {
+        margin-right: 5px;
+        font-size: 15px;
+    }
 }

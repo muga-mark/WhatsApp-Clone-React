@@ -3,6 +3,8 @@ export const initialState = {
     drawerBottom: false,
     drawerLeft: false,
     drawerRight: false,
+    menuSidebar: null,
+    menuChat: null,
 }
 
 export const actionTypes = {
@@ -10,6 +12,8 @@ export const actionTypes = {
     SET_DRAWER_BOTTOM: "SET_DRAWER_BOTTOM",
     SET_DRAWER_LEFT: "SET_DRAWER_LEFT",
     SET_DRAWER_RIGHT: "SET_DRAWER_RIGHT",
+    SET_MENU_SIDEBAR: "SET_MENU_SIDEBAR",
+    SET_MENU_CHAT: "SET_MENU_CHAT",
 }
 
 const reducer = (state, action) => {
@@ -38,6 +42,18 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 drawerRight: action.drawerRight,
+            };
+        
+        case actionTypes.SET_MENU_SIDEBAR:
+            return {
+                ...state,
+                menuSidebar: action.menuSidebar,
+            };
+
+        case actionTypes.SET_MENU_CHAT:
+            return {
+                ...state,
+                menuChat: action.menuChat,
             };
 
         default:

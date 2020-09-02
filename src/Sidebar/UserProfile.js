@@ -2,13 +2,13 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import DrawerLeft from './DrawerLeft';
 
-function UserProfile(props) {
-    console.log("onClick", props);
+function UserProfile( { photoURL, onClick }) {
+
     return (
         <div style={{cursor: 'pointer'}}>
             <Avatar 
-                src={props.photoURL} 
-                onClick={() => props.onClick()}
+                src={photoURL} 
+                onClick={onClick}
             />
             <DrawerLeft />
         </div>
