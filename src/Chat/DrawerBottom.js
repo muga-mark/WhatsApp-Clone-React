@@ -34,11 +34,22 @@ const useStyles = makeStyles ((theme) => ({
         },
     },
     paperAnchorBottom: {
-        top: 65,
         left: 'auto',
         right: 0,
         bottom: 0,
         maxHeight: '100%',
+        [theme.breakpoints.up('xs')]: {
+            top: 52,
+        },
+        [theme.breakpoints.up('sm')]: {
+            top: 65,
+        },
+        [theme.breakpoints.up('md')]: {
+            top: 65,
+        },
+        [theme.breakpoints.up('lg')]: {
+            top: 65,
+        },
     }
 }));
 
@@ -104,6 +115,8 @@ function DrawerBottom( fileUrl ) {
     const handleDrawerClose = () => {
         dispatch(setDrawerBottom(false));
     };
+
+    console.log("drawerBottom",drawerBottom)
 
     return (
         <div>

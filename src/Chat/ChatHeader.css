@@ -1,0 +1,102 @@
+
+.chat__header {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+.chat__headerRight {
+    display: flex;
+    justify-content: space-between;
+    min-width: 100px;
+} 
+.chat__header > .MuiAvatar-root {
+    margin-left: 8px;
+}
+.chat__headerInfo {
+    flex: 1;
+    padding-left: 20px;
+}
+.chat__headerInfo > h3 {
+    font-weight: 500;
+}
+.chat__headerInfo > p {
+    color: #4a4a4a;
+}
+.chat__attachFile {
+    position: absolute;
+    top: 70px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+.chat__attachFile > .MuiFab-root {
+  margin: 7px 0 7px 0;
+}
+.chat__icon {
+    height: 24px;
+}
+.chat__icon > label > .MuiSvgIcon-root {
+    cursor: pointer;
+}
+.chat__icon > input {
+    display: none;
+}
+.chat__attachFile_drawerHeader {
+    background-color: #00BFA5;
+}
+.chat__attachFile_drawerHeader_container {
+    display: flex;
+    align-items: center;
+}
+.chat__attachFile_drawerHeader_container > p{
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+.chat__attachFile_drawerHeader_container > .MuiIconButton-root {
+    color: white !important;
+    margin: 0 10px 0 10px;
+}
+.chat__attachFile_drawerContent {
+    background-color: #E6E6E6;
+    height: 100%;
+}
+.chat__attachFile_drawerContent_photo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat__attachFile_drawerContent_photo > img {
+    height: 244px;
+}
+
+@media screen and (max-width: 600px) {
+    .chat__header {
+        padding: 6px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: #045E54;
+    }
+    .chat__headerRight {
+        min-width: 80px;
+    }
+    .chat__headerInfo {
+        padding-left: 6px;
+    }
+    .chat__headerInfo > h3 {
+        color: white;
+    }
+    .chat__headerInfo > p {
+        font-size: 12px;
+        color: white;
+    }
+    .MuiIconButton-root {
+        padding: 5px!important;
+    }
+    .MuiIconButton-root {
+        color: white !important;
+    }
+}

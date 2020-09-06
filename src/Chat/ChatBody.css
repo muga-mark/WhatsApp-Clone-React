@@ -1,9 +1,8 @@
-
 .chat__message_reminder {
     background-color: #FDF4C4;
     font-size: 16px;
     padding: 5px 10px 5px 10px ;
-    border-radius: 10px;
+    border-radius: 5px;
     width: fit-content ;
     margin-bottom: 70px !important;
     margin: auto;
@@ -29,7 +28,7 @@
     position: relative;
     font-size: 16px;
     padding: 5px 10px 2px 10px ;
-    border-radius: 10px;
+    border-radius: 5px;
     width: fit-content ;
     background-color: #ffffff;
     margin-bottom: 30px;
@@ -58,4 +57,38 @@
     font-size: xx-small;
     margin-top: 22px;
     color: gray;
+}
+@media screen and (max-width: 600px) {
+    .chat__message_reminder {
+        
+        font-size: 12px;
+        padding: 5px 10px 5px 10px ;
+        border-radius: 5px;
+        width: fit-content ;
+        margin-bottom: 70px !important;
+        margin: 0 auto;
+    }
+    .chat__message_reminder > .MuiSvgIcon-root {
+        color: #4a4a4a;
+        font-size: small;
+    }
+    .chat__message {
+        font-size: 12px;
+        padding: 5px 10px 2px 10px ;
+        border-radius: 5px;
+        width: fit-content ;
+        background-color: #ffffff;
+        margin-bottom: 30px;
+        color: #4a4a4a;
+    }
+    .chat__receiver{ 
+        background-color: #DCF8C6;
+        margin-left: auto;
+        color: #4a4a4a;
+    }
+    .chat__body_image {
+        max-height: 150px;
+        max-width: 200px;
+        border-radius: 8px;
+    }
 }

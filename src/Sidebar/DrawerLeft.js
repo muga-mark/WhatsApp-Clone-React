@@ -38,25 +38,52 @@ const useStyles = makeStyles ((theme) => ({
 
 function DrawerLeft() {
     const classes = useStyles();
+    const [{ user, drawerLeft },  dispatch] = useStateValue();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [showEditName, setShowEditName] = useState(false);
     const [showEditAbout, setShowEditAbout] = useState(false);
-    const [{ user, drawerLeft },  dispatch] = useStateValue();
+    
+
+    useEffect(() => {
+        setName(user.displayName);
+
+        if(user.uid) {
+          db.collection("users")
+            .doc(user.uid)
+            .get().then(function(doc) {
+                if (doc.exists) {
+                    console.log("Document data:", doc.data());
+                    setAbout(doc.data()?.about)
+                } else {
+                    console.log("No such document!");
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });  
+        }
+
+        if(user.isAnonymous == true) {
+            db.collection("users").doc(user.uid).set({
+                name: user.displayName,
+                about: "Hey there! I am using WhatsApp.",
+            },{ merge: true });
+        }
+        
+    }, [user.uid]);
 
     const updateName = (e) => {
         e.preventDefault();
         
-        auth.currentUser.updateProfile({
-            displayName: name,
-        });
-
         if(user.uid) {
             db.collection("users").doc(user.uid).set({
                 name: name,
             },{ merge: true });
-        }
 
+            auth.currentUser.updateProfile({
+                displayName: name,
+            });
+        }
         setShowEditName(false);
     };
 
@@ -84,25 +111,6 @@ function DrawerLeft() {
         setShowEditName(false);
         setShowEditAbout(false);
     };
-
-    useEffect(() => {
-        setName(user.displayName);
-
-        if(user.uid) {
-          db.collection("users")
-            .doc(user.uid)
-            .onSnapshot(snapshot => (
-                setAbout(snapshot.data()?.about)
-            ));  
-        }
-
-        if(user.isAnonymous == true) {
-            db.collection("users").doc(user.uid).set({
-                name: user.displayName,
-            },{ merge: true });
-        }
-        
-    }, [user.uid]);
 
     return (
         <div>
@@ -134,7 +142,6 @@ function DrawerLeft() {
                                 <input 
                                     value={name} 
                                     onChange={e => setName(e.target.value)} 
-                                    // placeholder={user.displayName} 
                                     type="text"
                                 />
                                 <CheckIcon onClick={updateName} /> 
@@ -143,9 +150,7 @@ function DrawerLeft() {
                             <form>
                                 <input 
                                     value={name} 
-                                    // onChange={e => setName(e.target.value)} 
                                     placeholder={user.displayName} 
-                                    // type="text" 
                                 />
                                 <EditIcon onClick={editName}/> 
                             </form>
@@ -165,7 +170,6 @@ function DrawerLeft() {
                                 <input 
                                     value={about} 
                                     onChange={e => setAbout(e.target.value)} 
-                                    // placeholder={about}
                                     type="text" 
                                 />
                                 <CheckIcon onClick={updateAbout} /> 
@@ -174,9 +178,6 @@ function DrawerLeft() {
                             <form>
                                 <input 
                                     value={about} 
-                                    // onChange={e => setAbout(e.target.value)} 
-                                    // placeholder={about}
-                                    // type="text" 
                                 />
                                 <EditIcon onClick={editAbout} />
                             </form>

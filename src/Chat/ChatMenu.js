@@ -7,16 +7,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 
-
 function DropDownMenu( { menuChatLists }) {
-    const [{ user, menuChat },  dispatch] = useStateValue();
-    
-    console.log("menuSidebar => ",menuChat);
+    const [{ menuChat },  dispatch] = useStateValue();
 
     const handleCloseDropDownMenu = () => {
         dispatch(setMenuChat(null));
     };
-
 
     const handleClickDropDownMenu = (event) => {
         dispatch(setMenuChat(event.currentTarget));
@@ -32,7 +28,6 @@ function DropDownMenu( { menuChatLists }) {
                 </IconButton>
             </Tooltip>
 
-           
             <Menu id="simple-menu"
                 anchorEl={menuChat}
                 keepMounted
@@ -48,16 +43,12 @@ function DropDownMenu( { menuChatLists }) {
                 }}
                 getContentAnchorEl={null}
                 >
-                
                 {menuChatLists.map((menuChatList) =>
                     <MenuItem onClick={menuChatList.onClick}>
                         {menuChatList.title}
                     </MenuItem>
                 )}
             </Menu>
-            
-            
-                
         </div>
     )
 }

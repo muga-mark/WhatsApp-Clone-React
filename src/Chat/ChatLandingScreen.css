@@ -1,0 +1,52 @@
+.chat__landingScreen {
+    background-color: #F8F9FB !important;
+    color: #B5B6B7;
+    align-content: center;
+    text-align: center;
+    height: 100vh;
+    padding: 10px;
+}
+.chat__landingScreen > .MuiDivider-root {
+    width: 460px !important;
+    margin: 0 auto;
+    margin-top: 30px !important;
+}
+.chat__landingScreen > div {
+    max-width: 480px;
+    text-align: center;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    margin: 0 auto;
+}
+.chat__landingScreen > .chat__landingScreen_title > p {
+    font-weight: 200 !important;
+    font-size: 32px;
+    color: #525252;
+    margin-bottom: 25px;
+}
+.chat__landingScreen > div > p {
+    margin: 20px;
+    font-size: 14px;
+    line-height: 20px;
+    align-items: center;
+}
+.chat__landingScreen_footer {
+    display: flex;
+    align-items: center;
+    max-width: 350px !important;
+}
+.chat__landingScreen_footer > a {
+    color: #07BC4C;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: -15px;
+}
+.chat__landingScreen_footer > p {
+   width: fit-content;
+}
+.chat__landingScreen_footer > .MuiSvgIcon-root {
+    font-size: 18px;
+    margin-right: -10px;
+    color: #919191;
+}

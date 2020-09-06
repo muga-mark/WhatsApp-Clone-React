@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useStateValue } from '../StateProvider';
 import { setDrawerLeft, setMenuSidebar } from "../actions/drawerAction"
-import SearchBar from '../shared/SearchBar';
-import UserProfile from './UserProfile';
+import { toastInfo } from '../shared/toastInfo';
 import db from '../firebase';
 import { useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
+import SearchBar from '../shared/SearchBar';
+import UserProfile from './UserProfile';
 import NewChat from './NewChat';
 import Status from './Status';
 import DropDownMenu from './DropDownMenu';
@@ -16,46 +17,45 @@ import './Sidebar.css';
 
 function Sidebar( { rooms }) {
     const history = useHistory();
-    // const [rooms, setRooms] = useState([]);
     const [searchedRoom, setSearchedRoom] = useState([]);
     const [search, setSearch] = useState("");
     const [{ user },  dispatch] = useStateValue();
     const [errorMessage, setErrorMessage] = useState("");
     
-    
-    const notAvailable = () => {
-        const menuToastId = "menu";
-        toast.info("This is not available!", {
-            toastId: menuToastId,
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            }
-        );
+    const newGroup = () => {
+        const newGroup = "newGroup";
+        toastInfo("New Group is not available!", newGroup, "bottom-right");
     }
-
-    const logout = () => {
-        auth.signOut();
-        history.push('/');
-    };
 
     const handleDrawerLeftOpen = () => {
         dispatch(setDrawerLeft(true));
         dispatch(setMenuSidebar(null));
-    };
+    }
+
+    const archive = () => {
+        const archive = "archive";
+        toastInfo("Archive is not available!", archive, "bottom-right");
+    }
+
+    const starred = () => {
+        const starred = "starred";
+        toastInfo("Starred is not available!", starred, "bottom-right");
+    }
+
+    const settings = () => {
+        const settings = "settings";
+        toastInfo("Settings is not available!", settings, "bottom-right");
+    }
+    
+    const logout = () => {
+        auth.signOut();
+        history.push('/');
+    }
 
     const menuLists = [
         {
             title: "New Group",
-            onClick: () => notAvailable(),
-        },
-        {
-            title: "Create a room",
-            onClick: () => notAvailable(),
+            onClick: () => newGroup(),
         },
         {
             title: "Profile",
@@ -63,15 +63,15 @@ function Sidebar( { rooms }) {
         },
         {
             title: "Archived",
-            onClick: () => notAvailable(),
+            onClick: () => archive(),
         },
         {
             title: "Starred",
-            onClick: () => notAvailable(),
+            onClick: () => starred(),
         },
         {
             title: "Settings",
-            onClick: () => notAvailable(),
+            onClick: () => settings(),
         },
         {
             title: "Logout",
@@ -107,7 +107,7 @@ function Sidebar( { rooms }) {
     }
 
     console.log("search room", search);
-    console.log("search", searchedRoom);
+    console.log("rooms", rooms);
     
     return (
         <div className="sidebar">
@@ -130,10 +130,7 @@ function Sidebar( { rooms }) {
                 <div className="sidebar__headerRight">
                     <Status />
                     <NewChat />
-                    <DropDownMenu 
-                        menuLists={menuLists} 
-                        // anchorEl2={anchorEl2}
-                    />
+                    <DropDownMenu menuLists={menuLists} />
                 </div>
             </div>
 

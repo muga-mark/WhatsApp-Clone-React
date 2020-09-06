@@ -8,11 +8,10 @@ h3, p {
 }
 .Toastify__toast {
     font-size: 14px;
-    /* padding: 0; */
     min-height: 30px!important;
     max-height: 50px!important;
-    margin-bottom: 80px !important;
-    /* margin-bottom: 70px!important; */
+    /* margin-bottom: 80px !important; */
+    bottom: 50px;
 }
 
 /* Start: Chat Header */
@@ -21,74 +20,6 @@ h3, p {
     display: flex;
     align-items: center;
     border-bottom: 1px solid lightgray;
-}
-.chat__headerRight {
-    display: flex;
-    justify-content: space-between;
-    min-width: 100px;
-} 
-.chat__header > .MuiAvatar-root {
-    margin-left: 8px;
-}
-.chat__headerInfo {
-    flex: 1;
-    padding-left: 20px;
-}
-.chat__headerInfo > h3 {
-    /* margin-bottom: 3px; */
-    font-weight: 500;
-}
-.chat__headerInfo > p {
-    color: #4a4a4a;
-}
-.chat__attachFile {
-    position: absolute;
-    top: 70px;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-}
-.chat__attachFile > .MuiFab-root {
-  margin: 7px 0 7px 0;
-}
-.chat__icon {
-    height: 24px;
-}
-.chat__icon > label > .MuiSvgIcon-root {
-    cursor: pointer;
-}
-.chat__icon > input {
-    display: none;
-}
-
-.chat__attachFile_drawerHeader {
-    background-color: #00BFA5;
-}
-.chat__attachFile_drawerHeader_container {
-    display: flex;
-    align-items: center;
-}
-.chat__attachFile_drawerHeader_container > p{
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-}
-.chat__attachFile_drawerHeader_container > .MuiIconButton-root {
-    color: white !important;
-    margin: 0 10px 0 10px;
-}
-.chat__attachFile_drawerContent {
-    background-color: #E6E6E6;
-    height: 100%;
-}
-.chat__attachFile_drawerContent_photo {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.chat__attachFile_drawerContent_photo > img {
-    height: 244px;
 }
 /* End: Chat Header */
 
@@ -106,21 +37,12 @@ h3, p {
 ::-webkit-scrollbar {
     width: 8px;
 }
-
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
-    /* border-radius: 10px; */
 }
-
 ::-webkit-scrollbar-thumb {
     background: #B0ABA6; 
-    /* border-radius: 5px; */
 }
-
-/* ::-webkit-scrollbar-thumb:hover {
-background:rgb(54, 56, 58); 
-} */
-
 .chat__body-2::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
@@ -130,36 +52,6 @@ background:rgb(54, 56, 58);
 /* End: Chat Body */
 
 
-/* Start: Chat Footer */
-.chat__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 62px;
-    border-top: 1px solid lightgray;
-}
-.chat__footer > form {
-    flex: 1;
-    display: flex;
-}
-.chat__footer > form > input { 
-    flex: 1;
-    border-radius: 15px;
-    padding: 10px;
-    border: none;
-}
-.chat__footer > form > input:focus{
-    outline: none;
-}
-.chat__footer > form > button {
-    display: none;
-}
-.chat__footer > .MuiSvgIcon-root {
-    padding: 10px;
-    color: gray;
-}
-/* End: Chat Footer */
-
 @media screen and (max-width: 600px) {
     .chat {
         flex: 1;
@@ -168,18 +60,14 @@ background:rgb(54, 56, 58);
     }  
     .Toastify__toast {
         font-size: 12px;
-        /* padding: 0; */
         min-height: 30px!important;
         max-height: 50px!important;
         max-width: 80vw;
         margin-bottom: 80px !important;
         margin-left: 50px;
-        /* margin: 0 auto; */
-        /* position: sticky; */
-        /* bottom: 0 !important; */
     }
 
-    /* Start: Header */
+    /* Start: Chat Header */
     .chat__header {
         padding: 6px;
         position: sticky;
@@ -187,133 +75,19 @@ background:rgb(54, 56, 58);
         z-index: 100;
         background-color: #045E54;
     }
-    .chat__headerRight {
-        min-width: 80px;
-    }
-    .chat__headerInfo {
-        padding-left: 6px;
-    }
-    .chat__headerInfo > h3 {
-        color: white;
-    }
-    .chat__headerInfo > p {
-        font-size: 12px;
-        color: white;
-    }
-    .MuiIconButton-root {
-        padding: 5px!important;
-    }
-    .MuiIconButton-root {
-        color: white !important;
-    }
-    /* End: Header */
+    /* End: Chat Header */
 
     /* Start: Chat Body */
     .chat__body {
-        padding: 40px 12px 0px 12px;
-    }
-    .chat__message_reminder {
-        
-        font-size: 12px;
-        padding: 5px 10px 5px 10px ;
-        border-radius: 10px;
-        width: fit-content ;
-        margin-bottom: 70px !important;
-        margin: 0 auto;
-    }
-    .chat__message_reminder > .MuiSvgIcon-root {
-        color: #4a4a4a;
-        font-size: small;
-    }
-    .chat__message {
-        font-size: 12px;
-        padding: 5px 10px 2px 10px ;
-        border-radius: 10px;
-        width: fit-content ;
-        background-color: #ffffff;
-        margin-bottom: 30px;
-        color: #4a4a4a;
-    }
-    .chat__receiver{ 
-        background-color: #DCF8C6;
-        margin-left: auto;
-        color: #4a4a4a;
-    }
-    .chat__body_image {
-        max-height: 150px;
-        max-width: 200px;
-        border-radius: 8px;
+        padding: 40px 12px 0px 12px !important;
     }
     /* End: Chat Body */
+}
 
-    /* Start: Chat Footer */
-    .chat__footer { 
-        position: sticky;
-        bottom: 0;
-        z-index: 100;
-        background-color: #EDEDED;
+@media screen and (max-width: 800px) {
+    .chat__body {
+        padding: 40px 30px 0px 30px;
     }
-    /* End: Chat Footer */
 }
 
 
-.chat__landingScreen {
-    background-color: #F8F9FB !important;
-    color: #B5B6B7;
-    align-content: center;
-    text-align: center;
-    height: 100vh;
-    padding: 10px;
-}
-
-.chat__landingScreen > .MuiDivider-root {
-    width: 460px !important;
-    margin: 0 auto;
-    margin-top: 30px !important;
-}
-
-.chat__landingScreen > div {
-    max-width: 480px;
-    text-align: center;
-    margin-top: 20px !important;
-    margin-bottom: 20px !important;
-    margin: 0 auto;
-}
-
-.chat__landingScreen > .chat__landingScreen_title > p {
-    font-weight: 200 !important;
-    font-size: 32px;
-    color: #525252;
-    margin-bottom: 25px;
-}
-
-.chat__landingScreen > div > p {
-    margin: 20px;
-    font-size: 14px;
-    line-height: 20px;
-    align-items: center;
-}
-
-.chat__landingScreen_footer {
-    display: flex;
-    align-items: center;
-    max-width: 350px !important;
-}
-
-.chat__landingScreen_footer > a {
-    color: #07BC4C;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    margin-left: -15px;
-}
-
-.chat__landingScreen_footer > p {
-   width: fit-content;
-}
-
-.chat__landingScreen_footer > .MuiSvgIcon-root {
-    font-size: 18px;
-    margin-right: -10px;
-    color: #919191;
-}

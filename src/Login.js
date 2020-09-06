@@ -3,7 +3,7 @@ import './Login.css';
 import { auth, provider } from './firebase';
 import { useStateValue } from './StateProvider';
 import { setUser } from './actions/userAction';
-import { setMenuSidebar, setMenuChat } from './actions/drawerAction';
+// import { setMenuSidebar, setMenuChat } from './actions/drawerAction';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 function Login() {
@@ -16,8 +16,8 @@ function Login() {
                 dispatch(setUser(result.action));
             })
             .catch((error) => alert(error.message));
-            dispatch(setMenuSidebar(null));
-            dispatch(setMenuChat(null));
+            // dispatch(setMenuSidebar(null));
+            // dispatch(setMenuChat(null));
     };
 
     const loginAnonymously = () => {
@@ -27,8 +27,8 @@ function Login() {
                 dispatch(setUser(result.action));
             })
             .catch((error) => alert(error.message)); 
-            dispatch(setMenuSidebar(null));
-            dispatch(setMenuChat(null));
+            // dispatch(setMenuSidebar(null));
+            // dispatch(setMenuChat(null));
     };
 
     return (
