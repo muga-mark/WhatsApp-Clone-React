@@ -47,22 +47,29 @@ function DrawerLeft() {
     
 
     useEffect(() => {
-        const noAbout = "noAbout";
         const errorAbout = "errorAbout";
         setName(user.displayName);
 
         if(user.uid) {
+            
+          db.collection("users").doc(user.uid).set({
+            name: user.displayName,
+            about: "Hey there! I am using WhatsApp.",
+          },{ merge: true });
+
           db.collection("users")
             .doc(user.uid)
             .get().then(function(doc) {
                 if (doc.exists) {
                     setAbout(doc.data()?.about)
                 } else {
-                    toastInfo("User doesn't have About!", noAbout, "top-center");
+                    db.collection("users").doc(user.uid).set({
+                        about: "Hey there! I am using WhatsApp.",
+                    },{ merge: true });
                 }
-            }).catch(function(error) {
+          }).catch(function(error) {
                 toastInfo(`${error}`, errorAbout, "top-center");
-            });  
+          });  
         }
 
         if(user.isAnonymous === true) {
@@ -152,7 +159,7 @@ function DrawerLeft() {
                             <form>
                                 <input 
                                     value={name} 
-                                    placeholder={user.displayName} 
+                                    // placeholder={user.displayName} 
                                 />
                                 <EditIcon onClick={editName}/> 
                             </form>

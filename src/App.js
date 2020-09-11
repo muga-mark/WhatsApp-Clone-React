@@ -24,6 +24,7 @@ function App() {
           auth.currentUser.updateProfile({
             displayName: "Anonymous" + " " + Math.floor(Math.random() * 1000000),
           });
+          
         }
 
         db.collection("rooms")

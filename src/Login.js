@@ -1,31 +1,22 @@
 import React from 'react';
-import './Login.css';
 import { auth, provider } from './firebase';
 import { toastInfo } from './shared/toastInfo';
-import { useHistory } from 'react-router-dom';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import './Login.css';
 
 function Login() {
-    const history = useHistory();
-
     const signInGoogle = () => {
         const google ="google";
 
         auth.signInWithPopup(provider)
-            .then(result => {
-                history.push('/');
-            })
-            .catch((error) => toastInfo(`${error}`, google, "top-center"));
+            .catch((error) => toastInfo(`fucksss${error}`, google, "top-center"));
     };
 
     const loginAnonymously = () => {
         const anonymous = "anonymous";
 
         auth.signInAnonymously()
-            .then((result) =>{
-                history.push('/');
-            })
-            .catch((error) => toastInfo(`${error}`, anonymous, "top-center")); 
+            .catch((error) => toastInfo(`fuck${error}`, anonymous, "top-center")); 
     };
 
     return (
