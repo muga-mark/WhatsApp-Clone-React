@@ -1,34 +1,31 @@
 import React from 'react';
 import './Login.css';
 import { auth, provider } from './firebase';
-import { useStateValue } from './StateProvider';
-import { setUser } from './actions/userAction';
-// import { setMenuSidebar, setMenuChat } from './actions/drawerAction';
+import { toastInfo } from './shared/toastInfo';
+import { useHistory } from 'react-router-dom';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 function Login() {
-    const [ { user }, dispatch] = useStateValue();
+    const history = useHistory();
 
     const signInGoogle = () => {
-        auth
-            .signInWithPopup(provider)
+        const google ="google";
+
+        auth.signInWithPopup(provider)
             .then(result => {
-                dispatch(setUser(result.action));
+                history.push('/');
             })
-            .catch((error) => alert(error.message));
-            // dispatch(setMenuSidebar(null));
-            // dispatch(setMenuChat(null));
+            .catch((error) => toastInfo(`${error}`, google, "top-center"));
     };
 
     const loginAnonymously = () => {
-        auth
-            .signInAnonymously()
+        const anonymous = "anonymous";
+
+        auth.signInAnonymously()
             .then((result) =>{
-                dispatch(setUser(result.action));
+                history.push('/');
             })
-            .catch((error) => alert(error.message)); 
-            // dispatch(setMenuSidebar(null));
-            // dispatch(setMenuChat(null));
+            .catch((error) => toastInfo(`${error}`, anonymous, "top-center")); 
     };
 
     return (

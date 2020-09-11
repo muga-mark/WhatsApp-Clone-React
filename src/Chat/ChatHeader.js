@@ -48,7 +48,7 @@ const attachFileLists = [
 ]
 
 function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
-    const [{ drawerBottom },  dispatch] = useStateValue();
+    const [{ user },  dispatch] = useStateValue();
     const [showAttachFile, setShowAttachFile] = useState(false);
     const [fileUrl, setFileUrl] = useState(null);
     
@@ -95,11 +95,9 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
             db.collection("rooms")
             .doc(roomId)
             .delete().then(function() {
-                console.log("Room successfully deleted!");
                 toastInfo("Room successfully deleted!", roomDeleted, "top-center");
 
             }).catch(function(error) {
-                console.error("Error removing room: ", error);
                 toastInfo(`Error removing room! ${error}`, roomDeleted, "top-center");
             });
         }
@@ -131,16 +129,17 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
     ]
 
     const onFileChange = async (e) => {
-        console.log("photo attach clicked");
-        console.log("drawerBOTOOOM CHATTT",drawerBottom);
         const file = e.target.files[0];
         const storageRef = storage.ref();
-        const fileRef = storageRef.child(file.name);
+        const imagesRef = storageRef.child(`rooms/${roomName}/images`);
+        const fileRef = imagesRef.child(file.name);
         await fileRef.put(file);
         setFileUrl(await fileRef.getDownloadURL());
 
         dispatch(setDrawerBottom(true));
     };
+
+    console.log("CHAT HEADER", fileUrl);
 
     const handleClickAway = ()  => {
         setShowAttachFile(false);

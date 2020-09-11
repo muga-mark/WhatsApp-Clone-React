@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import { setDrawerRight } from '../actions/drawerAction';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,9 +22,7 @@ const useStyles = makeStyles({
 
 function DrawerRight() {
     const classes = useStyles();
-    const {roomId } = useParams();
-    const [{ user, drawerRight },  dispatch] = useStateValue();
-    // const [searchedMessage, setSearchedMessage] = useState("");
+    const [{ drawerRight },  dispatch] = useStateValue();
     
     const handleDrawerClose = () => {
         dispatch(setDrawerRight(false))
@@ -55,7 +52,6 @@ function DrawerRight() {
 
                 <div className="drawerRight__content">
                     <p>Search for messages in this room.</p>
-                    {/* {searchedMessage} */}
                 </div>
             </Drawer>
         </div>

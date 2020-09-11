@@ -1,6 +1,6 @@
 export default function searchRoom(search){
     return function(x){
-        var name = x.name;
-        return name.toLowerCase().includes(search.toLowerCase()) || !search;
+        var room = x.data.name + ' ' + x.id;
+        return room.toLowerCase().includes(search.toLowerCase()) || !search;
     }
 }

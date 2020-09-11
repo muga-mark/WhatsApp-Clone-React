@@ -6,7 +6,7 @@ import db from '../firebase';
 import './SidebarChat.css';
 
 function SidebarChat({ id, name }) {
-    const [messages, setMessages] = useState("");
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         if(id){
@@ -19,22 +19,20 @@ function SidebarChat({ id, name }) {
                 doc.data()))
             ));
         }
-    }, [])
-
+    }, [id])
     
     return (
         <Link to={`/rooms/${id}`} className="sidebarChat__link">
             <div className="sidebarChat">
-                {/* <Avatar src={`https://avatars.dicebear.com/api/human/${id}.svg`}/> */}
                 <Avatar>{name[0]}</Avatar>
                 <div className="sidebarChat__info">
                     <h2>{name}</h2> 
-                    <p>{messages[0]?.message}</p>
                     {messages[0]?.caption?
                         <div className="sideChat__photo">
                             <PhotoCameraIcon /> <span>Photo</span>
                         </div>
                     :null}
+                    <p>{messages[0]?.message}</p>
                 </div>
             </div>
         </Link>

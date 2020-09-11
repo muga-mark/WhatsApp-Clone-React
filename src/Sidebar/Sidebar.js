@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useStateValue } from '../StateProvider';
 import { setDrawerLeft, setMenuSidebar } from "../actions/drawerAction"
 import { toastInfo } from '../shared/toastInfo';
@@ -6,22 +6,64 @@ import db from '../firebase';
 import { useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
 import SearchBar from '../shared/SearchBar';
+// import searchRoom from '../shared/searchRoom';
 import UserProfile from './UserProfile';
 import NewChat from './NewChat';
 import Status from './Status';
 import DropDownMenu from './DropDownMenu';
 import SidebarChat from './SidebarChat';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Sidebar.css';
 
 function Sidebar( { rooms }) {
     const history = useHistory();
     const [searchedRoom, setSearchedRoom] = useState([]);
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
     const [{ user },  dispatch] = useStateValue();
     const [errorMessage, setErrorMessage] = useState("");
     
+    useEffect(() => {
+        if(search) {
+            db.collection("rooms")
+            .where("name", ">=", `${search}`)
+            .get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    setSearchedRoom(querySnapshot.docs.map(doc => 
+                          ({
+                              id: doc.id,
+                              data: doc.data(),
+                          }))
+                      )
+                });
+            })
+            .catch(function(error) {
+                setErrorMessage(error);
+            });
+
+            db.collection("rooms")
+            .where("name", "==", `${search}`)
+            .get()
+            .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                    setSearchedRoom(querySnapshot.docs.map(doc => 
+                          ({
+                              id: doc.id,
+                              data: doc.data(),
+                          }))
+                      )
+                });
+            })
+            .catch(function(error) {
+                setErrorMessage(error);
+            });
+               
+        } else if (!search) {
+            setSearchedRoom([]);
+        }
+    }, [search]);
+
     const newGroup = () => {
         const newGroup = "newGroup";
         toastInfo("New Group is not available!", newGroup, "bottom-right");
@@ -52,6 +94,11 @@ function Sidebar( { rooms }) {
         history.push('/');
     }
 
+    const searchRoom = () => {
+        const searchedRoom = "searchedRoom";
+        toastInfo("Search is case-sensitive!", searchedRoom, "top-center");
+    }
+
     const menuLists = [
         {
             title: "New Group",
@@ -79,36 +126,10 @@ function Sidebar( { rooms }) {
         },
     ]
 
-    const searchRoom = () => {
-        if(!search) return;
+    // const searchHandler = (event) => {
+    //     setSearch({search: event.target.value})
+    // }
 
-        if(search){
-            db.collection("rooms")
-            .where("name", "==", `${search}`)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    setSearchedRoom(querySnapshot.docs.map(doc => 
-                          ({
-                              id: doc.id,
-                              data: doc.data(),
-                          }))
-                      )
-                    console.log(doc.id, " => ", doc.data());
-                });
-            })
-            .catch(function(error) {
-                console.log("Error getting documents: ", error);
-                setErrorMessage(error);
-            });
-        }
-        
-    }
-
-    console.log("search room", search);
-    console.log("rooms", rooms);
-    
     return (
         <div className="sidebar">
             <ToastContainer 
@@ -139,20 +160,31 @@ function Sidebar( { rooms }) {
                 search={search} 
                 setSearch={setSearch} 
                 placeholder="Search or start new chat" 
+                // onChange={(event) => searchHandler(event)}
             />
             <div><p>{errorMessage}</p></div>
 
             <div className="sidebar__chats">
                 <div className="sidebar__chatsContainer">
-                    
-                    {search ? 
-                        <div>
-                            {searchedRoom.map(room => (
+{/*                    
+                    {rooms.filter(searchRoom(search)).map(room => {
+                        return(
                             <SidebarChat 
                                 key={room.id} 
                                 id={room.id} 
                                 name={room.data.name} 
                             />
+                        )
+                    })} */}
+
+                    {search ? 
+                        <div>
+                            {searchedRoom.map(room => (
+                                <SidebarChat 
+                                    key={room.id} 
+                                    id={room.id} 
+                                    name={room.data.name} 
+                                />
                             ))}
                         </div>  
                     : 

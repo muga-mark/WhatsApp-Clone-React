@@ -2,7 +2,7 @@ import React from 'react';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import './SearchBar.css';
 
-function SearchBar( { placeholder, setSearch, search, searchRoom } ) {
+function SearchBar( { placeholder, searchRoom, setSearch, search } ) {
 
     return (
         <div className="search">

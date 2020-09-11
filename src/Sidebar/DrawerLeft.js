@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStateValue } from '../StateProvider';
 import { setDrawerLeft } from '../actions/drawerAction';
 import { auth } from '../firebase';
+import { toastInfo } from '../shared/toastInfo';
 import db from '../firebase';
 import Drawer from '@material-ui/core/Drawer';
 import Avatar from '@material-ui/core/Avatar';
@@ -46,6 +47,8 @@ function DrawerLeft() {
     
 
     useEffect(() => {
+        const noAbout = "noAbout";
+        const errorAbout = "errorAbout";
         setName(user.displayName);
 
         if(user.uid) {
@@ -53,24 +56,23 @@ function DrawerLeft() {
             .doc(user.uid)
             .get().then(function(doc) {
                 if (doc.exists) {
-                    console.log("Document data:", doc.data());
                     setAbout(doc.data()?.about)
                 } else {
-                    console.log("No such document!");
+                    toastInfo("User doesn't have About!", noAbout, "top-center");
                 }
             }).catch(function(error) {
-                console.log("Error getting document:", error);
+                toastInfo(`${error}`, errorAbout, "top-center");
             });  
         }
 
-        if(user.isAnonymous == true) {
+        if(user.isAnonymous === true) {
             db.collection("users").doc(user.uid).set({
                 name: user.displayName,
                 about: "Hey there! I am using WhatsApp.",
             },{ merge: true });
         }
         
-    }, [user.uid]);
+    }, [user.uid, user.displayName, user.isAnonymous]);
 
     const updateName = (e) => {
         e.preventDefault();

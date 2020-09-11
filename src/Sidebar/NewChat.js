@@ -42,7 +42,7 @@ function NewChat() {
             <TooltipCustom name="New Chat" onClick={() => handleNewChatOpen()} icon={<ChatIcon />}/>
 
             <Dialog open={open} onClose={handleNewChatClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Create Room Name</DialogTitle>
+                <DialogTitle id="form-dialog-title">Create Chat Room</DialogTitle>
                 <DialogContent>
                 <TextField
                     autoFocus

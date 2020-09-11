@@ -12,7 +12,6 @@ function ChatFooter( { roomId, db, firebase, user }) {
 
     const sendMessage = (e) => {
         e.preventDefault();
-        console.log("You typed >>", input);
         
         if(roomId){
             if(input){

@@ -30,7 +30,7 @@ function ChatLandingScreen() {
                 <p>
                         WhatsApp is available for Windows.
                 </p>
-                <a target="_blank" href="https://www.whatsapp.com/download">
+                <a target="_blank" href="https://www.whatsapp.com/download" rel="noopener noreferrer">
                     Get it here.
                 </a>
             </div>

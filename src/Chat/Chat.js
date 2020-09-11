@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import { useHistory } from 'react-router-dom';
@@ -39,7 +39,7 @@ function Chat() {
         } else if (!roomId) {
             history.push('/');
         }
-    }, [roomId]);
+    }, [roomId, history]);
 
     return (
         <div className="chat">

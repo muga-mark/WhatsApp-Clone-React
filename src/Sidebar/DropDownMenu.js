@@ -9,15 +9,11 @@ import IconButton from '@material-ui/core/IconButton';
 
 
 function DropDownMenu( { menuLists }) {
-    const [{ user, menuSidebar },  dispatch] = useStateValue();
-    
-
-    console.log("menuSidebar => ",menuSidebar);
+    const [{ menuSidebar },  dispatch] = useStateValue();
 
     const handleCloseDropDownMenu = () => {
         dispatch(setMenuSidebar(null));
     };
-
 
     const handleClickDropDownMenu = (event) => {
         dispatch(setMenuSidebar(event.currentTarget));
