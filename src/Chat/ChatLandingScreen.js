@@ -1,7 +1,7 @@
 import React from 'react';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import Divider from '@material-ui/core/Divider';
-import whatsAppConnected from '../image/whatsapp-connect.jpg';
+import whatsAppConnected from '../images/whatsapp-connect.jpg';
 import './ChatLandingScreen.css';
 
 function ChatLandingScreen() {

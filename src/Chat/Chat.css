@@ -29,7 +29,7 @@ h3, p {
 /* Start: Chat Body */
 .chat__body {
     flex: 1;
-    background-image: url('../image/whatsapp-chat-bg.png');
+    background-image: url('../images/whatsapp-chat-bg.png');
     background-repeat: repeat;
     background-position: center;
     padding: 40px 90px 0px 90px;
@@ -65,8 +65,10 @@ h3, p {
         min-height: 30px!important;
         max-height: 50px!important;
         max-width: 80vw;
-        margin-bottom: 80px !important;
-        margin-left: 50px;
+        /* margin-bottom: 10px !important; */
+        margin-top: 20px !important;
+        /* margin-left: 80px; */
+        margin: 0 auto;
     }
 
     /* Start: Chat Header */

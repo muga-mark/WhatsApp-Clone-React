@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import DrawerLeft from './DrawerLeft';
+// import DrawerLeft from './DrawerLeft';
 
 function UserProfile( { photoURL, onClick }) {
 
@@ -10,7 +10,7 @@ function UserProfile( { photoURL, onClick }) {
                 src={photoURL} 
                 onClick={onClick}
             />
-            <DrawerLeft />
+            {/* <DrawerLeft /> */}
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { auth, provider } from './firebase';
 import { toastInfo } from './shared/toastInfo';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import GoogleLogo from './images/Google G Logo.png';
 import './Login.css';
 
 function Login() {
@@ -33,7 +34,7 @@ function Login() {
             
             <div className="login__withGoogle" onClick={signInGoogle}>
                 <img 
-                    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+                    src={GoogleLogo}
                     alt="Google Logo" 
                 />
                 <span>Sign in with Google</span>

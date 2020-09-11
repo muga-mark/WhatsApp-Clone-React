@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { setDrawerRight, setDrawerBottom, setMenuChat } from '../actions/drawerAction';
+import { setDrawerRight, setDrawerBottom } from '../actions/drawerAction';
+import { setMenuChat } from "../actions/menuAction";
 import { toastInfo } from '../shared/toastInfo';
 import ChatMenu from '../Chat/ChatMenu';
 import DrawerBottom from './DrawerBottom';
@@ -101,6 +102,7 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
                 toastInfo(`Error removing room! ${error}`, roomDeleted, "top-center");
             });
         }
+
         dispatch(setMenuChat(null));
         history.push('/');
     }

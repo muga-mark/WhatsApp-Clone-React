@@ -4,7 +4,7 @@ import db from './firebase';
 import { auth } from './firebase';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { setUser } from './actions/userAction';
-import { setMenuSidebar, setMenuChat } from './actions/drawerAction';
+import { setMenuSidebar, setMenuChat } from './actions/menuAction';
 import Login from './Login';
 import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';

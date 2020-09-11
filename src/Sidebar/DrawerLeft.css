@@ -30,14 +30,73 @@
     display: none;  /* Safari and Chrome */
 }
 .drawerLeft__content_photo {
-    height: 180px;
-    /* align-items: center; */
-    padding: 8px 112px 50px 112px;
-
+    height: 200px;
+    padding-top: 8px;
+    padding-bottom: 30px;
+    margin: 0 auto;
+}
+.MuiDialogContent-root {
+    margin: 0 auto;
 }
 .drawerLeft__content_photo > .MuiAvatar-root {
     height: 200px;
     width: 200px;
+}
+.profilePhoto {
+    /* max-width: 100%; */
+	height: auto;
+    position: relative;
+	display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+}
+.profilePhoto > .MuiAvatar-root {
+    height: 200px !important;
+    width: 200px !important;
+}
+.profilePhoto .profilePhoto__layer_bottom {
+    display: block;
+}
+.profilePhoto .profilePhoto__layer_top {
+    /* height: 200px !important; */
+    /* width: 200px !important; */
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+    height: 100%;
+    border-radius: 50%;
+	background: rgba(107, 101, 101, 0.6);
+	color: #fff;
+	/* padding: 15px; */
+	-moz-transition: all 0.4s ease-in-out 0s;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	-ms-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
+}
+.profilePhoto:hover .profilePhoto__layer_top,
+.profilePhoto.active .profilePhoto__layer_top {
+	opacity: 1;
+}
+.profilePhoto__text {
+    display: flex;
+    flex-direction: column;
+}
+.profilePhoto .profilePhoto__text {
+	text-align: center;
+	font-size: 14px;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin: 0 auto;
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 .drawerLeft__content_name {
     height: 85px;
@@ -61,6 +120,13 @@
 }
 .drawerLeft__content_name > form > input {
     border: none;
+    border-bottom: 2px solid #00BFA5 !important;
+    font-size: 17px;
+    color: #666666;
+    width: 100%;
+}
+.drawerLeft__content_name > form > span {
+    border: none;
     font-size: 17px;
     color: #666666;
     width: 100%;
@@ -83,14 +149,3 @@
     color: #ADADAD;
 }
 
-@media screen and (max-width: 600px) {
-    .drawerLeft__content_photo {
-        height: 180px;
-        padding: 10px 50px 50px 50px;
-    }
-    .drawerLeft__content_photo > .MuiAvatar-root {
-        height: 200px;
-        width: 200px;
-        margin: 0 auto;
-    }
-}

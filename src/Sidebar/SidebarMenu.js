@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStateValue } from '../StateProvider';
-import { setMenuSidebar } from '../actions/drawerAction';
+import { setMenuSidebar } from '../actions/menuAction';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 
 
-function DropDownMenu( { menuLists }) {
+function SidebarMenu( { menuLists }) {
     const [{ menuSidebar },  dispatch] = useStateValue();
 
     const handleCloseDropDownMenu = () => {
@@ -56,4 +56,4 @@ function DropDownMenu( { menuLists }) {
     )
 }
 
-export default DropDownMenu
+export default SidebarMenu

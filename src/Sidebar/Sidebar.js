@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useStateValue } from '../StateProvider';
-import { setDrawerLeft, setMenuSidebar } from "../actions/drawerAction"
+import { setDrawerLeft } from "../actions/drawerAction";
+import { setMenuSidebar } from "../actions/menuAction";
 import { toastInfo } from '../shared/toastInfo';
 import db from '../firebase';
 import { useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
 import SearchBar from '../shared/SearchBar';
+import DrawerLeft from './DrawerLeft';
 // import searchRoom from '../shared/searchRoom';
 import UserProfile from './UserProfile';
 import NewChat from './NewChat';
 import Status from './Status';
-import DropDownMenu from './DropDownMenu';
+import SidebarMenu from './SidebarMenu';
 import SidebarChat from './SidebarChat';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -147,11 +149,12 @@ function Sidebar( { rooms }) {
                     photoURL={user.photoURL} 
                     onClick={() => handleDrawerLeftOpen()}
                 />
+                <DrawerLeft />
                 
                 <div className="sidebar__headerRight">
                     <Status />
                     <NewChat />
-                    <DropDownMenu menuLists={menuLists} />
+                    <SidebarMenu menuLists={menuLists} />
                 </div>
             </div>
 
@@ -207,3 +210,4 @@ function Sidebar( { rooms }) {
 }
 
 export default Sidebar
+

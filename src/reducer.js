@@ -5,6 +5,7 @@ export const initialState = {
     drawerRight: false,
     menuSidebar: null,
     menuChat: null,
+    menuProfile: null,
 }
 
 export const actionTypes = {
@@ -14,6 +15,7 @@ export const actionTypes = {
     SET_DRAWER_RIGHT: "SET_DRAWER_RIGHT",
     SET_MENU_SIDEBAR: "SET_MENU_SIDEBAR",
     SET_MENU_CHAT: "SET_MENU_CHAT",
+    SET_MENU_PROFILE: "SET_MENU_PROFILE",
 }
 
 const reducer = (state, action) => {
@@ -53,6 +55,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 menuChat: action.menuChat,
+            };
+
+        case actionTypes.SET_MENU_PROFILE:
+            return {
+                ...state,
+                menuProfile: action.menuProfile,
             };
 
         default:
