@@ -21,6 +21,14 @@
     flex-direction: column;
     margin: 0px -5px 0 -5px;
 }
+.chat__body_image_container_buttons {
+    display: flex;
+    /* flex-direction: row; */
+    margin: 0 auto;
+}
+.chat__body_image_container_buttons > button {
+    margin: 5px 5px 0 5px;
+}
 .chat__message_box {
     display: flex;
 }

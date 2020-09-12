@@ -25,33 +25,33 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import './ChatHeader.css';
 
-const attachFileLists = [
-    {
-        title: "Photos & Videos",
-        icon: <PhotoIcon />,
-    },
-    {
-        title: "Camera",
-        icon: <CameraAltIcon />,
-    },
-    {
-        title: "Document",
-        icon: <InsertDriveFileIcon />,
-    },
-    {
-        title: "Contact",
-        icon: <PersonIcon />,
-    },
-    {
-        title: "Room",
-        icon: <VideoCallIcon />,
-    },
-]
+// const attachFileLists = [
+//     {
+//         title: "Photos & Videos",
+//         icon: <PhotoIcon />,
+//     },
+//     {
+//         title: "Camera",
+//         icon: <CameraAltIcon />,
+//     },
+//     {
+//         title: "Document",
+//         icon: <InsertDriveFileIcon />,
+//     },
+//     {
+//         title: "Contact",
+//         icon: <PersonIcon />,
+//     },
+//     {
+//         title: "Room",
+//         icon: <VideoCallIcon />,
+//     },
+// ]
 
 function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
     const [{ user },  dispatch] = useStateValue();
-    const [showAttachFile, setShowAttachFile] = useState(false);
-    const [fileUrl, setFileUrl] = useState(null);
+    // const [showAttachFile, setShowAttachFile] = useState(false);
+    // const [fileUrl, setFileUrl] = useState(null);
     
     const searchMessage = () => {
         const searchToastId = "search";
@@ -59,15 +59,15 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
         dispatch(setDrawerRight(true));
     }
 
-    const attachFile = () => {
-        const attachToastId = "attach";
-        toastInfo("All icons have the same functions, you can only upload images and gifs!",attachToastId, "bottom-right");
-        if(showAttachFile === false) {
-            setShowAttachFile(true);
-        } else {
-            setShowAttachFile(false);
-        }
-    };
+    // const attachFile = () => {
+    //     const attachToastId = "attach";
+    //     toastInfo("All icons have the same functions, you can only upload images and gifs!",attachToastId, "bottom-right");
+    //     if(showAttachFile === false) {
+    //         setShowAttachFile(true);
+    //     } else {
+    //         setShowAttachFile(false);
+    //     }
+    // };
 
     const contactInfo = () => {
         const contactInfo = "contactInfo";
@@ -130,29 +130,29 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
         },
     ]
 
-    const onFileChange = async (e) => {
-        const file = e.target.files[0];
-        const storageRef = storage.ref();
-        const imagesRef = storageRef.child(`rooms/${roomName}/images`);
-        const fileRef = imagesRef.child(file.name);
-        await fileRef.put(file);
-        setFileUrl(await fileRef.getDownloadURL());
+    // const onFileChange = async (e) => {
+    //     const file = e.target.files[0];
+    //     const storageRef = storage.ref();
+    //     const imagesRef = storageRef.child(`rooms/${roomName}/images`);
+    //     const fileRef = imagesRef.child(file.name);
+    //     await fileRef.put(file);
+    //     setFileUrl(await fileRef.getDownloadURL());
 
-        dispatch(setDrawerBottom(true));
-    };
+    //     dispatch(setDrawerBottom(true));
+    // };
 
-    console.log("CHAT HEADER", fileUrl);
+    // console.log("CHAT HEADER", fileUrl);
 
-    const handleClickAway = ()  => {
-        setShowAttachFile(false);
-    };
+    // const handleClickAway = ()  => {
+    //     setShowAttachFile(false);
+    // };
 
     return (
         <div className="chat__header">
-            <DrawerBottom 
+            {/* <DrawerBottom 
                 fileUrl={fileUrl} 
                 roomId={roomId} 
-            /> 
+            />  */}
 
             <DrawerRight 
                 roomId={roomId} 
@@ -196,7 +196,7 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
                     />
                 </Hidden>     
 
-                <div>
+                {/* <div>
                     <TooltipCustom 
                         name="Attach" 
                         icon={<AttachFileIcon/>} 
@@ -230,7 +230,7 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
                             </div>
                         </ClickAwayListener>
                     ):null}
-                </div>
+                </div> */}
             
                 <ChatMenu menuChatLists={menuChatLists} />
             </div>

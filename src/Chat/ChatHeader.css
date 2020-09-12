@@ -25,10 +25,11 @@
 }
 .chat__attachFile {
     position: absolute;
-    top: 70px;
+    bottom: 70px;
     display: flex;
     flex-direction: column;
     z-index: 1000;
+    overflow: hidden;
 }
 .chat__attachFile > .MuiFab-root {
   margin: 7px 0 7px 0;

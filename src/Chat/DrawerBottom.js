@@ -48,17 +48,30 @@ const useStyles = makeStyles ((theme) => ({
     }
 }));
 
-function DrawerBottom( fileUrl ) {
+function DrawerBottom( fileImageUrl, fileVideoUrl ) {
     const classes = useStyles();
     const [{ user, drawerBottom },  dispatch] = useStateValue();
     const [caption, setCaption] = useState([]); 
     const { roomId } = useParams();
 
+    console.log("fileVideoUrl",fileVideoUrl);
+    console.log("fileImageUrl",fileImageUrl);
+
     const handleUpload = (e) => {
         e.preventDefault();
-        if(fileUrl){
+        if(fileImageUrl.fileImageUrl){
             db.collection("rooms").doc(roomId).collection('messages').add({
-                photo: fileUrl.fileUrl,
+                photo: fileImageUrl.fileImageUrl,
+                name: user.displayName,
+                uid: user.uid,
+                caption: caption,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+            dispatch(setDrawerBottom(false));
+        }
+        else if(fileVideoUrl.fileVideoUrl){
+            db.collection("rooms").doc(roomId).collection('messages').add({
+                video: fileVideoUrl.fileVideoUrl,
                 name: user.displayName,
                 uid: user.uid,
                 caption: caption,
@@ -92,7 +105,7 @@ function DrawerBottom( fileUrl ) {
                 
                 <div className="drawerBottom__content">
                     <div className="drawerBottom__content_photo">
-                        <img src={fileUrl.fileUrl} alt="" />
+                        <img src={fileImageUrl.fileImageUrl} alt="" />
                     </div>
                     <div className="drawerBottom__content_caption">
                         <input 
@@ -111,7 +124,7 @@ function DrawerBottom( fileUrl ) {
 
                 <div className="drawerBottom__footer">
                     <div>
-                        <img src={fileUrl.fileUrl} alt=""/>
+                        <img src={fileImageUrl.fileImageUrl} alt=""/>
                     </div>
                 </div>
             </Drawer>

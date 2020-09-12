@@ -7,11 +7,13 @@
 .sidebar__header {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    /* padding: 10px; */
+    padding: 5px;
     border-right: 1px solid lightgray;
 }
-.sidebar__header > .MuiAvatar-root {
-    margin-left: 8px;
+.sidebar__header > div > .MuiAvatar-root {
+    margin-left: 10px;
+    margin-top: 5px;
     cursor: pointer;
 }
 .sidebar__headerRight {
@@ -33,6 +35,21 @@
 }
 .sidebar__chats::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
+}
+.sidebar__chatsContainer_empty {
+    /* align-content: center; */
+    /* margin: 0 auto; */
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    display: table;
+    /* background-color: black; */
+}
+.sidebar__chatsContainer_empty > span {
+    display: table-cell;
+    vertical-align: middle;
+    color: #A7A7A7;
+    font-size: 14px;
 }
 
 @media screen and (max-width: 600px) {

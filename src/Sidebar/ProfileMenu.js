@@ -10,18 +10,14 @@ import './DrawerLeft.css';
 
 function ProfileMenu( { menuProfileLists, user }) {
     const [{ menuProfile, drawerLeft },  dispatch] = useStateValue();
-    const [checked, setChecked] = useState(false);
 
     const handleCloseDropDownMenu = () => {
         dispatch(setMenuProfile(null));
-        setChecked(false);
     };
 
     const handleClickDropDownMenu = (event) => {
         dispatch(setMenuProfile(event.currentTarget));
-        setChecked(true);
     };
-    console.log("checked", checked);
 
     return (
         <div className="profilePhoto">

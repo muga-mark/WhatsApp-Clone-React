@@ -50,7 +50,7 @@ function App() {
     }
 
   }, [dispatch]);
-
+  console.log("rooms",rooms);
   return (
     <div className="app">
       {!user ? (

@@ -23,6 +23,9 @@
 .search__container > input:focus{
     outline: none;
 }
+.search__container >input::placeholder {
+    color: #A7A7A7;
+}
 .search__container > .MuiSvgIcon-root {
     color: grey;
     padding: 10px;

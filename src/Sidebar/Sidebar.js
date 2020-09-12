@@ -128,10 +128,6 @@ function Sidebar( { rooms }) {
         },
     ]
 
-    // const searchHandler = (event) => {
-    //     setSearch({search: event.target.value})
-    // }
-
     return (
         <div className="sidebar">
             <ToastContainer 
@@ -163,46 +159,39 @@ function Sidebar( { rooms }) {
                 search={search} 
                 setSearch={setSearch} 
                 placeholder="Search or start new chat" 
-                // onChange={(event) => searchHandler(event)}
             />
             <div><p>{errorMessage}</p></div>
 
             <div className="sidebar__chats">
-                <div className="sidebar__chatsContainer">
-{/*                    
-                    {rooms.filter(searchRoom(search)).map(room => {
-                        return(
-                            <SidebarChat 
-                                key={room.id} 
-                                id={room.id} 
-                                name={room.data.name} 
-                            />
-                        )
-                    })} */}
-
-                    {search ? 
-                        <div>
-                            {searchedRoom.map(room => (
-                                <SidebarChat 
-                                    key={room.id} 
-                                    id={room.id} 
-                                    name={room.data.name} 
-                                />
-                            ))}
-                        </div>  
-                    : 
-                        <div> 
-                            {rooms.map(room => (
-                                <SidebarChat 
-                                    key={room.id} 
-                                    id={room.id} 
-                                    name={room.data.name} 
-                                />
-                            ))}
-                        </div>  
-                    }
-                    
-                </div>
+                {rooms.length>0 ?          
+                    <div className="sidebar__chatsContainer">
+                        {search ? 
+                            <div>
+                                {searchedRoom.map(room => (
+                                    <SidebarChat 
+                                        key={room.id} 
+                                        id={room.id} 
+                                        name={room.data.name} 
+                                    />
+                                ))}
+                            </div>  
+                        : 
+                            <div> 
+                                {rooms.map(room => (
+                                    <SidebarChat 
+                                        key={room.id} 
+                                        id={room.id} 
+                                        name={room.data.name} 
+                                    />
+                                ))}
+                            </div>  
+                        }
+                    </div>
+                :
+                    <div className="sidebar__chatsContainer_empty">
+                        <span>No chats</span>
+                    </div>
+                }     
             </div>
 
         </div>

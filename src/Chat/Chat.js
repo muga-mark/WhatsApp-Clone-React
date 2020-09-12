@@ -77,11 +77,13 @@ function Chat() {
         
                     <div>
                         <ChatFooter 
+                            roomName={roomName} 
                             roomId={roomId}
                             db={db}
-                            user={user}
+                            // user={user}
                             firebase={firebase}
                             toast={toast}
+                            storage={storage}
                         />
                     </div>  
                 </>
