@@ -1,29 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStateValue } from '../StateProvider';
 import { setMenuProfile } from '../actions/menuAction';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import Zoom from '@material-ui/core/Zoom';
 import './DrawerLeft.css';
 
 function ProfileMenu( { menuProfileLists, user }) {
-    const [{ menuProfile },  dispatch] = useStateValue();
+    const [{ menuProfile, drawerLeft },  dispatch] = useStateValue();
+    const [checked, setChecked] = useState(false);
 
     const handleCloseDropDownMenu = () => {
         dispatch(setMenuProfile(null));
+        setChecked(false);
     };
 
     const handleClickDropDownMenu = (event) => {
         dispatch(setMenuProfile(event.currentTarget));
+        setChecked(true);
     };
+    console.log("checked", checked);
 
     return (
         <div className="profilePhoto">
-            <Avatar 
-                src={user.photoURL} 
-                className="profilePhoto__layer_bottom"
-            />
+             <Zoom in={drawerLeft} style={{ transitionDelay: drawerLeft ? '300ms' : '0ms' }}>
+                <Avatar 
+                    src={user.photoURL} 
+                    className="profilePhoto__layer_bottom"
+                />
+            </Zoom>
             <div className="profilePhoto__layer_top" onClick={handleClickDropDownMenu} >
                 <div className="profilePhoto__text">
                     <PhotoCameraIcon />

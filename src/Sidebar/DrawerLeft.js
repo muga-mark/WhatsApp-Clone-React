@@ -17,6 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
+import Zoom from '@material-ui/core/Zoom';
 import './DrawerLeft.css';
 
 const useStyles = makeStyles ((theme) => ({
@@ -51,7 +52,6 @@ function DrawerLeft() {
     const [showEditName, setShowEditName] = useState(false);
     const [showEditAbout, setShowEditAbout] = useState(false);
     const [showProfilePhoto, setShowProfilePhoto] = useState(false);
-    
 
     useEffect(() => {
         const errorAbout = "errorAbout";
@@ -205,12 +205,19 @@ function DrawerLeft() {
                             aria-describedby="alert-dialog-description"
                         >
                             <DialogTitle id="alert-dialog-title">
-                                <IconButton edge="end" color="inherit" onClick={viewPhotoClose} aria-label="close">
-                                    <CloseIcon />
-                                </IconButton>
+                                <div>
+                                    <Avatar src={user.photoURL}/>
+                                </div>
+                                <div>
+                                    <IconButton edge="end" color="inherit" onClick={viewPhotoClose} aria-label="close">
+                                        <CloseIcon />
+                                    </IconButton>
+                                </div>
                             </DialogTitle>
                             <DialogContent>
-                                <img src={user.photoURL} alt=""/>
+                                <Zoom in={showProfilePhoto} style={{ transitionDelay: showProfilePhoto ? '300ms' : '0ms' }}>
+                                    <img src={user.photoURL} alt="" className="drawerLeft__content_photo_img"/>
+                                </Zoom>
                             </DialogContent>
                         </Dialog>
                     </div>

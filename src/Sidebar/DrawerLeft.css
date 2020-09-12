@@ -35,9 +35,6 @@
     padding-bottom: 30px;
     margin: 0 auto;
 }
-.MuiDialogContent-root {
-    margin: 0 auto;
-}
 .drawerLeft__content_photo > .MuiAvatar-root {
     height: 200px;
     width: 200px;
@@ -147,5 +144,35 @@
 .drawerLeft__note > span {
     font-size: 14px;
     color: #ADADAD;
+}
+.MuiDialogContent-root {
+    margin: 0 auto;
+    padding: 0 24px !important;
+    max-width: 545px;
+}
+.MuiTypography-h6 {
+    display: flex;
+}
+.MuiTypography-h6 div:last-child {
+    margin-left: auto;;
+}
+.drawerLeft__content_photo_img {
+    width: 100%;
+    height: auto;
+    /* padding: 10px; */
+}
+.MuiDialogTitle-root {
+    padding: 10px 24px !important;
+}
+.MuiTypography-h6 > div > .MuiAvatar-root {
+    margin-left: 6px!important;
+}
+@media screen and (max-width: 600px) {
+    .MuiDialogTitle-root {
+        background-color: #00BFA5;
+    }
+    .MuiDialogContent-root {
+        padding: 25px 24px !important;
+    }
 }
 
