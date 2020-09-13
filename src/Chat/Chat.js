@@ -9,6 +9,7 @@ import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import ChatLandingScreen from './ChatLandingScreen';
 import { ToastContainer, toast } from 'react-toastify';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import 'react-toastify/dist/ReactToastify.css';
 import './Chat.css';
 
@@ -18,6 +19,8 @@ function Chat() {
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState("");
     const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [showLandingScreenPhoto, setShowLandingScreenPhoto] = useState(false);
   
     useEffect(() => {
         if(roomId) {
@@ -33,10 +36,12 @@ function Chat() {
             .orderBy("timestamp", "asc")
             .onSnapshot(snapshot => (
                 setMessages(snapshot.docs.map((doc) => 
-                    doc.data()))
+                    doc.data())),
+                setLoading(true)
             ));
-               
+
         } else if (!roomId) {
+            setShowLandingScreenPhoto(true);
             history.push('/');
         }
     }, [roomId, history]);
@@ -68,11 +73,19 @@ function Chat() {
                     </div>
         
                     <div className="chat__body">
-                        <ChatBody 
-                            roomId={roomId}
-                            messages={messages} 
-                            user={user} 
-                        />
+                        {loading?
+                            <ChatBody 
+                                roomId={roomId}
+                                messages={messages} 
+                                user={user} 
+                            />
+                        :
+                            <div className="chat__body_loading">
+                                <div>
+                                <CircularProgress />
+                                </div>
+                            </div>
+                        }
                     </div>
         
                     <div>
@@ -88,7 +101,7 @@ function Chat() {
                     </div>  
                 </>
             :
-                <ChatLandingScreen />
+                <ChatLandingScreen showLandingScreenPhoto={showLandingScreenPhoto} />
             }
             
         </div>

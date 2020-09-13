@@ -172,17 +172,19 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
             <div className="chat__headerInfo">
                 <h3>{roomName}</h3>
                 <Hidden only={['xs']}>
-                    <p>Last seen {" "}
-                        {messages[messages.length-1] ? 
-                        (new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleTimeString([], { 
-                            weekday: "long",
-                            year: "numeric",
-                            month:"long",
-                            day:"numeric",
-                            hour: 'numeric', 
-                            hour12: true, 
-                            minute: 'numeric'
-                        })) : (" ")}
+                    <p>
+                        {messages[messages.length-1]? <>Last seen {" "} </>: null}
+                        {messages[messages.length-1]? 
+                            (new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleTimeString([], { 
+                                weekday: "long",
+                                year: "numeric",
+                                month:"long",
+                                day:"numeric",
+                                hour: 'numeric', 
+                                hour12: true, 
+                                minute: 'numeric'
+                            })):(" ")
+                        }
                     </p>
                 </Hidden>
             </div>

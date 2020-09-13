@@ -14,6 +14,7 @@ import NewChat from './NewChat';
 import Status from './Status';
 import SidebarMenu from './SidebarMenu';
 import SidebarChat from './SidebarChat';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Sidebar.css';
@@ -24,8 +25,12 @@ function Sidebar( { rooms }) {
     const [search, setSearch] = useState('');
     const [{ user },  dispatch] = useStateValue();
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     
     useEffect(() => {
+        if(rooms.length>0){
+            setLoading(true);
+        }
         if(search) {
             db.collection("rooms")
             .where("name", ">=", `${search}`)
@@ -64,7 +69,7 @@ function Sidebar( { rooms }) {
         } else if (!search) {
             setSearchedRoom([]);
         }
-    }, [search]);
+    }, [search, rooms]);
 
     const newGroup = () => {
         const newGroup = "newGroup";
@@ -142,6 +147,7 @@ function Sidebar( { rooms }) {
 
             <div className="sidebar__header">
                 <UserProfile 
+                    id="UserProfile"
                     photoURL={user.photoURL} 
                     onClick={() => handleDrawerLeftOpen()}
                 />
@@ -163,35 +169,41 @@ function Sidebar( { rooms }) {
             <div><p>{errorMessage}</p></div>
 
             <div className="sidebar__chats">
-                {rooms.length>0 ?          
-                    <div className="sidebar__chatsContainer">
-                        {search ? 
-                            <div>
-                                {searchedRoom.map(room => (
-                                    <SidebarChat 
-                                        key={room.id} 
-                                        id={room.id} 
-                                        name={room.data.name} 
-                                    />
-                                ))}
-                            </div>  
-                        : 
-                            <div> 
-                                {rooms.map(room => (
-                                    <SidebarChat 
-                                        key={room.id} 
-                                        id={room.id} 
-                                        name={room.data.name} 
-                                    />
-                                ))}
-                            </div>  
-                        }
-                    </div>
+                {loading?
+                <>
+                    {rooms.length>0 ?          
+                        <div className="sidebar__chatsContainer">
+                            {search ? 
+                                <div>
+                                    {searchedRoom.map(room => (
+                                        <SidebarChat 
+                                            key={room.id} 
+                                            id={room.id} 
+                                            name={room.data.name} 
+                                        />
+                                    ))}
+                                </div>  
+                            : 
+                                <div> 
+                                    {rooms.map(room => (
+                                        <SidebarChat 
+                                            key={room.id} 
+                                            id={room.id} 
+                                            name={room.data.name} 
+                                        />
+                                    ))}
+                                </div>  
+                            }
+                        </div>
+                    :
+                        <div className="sidebar__chatsContainer_empty">
+                            <span>No chats</span>
+                        </div>
+                    }     
+                </>
                 :
-                    <div className="sidebar__chatsContainer_empty">
-                        <span>No chats</span>
-                    </div>
-                }     
+                    <CircularProgress />
+                }
             </div>
 
         </div>

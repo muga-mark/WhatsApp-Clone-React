@@ -9,12 +9,13 @@ import Login from './Login';
 import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './App.css';
 
 function App() {
   const [{ user },  dispatch] = useStateValue();
   const [rooms, setRooms] = useState([]);
- 
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if(authUser){
@@ -40,6 +41,8 @@ function App() {
 
         dispatch(setMenuSidebar(null));
         dispatch(setMenuChat(null));
+        
+      
       }else{
         dispatch(setUser(null));
       }
@@ -50,34 +53,34 @@ function App() {
     }
 
   }, [dispatch]);
-  console.log("rooms",rooms);
+
   return (
     <div className="app">
       {!user ? (
         <Login />
       ) : (
         <div className="app__body">
-          <Router>
-            <Switch>
+            <Router>
+              <Switch>
 
-              <Route exact path="/">
-                <Sidebar rooms={rooms} />
-                {/* Chat component will be hidden in mobile view */}
-                <Hidden only={['xs']}>
-                  <Chat />
-                </Hidden>
-              </Route>
-
-              <Route path="/rooms/:roomId">  
-                {/* Sidebar component will be hidden in mobile view */}
-                <Hidden only={['xs']}> 
+                <Route exact path="/">
                   <Sidebar rooms={rooms} />
-                </Hidden>
-                <Chat />
-              </Route>
+                  {/* Chat component will be hidden in mobile view */}
+                  <Hidden only={['xs']}>
+                    <Chat />
+                  </Hidden>
+                </Route>
 
-            </Switch>
-          </Router>        
+                <Route path="/rooms/:roomId">  
+                  {/* Sidebar component will be hidden in mobile view */}
+                  <Hidden only={['xs']}> 
+                    <Sidebar rooms={rooms} />
+                  </Hidden>
+                  <Chat />
+                </Route>
+
+              </Switch>
+            </Router>      
         </div>
       )}
     </div>

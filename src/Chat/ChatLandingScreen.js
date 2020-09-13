@@ -3,12 +3,17 @@ import LaptopIcon from '@material-ui/icons/Laptop';
 import Divider from '@material-ui/core/Divider';
 import whatsAppConnected from '../images/whatsapp-connect.jpg';
 import './ChatLandingScreen.css';
+import Zoom from '@material-ui/core/Zoom';
 
-function ChatLandingScreen() {
+function ChatLandingScreen({ showLandingScreenPhoto }) {
+
+    console.log("showLandingScreenPhoto", showLandingScreenPhoto);
     return (
         <div className="chat__landingScreen"> 
             <div>
-                <img src={whatsAppConnected} alt="whatsAppConnected" />
+                <Zoom in={showLandingScreenPhoto} style={{ transitionDelay: showLandingScreenPhoto ? '300ms' : '0ms' }}>
+                    <img src={whatsAppConnected} alt="whatsAppConnected" />
+                </Zoom>                
             </div>
 
             <div className="chat__landingScreen_title"> 

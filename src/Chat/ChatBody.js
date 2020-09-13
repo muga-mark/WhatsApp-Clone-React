@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player'
-// import IconButton from '@material-ui/core/IconButton';
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
-// import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-// import StopIcon from '@material-ui/icons/Stop';
-// import PauseIcon from '@material-ui/icons/Pause';
-// import PictureInPictureAltIcon from '@material-ui/icons/PictureInPictureAlt';
-// import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import './ChatBody.css'
+
 
 function ChatBody({ messages, user, roomId }) {
     const messagesEndRef = useRef(null);
@@ -21,9 +16,11 @@ function ChatBody({ messages, user, roomId }) {
 
     return (
         <div>
+            {messages.length>0 ?
             <p className="chat__message_reminder">
                 <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
             </p>
+            :null}
                
             {messages.map((message) => (
                 <div className={`chat__message ${ message.uid === user.uid && "chat__receiver"}`}>
@@ -35,15 +32,21 @@ function ChatBody({ messages, user, roomId }) {
                         {message.photo? 
                             <img className="chat__body_image"src={message.photo} alt=""/>
                         : null}
-                        {message.video?
-                            <>
-                            <ReactPlayer 
-                                url={message.video} 
-                                controls={true}
-                            />
-                            </>
-                        : null}
                     </div>  
+
+                    <div className="chat__body_video_container">
+                        {message.video?
+                            <div className='player-wrapper'>
+                                <ReactPlayer
+                                    className='react-player'
+                                    width='100%'
+                                    height='100%'
+                                    url={message.video} 
+                                    controls={true}
+                                />
+                            </div>  
+                        : null}
+                    </div>
 
                     <div className="chat__message_box">
                         <div>

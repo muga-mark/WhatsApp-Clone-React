@@ -36,6 +36,16 @@ h3, p {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+.chat__body_loading {
+    display: table;
+    text-align: center;
+    width:100%;
+    height: 100%;
+}
+.chat__body_loading > div {
+    display: table-cell; 
+    vertical-align: middle;
+}
 ::-webkit-scrollbar {
     width: 8px;
 }
