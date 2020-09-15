@@ -9,7 +9,7 @@ import Login from './Login';
 import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';
 import Hidden from '@material-ui/core/Hidden';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { ToastContainer } from 'react-toastify';
 import {Helmet} from "react-helmet";
 import './App.css';
 
@@ -65,6 +65,15 @@ function App() {
         <meta name="theme-color" content="#1EBEA5" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Helmet>
+      <ToastContainer 
+          position="top-center"
+          autoClose={5000}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+      />
       {!user ? (
         <Login />
       ) : (

@@ -15,7 +15,7 @@ import Status from './Status';
 import SidebarMenu from './SidebarMenu';
 import SidebarChat from './SidebarChat';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Sidebar.css';
 
@@ -135,7 +135,7 @@ function Sidebar( { rooms }) {
 
     return (
         <div className="sidebar">
-            <ToastContainer 
+            {/* <ToastContainer 
                 position="bottom-right"
                 autoClose={5000}
                 newestOnTop={false}
@@ -143,7 +143,7 @@ function Sidebar( { rooms }) {
                 rtl={false}
                 pauseOnFocusLoss
                 draggable
-            />
+            /> */}
 
             <div className="sidebar__header">
                 <UserProfile 
