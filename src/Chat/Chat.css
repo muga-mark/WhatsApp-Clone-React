@@ -10,10 +10,7 @@ h3, p {
     font-size: 14px;
     min-height: 30px!important;
     max-height: 50px!important;
-    /* margin-bottom: 80px !important; */
-    /* bottom: 50px; */
-    /* top: 50px; */
-    /* margin-top: 50px; */
+    top: 60px;
 }
 
 /* Start: Chat Header */

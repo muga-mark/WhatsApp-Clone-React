@@ -23,7 +23,7 @@
 }
 .player-wrapper {
     position: relative;
-    width: 500px;
+    width: 35vw;
     padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
 }
    
@@ -76,7 +76,6 @@
 }
 @media screen and (max-width: 600px) {
     .chat__message_reminder {
-        
         font-size: 12px;
         padding: 5px 10px 5px 10px ;
         border-radius: 5px;
@@ -108,6 +107,6 @@
         border-radius: 8px;
     }
     .player-wrapper {
-        width: 220px;
+        width: 60vw;
     }
 }

@@ -27,8 +27,7 @@ const useStyles = makeStyles ((theme) => ({
     hide: {
         display: 'none',
     },
-    drawerPaper: {
-        
+    drawerPaper: {    
         [theme.breakpoints.up('xs')]: {
             width: '100vw',
         },

@@ -71,22 +71,22 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
 
     const contactInfo = () => {
         const contactInfo = "contactInfo";
-        toastInfo("Contact Info is not available!", contactInfo, "bottom-right");
+        toastInfo("Contact Info is still not available!", contactInfo, "top-center");
     }
 
     const selectMessages = () => {
         const selectMessages = "selectMessages";
-        toastInfo("Select Messages is not available!", selectMessages, "bottom-right");
+        toastInfo("Select Messages is still not available!", selectMessages, "top-center");
     }
 
     const muteNotifications = () => {
         const muteNotifications = "muteNotifications";
-        toastInfo("Mute Notifications is not available!", muteNotifications, "bottom-right");
+        toastInfo("Mute Notifications still is not available!", muteNotifications, "top-center");
     }
 
     const clearMessages = () => {
         const clearMessages = "clearMessages";
-        toastInfo("Clear Messages is not available!", clearMessages, "bottom-right");
+        toastInfo("Clear Messages is still not available!", clearMessages, "top-center");
     }
 
     const deleteRoom = () => {
@@ -154,9 +154,7 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
                 roomId={roomId} 
             />  */}
 
-            <DrawerRight 
-                roomId={roomId} 
-            />  
+            <DrawerRight />  
 
             <Hidden smUp>
                 <Link to='/'>
@@ -190,50 +188,11 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
             </div>
             
             <div className="chat__headerRight">
-                <Hidden only={['xs']}>
-                    <TooltipCustom 
-                        name="Search" 
-                        icon={<SearchOutlinedIcon/>} 
-                        onClick={searchMessage}
-                    />
-                </Hidden>     
-
-                {/* <div>
-                    <TooltipCustom 
-                        name="Attach" 
-                        icon={<AttachFileIcon/>} 
-                        onClick={attachFile}
-                    />
-                    { showAttachFile? (
-                        <ClickAwayListener onClickAway={handleClickAway}>
-                            <div className="chat__attachFile">
-                                {attachFileLists.map((attachFileList) => 
-                                <Slide direction="down" in={attachFile} mountOnEnter unmountOnExit>
-                                    <Tooltip title={<span style={{fontSize: '14px', padding: '8px 5px 8px 5px'}}>
-                                                        {attachFileList.title}
-                                                    </span>} 
-                                            placement="left">
-                                        <Fab color="primary" aria-label="person">
-                                            <div className="chat__icon">
-                                                <label for="file-input">
-                                                    {attachFileList.icon}
-                                                </label>
-                                                <input 
-                                                    id="file-input"
-                                                    type="file" 
-                                                    onChange={onFileChange} 
-                                                    accept="video/*,image/*"
-                                                />
-                                            </div>
-                                        </Fab>
-                                    </Tooltip>
-                                </Slide>
-                                )}
-                            </div>
-                        </ClickAwayListener>
-                    ):null}
-                </div> */}
-            
+                <TooltipCustom 
+                    name="Search" 
+                    icon={<SearchOutlinedIcon/>} 
+                    onClick={searchMessage}
+                />
                 <ChatMenu menuChatLists={menuChatLists} />
             </div>
         </div>

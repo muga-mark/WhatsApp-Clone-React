@@ -8,7 +8,6 @@ import ChatHeader from './ChatHeader';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import ChatLandingScreen from './ChatLandingScreen';
-import { ToastContainer, toast } from 'react-toastify';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import 'react-toastify/dist/ReactToastify.css';
 import './Chat.css';
@@ -50,16 +49,6 @@ function Chat() {
         <div className="chat">
             {roomId ? 
                 <>
-                    <ToastContainer 
-                        position="bottom-right"
-                        autoClose={5000}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                    />
-        
                     <div>
                         <ChatHeader 
                             roomName={roomName} 
@@ -68,7 +57,6 @@ function Chat() {
                             db={db}
                             storage={storage}
                             history={history}
-                            toast={toast}
                         />
                     </div>
         
@@ -93,15 +81,15 @@ function Chat() {
                             roomName={roomName} 
                             roomId={roomId}
                             db={db}
-                            // user={user}
                             firebase={firebase}
-                            toast={toast}
                             storage={storage}
                         />
                     </div>  
                 </>
             :
-                <ChatLandingScreen showLandingScreenPhoto={showLandingScreenPhoto} />
+                <ChatLandingScreen 
+                    showLandingScreenPhoto={showLandingScreenPhoto} 
+                />
             }
             
         </div>

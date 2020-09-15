@@ -79,7 +79,6 @@
     flex-direction: column;
     background-color: white;
     margin-bottom: 20px;
-   
 }
 .drawerRight__content_name > p {
     color: #57BAB1;
@@ -116,3 +115,12 @@
     color: #ADADAD;
 }
 /* End: Drawer Right */
+
+@media screen and (max-width: 600px) {
+    .drawerRight__header { 
+        background-color: #045E54;
+    }
+    .drawerRight__header > p {
+        color: white;
+    }
+}

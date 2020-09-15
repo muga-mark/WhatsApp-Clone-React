@@ -73,7 +73,7 @@ function Sidebar( { rooms }) {
 
     const newGroup = () => {
         const newGroup = "newGroup";
-        toastInfo("New Group is not available!", newGroup, "bottom-right");
+        toastInfo("New Group is not available!", newGroup, "top-center");
     }
 
     const handleDrawerLeftOpen = () => {
@@ -83,17 +83,17 @@ function Sidebar( { rooms }) {
 
     const archive = () => {
         const archive = "archive";
-        toastInfo("Archive is not available!", archive, "bottom-right");
+        toastInfo("Archive is not available!", archive, "top-center");
     }
 
     const starred = () => {
         const starred = "starred";
-        toastInfo("Starred is not available!", starred, "bottom-right");
+        toastInfo("Starred is not available!", starred, "top-center");
     }
 
     const settings = () => {
         const settings = "settings";
-        toastInfo("Settings is not available!", settings, "bottom-right");
+        toastInfo("Settings is not available!", settings, "top-center");
     }
     
     const logout = () => {

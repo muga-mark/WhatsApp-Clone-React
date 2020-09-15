@@ -10,6 +10,7 @@ import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';
 import Hidden from '@material-ui/core/Hidden';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {Helmet} from "react-helmet";
 import './App.css';
 
 function App() {
@@ -56,6 +57,14 @@ function App() {
 
   return (
     <div className="app">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>WhatsApp Web Clone</title>
+        <meta itemprop="image" content="https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-d4817.appspot.com/o/whatsapp.png?alt=media&token=eb6fa39a-aa7e-4a9f-9d53-282bb6c73730"  />
+        <meta name="description" content="Quickly send and receive WhatsApp messages right from your computer." />
+        <meta name="theme-color" content="#1EBEA5" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Helmet>
       {!user ? (
         <Login />
       ) : (

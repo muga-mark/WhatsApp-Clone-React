@@ -66,22 +66,23 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
 
     const attachFile = () => {
         const attachToastId = "attach";
-        toastInfo("All icons have the same functions, you can only upload images and gifs!",attachToastId, "bottom-right");
+        toastInfo("All icons have the same functions, you can only upload images and gifs!",attachToastId, "top-center");
         if(showAttachFile === false) {
             setShowAttachFile(true);
         } else {
             setShowAttachFile(false);
         }
+        console.log("attachFile click", attachToastId);
     };
 
     const emoticons = () => {
         const emoticonToastId = "emoticon";
-        toastInfo("Emoticons is not available!", emoticonToastId, "bottom-right");
+        toastInfo("Emoticons is still not available!", emoticonToastId, "top-center");
     }
 
     const voiceMessage = () => {
         const voiceMessageToastId = "voiceMessage";
-        toastInfo("Voice Message is not available!", voiceMessageToastId, "bottom-right");
+        toastInfo("Voice Message is still not available!", voiceMessageToastId, "top-center");
     }
 
     const onFileChange = async (e) => {

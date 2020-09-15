@@ -8,7 +8,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import './DrawerRight.css';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles ((theme) => ({
     root: {
         display: 'flex',
     },
@@ -16,11 +16,22 @@ const useStyles = makeStyles({
         display: 'none',
     },
     drawerPaper: {
-        width: '30vw',
+        [theme.breakpoints.up('xs')]: {
+            width: '100vw',
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: '30vw',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '30vw',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '30vw',
+        },
     },
-});
+}));
 
-function DrawerRight() {
+function DrawerRight({ searchMessage }) {
     const classes = useStyles();
     const [{ drawerRight },  dispatch] = useStateValue();
     
@@ -30,6 +41,7 @@ function DrawerRight() {
     
     return (
         <div>
+            {searchMessage}
             <Drawer
                 anchor="right"
                 variant="persistent"
