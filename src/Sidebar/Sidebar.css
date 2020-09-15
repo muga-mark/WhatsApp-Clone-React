@@ -51,6 +51,16 @@
     color: #A7A7A7;
     font-size: 14px;
 }
+.sidebar__chatsContainer_loading {
+    display: table;
+    text-align: center;
+    width:100%;
+    height: 100%;
+}
+.sidebar__chatsContainer_loading > div {
+    display: table-cell; 
+    vertical-align: middle;
+}
 
 @media screen and (max-width: 600px) {
     .sidebar {

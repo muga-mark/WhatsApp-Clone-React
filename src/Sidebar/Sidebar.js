@@ -202,7 +202,11 @@ function Sidebar( { rooms }) {
                     }     
                 </>
                 :
-                    <CircularProgress />
+                    <div className="sidebar__chatsContainer_loading">
+                        <div>
+                            <CircularProgress />
+                        </div>
+                    </div>
                 }
             </div>
 
