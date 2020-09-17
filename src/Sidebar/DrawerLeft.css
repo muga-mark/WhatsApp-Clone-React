@@ -127,6 +127,9 @@
     font-size: 17px;
     color: #666666;
     width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .drawerLeft__content_name > form > input:focus {
    outline: 0 !important;
@@ -159,7 +162,6 @@
 .drawerLeft__content_photo_img {
     width: 100%;
     height: auto;
-    /* padding: 10px; */
 }
 .MuiDialogTitle-root {
     padding: 10px 24px !important;
@@ -167,12 +169,44 @@
 .MuiTypography-h6 > div > .MuiAvatar-root {
     margin-left: 6px!important;
 }
+.profileMenu_uploadPhoto > label {
+    cursor: pointer;
+}
+.profileMenu_uploadPhoto > input {
+    display: none;
+}
+.profileMenu__uploadPhoto_dialog > img {
+    width: 400px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.profileMenu_uploadPhoto_iconButton {
+    /* background-color: #09E85E; */
+    /* border-radius: 50%; */
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+}
+.profileMenu_uploadPhoto_iconButton > .MuiIconButton-root {
+    color: white !important;
+    background-color: #09E85E;
+}
+.profileMenu_uploadPhoto_iconButton > .MuiIconButton-root:hover {
+    color: white !important;
+    background-color: #09E85E;
+}
+
+#form-dialog-title {
+    background-color: #00BFA5 !important;
+}
+#form-dialog-content {
+    padding: 0 !important;
+}
 @media screen and (max-width: 600px) {
-    .MuiDialogTitle-root {
-        background-color: #00BFA5;
-    }
     .MuiDialogContent-root {
         padding: 25px 24px !important;
     }
 }
+
 

@@ -23,26 +23,6 @@
 .chat__headerInfo > p {
     color: #4a4a4a;
 }
-.chat__attachFile {
-    position: absolute;
-    bottom: 70px;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    overflow: hidden;
-}
-.chat__attachFile > .MuiFab-root {
-  margin: 7px 0 7px 0;
-}
-.chat__icon {
-    height: 24px;
-}
-.chat__icon > label > .MuiSvgIcon-root {
-    cursor: pointer;
-}
-.chat__icon > input {
-    display: none;
-}
 .chat__attachFile_drawerHeader {
     background-color: #00BFA5;
 }

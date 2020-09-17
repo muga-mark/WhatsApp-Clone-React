@@ -23,6 +23,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-height: 300px;
+}
+.drawerBottom__content_video {
+    height: 300px;
+    width: 100%;
+}
+.drawerBottom__content_video > .player-wrapper {
+    margin: 0 auto;
+    margin-top: 30px !important;
 }
 .drawerBottom__content_photo > img {
     height: 244px;

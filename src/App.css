@@ -14,6 +14,34 @@
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.7);
 }
 
+.app__loading {
+  display: table;
+  text-align: center;
+  height: 100%;
+  width: 350px;
+}
+
+.app__loading > div {
+  display: table-cell; 
+  vertical-align: middle;
+}
+
+.app__loading > div > .app__loading_circular  {
+  margin-top: 100px !important;
+}
+
+.app__loading > div > .app__loading_linear .MuiLinearProgress-root {
+  margin-top: 100px !important;
+}
+
+.MuiCircularProgress-colorPrimary {
+  color: gray !important;
+}
+
+.MuiLinearProgress-barColorPrimary {
+  background-color: #15C39A !important;
+}
+
 @media screen and (max-width: 600px) {
   .app__body {
       display: inline;

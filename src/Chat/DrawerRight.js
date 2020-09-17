@@ -41,7 +41,6 @@ function DrawerRight({ searchMessage }) {
     
     return (
         <div>
-            {searchMessage}
             <Drawer
                 anchor="right"
                 variant="persistent"

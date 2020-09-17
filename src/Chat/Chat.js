@@ -17,6 +17,8 @@ function Chat() {
     const [{ user }] = useStateValue();
     const { roomId } = useParams();
     const [roomName, setRoomName] = useState("");
+    const [roomCreatedBy, setRoomCreatedBy] = useState("");
+    const [roomOwner, setRoomOwner] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showLandingScreenPhoto, setShowLandingScreenPhoto] = useState(false);
@@ -26,7 +28,9 @@ function Chat() {
           db.collection("rooms")
             .doc(roomId)
             .onSnapshot(snapshot => (
-                setRoomName(snapshot.data()?.name)
+                setRoomName(snapshot.data()?.name),
+                setRoomCreatedBy(snapshot.data()?.createdBy),
+                setRoomOwner(snapshot.data()?.roomOwner)
             ));
           
           db.collection("rooms")
@@ -39,7 +43,7 @@ function Chat() {
                 setLoading(true)
             ));
 
-        } else if (!roomId) {
+        }else{
             setShowLandingScreenPhoto(true);
             history.push('/');
         }
@@ -50,13 +54,15 @@ function Chat() {
             {roomId ? 
                 <>
                     <div>
-                        <ChatHeader 
+                        <ChatHeader
+                            roomCreatedBy={roomCreatedBy} 
+                            roomOwner={roomOwner}
                             roomName={roomName} 
                             roomId={roomId} 
                             messages={messages}
                             db={db}
-                            storage={storage}
                             history={history}
+
                         />
                     </div>
         

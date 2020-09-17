@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player'
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import './ChatBody.css'

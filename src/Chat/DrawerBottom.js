@@ -10,6 +10,7 @@ import Drawer from '@material-ui/core/Drawer';
 import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactPlayer from 'react-player'
 import './DrawerBottom.css';
 
 const useStyles = makeStyles ((theme) => ({
@@ -48,38 +49,39 @@ const useStyles = makeStyles ((theme) => ({
     }
 }));
 
-function DrawerBottom( fileImageUrl, fileVideoUrl ) {
+function DrawerBottom( {fileImageUrl, fileVideoUrl, setFileVideoUrl, setFileImageUrl} ) {
     const classes = useStyles();
     const [{ user, drawerBottom },  dispatch] = useStateValue();
-    const [caption, setCaption] = useState([]); 
+    const [caption, setCaption] = useState(""); 
     const { roomId } = useParams();
 
-    console.log("fileVideoUrl",fileVideoUrl);
     console.log("fileImageUrl",fileImageUrl);
+    console.log("fileVideoUrl",fileVideoUrl);
 
     const handleUpload = (e) => {
         e.preventDefault();
-        if(fileImageUrl.fileImageUrl){
+        if(fileImageUrl){
             db.collection("rooms").doc(roomId).collection('messages').add({
-                photo: fileImageUrl.fileImageUrl,
+                photo: fileImageUrl,
                 name: user.displayName,
                 uid: user.uid,
                 caption: caption,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
-            dispatch(setDrawerBottom(false));
+            setFileImageUrl(null);
         }
-        else if(fileVideoUrl.fileVideoUrl){
+        if(fileVideoUrl){
             db.collection("rooms").doc(roomId).collection('messages').add({
-                video: fileVideoUrl.fileVideoUrl,
+                video: fileVideoUrl,
                 name: user.displayName,
                 uid: user.uid,
                 caption: caption,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
-            dispatch(setDrawerBottom(false));
+            setFileVideoUrl(null);
         }
         setCaption("");
+        dispatch(setDrawerBottom(false));
     }
 
     const handleDrawerClose = () => {
@@ -105,7 +107,22 @@ function DrawerBottom( fileImageUrl, fileVideoUrl ) {
                 
                 <div className="drawerBottom__content">
                     <div className="drawerBottom__content_photo">
-                        <img src={fileImageUrl.fileImageUrl} alt="" />
+                        {fileImageUrl?
+                            <img src={fileImageUrl} alt=""/>
+                        :
+                            <div className="drawerBottom__content_video">
+                                <div className='player-wrapper'>
+                                    <ReactPlayer
+                                        className='react-player'
+                                        width='100%'
+                                        height='50%'
+                                        url={fileVideoUrl} 
+                                        controls={true}
+                                    />
+                                </div> 
+                            </div>
+                        }
+
                     </div>
                     <div className="drawerBottom__content_caption">
                         <input 
@@ -124,7 +141,9 @@ function DrawerBottom( fileImageUrl, fileVideoUrl ) {
 
                 <div className="drawerBottom__footer">
                     <div>
-                        <img src={fileImageUrl.fileImageUrl} alt=""/>
+                        {fileImageUrl?
+                            <img src={fileImageUrl} alt=""/>
+                        :null}
                     </div>
                 </div>
             </Drawer>

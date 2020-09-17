@@ -10,14 +10,15 @@ function Login() {
         const google ="google";
 
         auth.signInWithPopup(provider)
-            .catch((error) => toastInfo(`fucksss${error}`, google, "top-center"));
+            .catch((error) => console.log(`fucksss${error}`, google, "top-center"));
     };
 
     const loginAnonymously = () => {
         const anonymous = "anonymous";
 
         auth.signInAnonymously()
-            .catch((error) => toastInfo(`fuck${error}`, anonymous, "top-center")); 
+            .catch((error) => console.log(`fuck${error}`, anonymous, "top-center"));
+                   
     };
 
     return (

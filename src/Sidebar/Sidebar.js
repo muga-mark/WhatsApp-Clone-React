@@ -31,6 +31,7 @@ function Sidebar( { rooms }) {
         if(rooms.length>0){
             setLoading(true);
         }
+
         if(search) {
             db.collection("rooms")
             .where("name", ">=", `${search}`)
@@ -69,11 +70,13 @@ function Sidebar( { rooms }) {
         } else if (!search) {
             setSearchedRoom([]);
         }
-    }, [search, rooms]);
 
+
+    }, [search, rooms]);
+    
     const newGroup = () => {
         const newGroup = "newGroup";
-        toastInfo("New Group is not available!", newGroup, "top-center");
+        toastInfo("New Group is not yet available!", newGroup, "top-center");
     }
 
     const handleDrawerLeftOpen = () => {
@@ -83,22 +86,32 @@ function Sidebar( { rooms }) {
 
     const archive = () => {
         const archive = "archive";
-        toastInfo("Archive is not available!", archive, "top-center");
+        toastInfo("Archive is not yet available!", archive, "top-center");
     }
 
     const starred = () => {
         const starred = "starred";
-        toastInfo("Starred is not available!", starred, "top-center");
+        toastInfo("Starred is not yet available!", starred, "top-center");
     }
 
     const settings = () => {
         const settings = "settings";
-        toastInfo("Settings is not available!", settings, "top-center");
+        toastInfo("Settings is not yet available!", settings, "top-center");
     }
     
     const logout = () => {
-        auth.signOut();
-        history.push('/');
+        if(user.isAnonymous){
+            auth.currentUser.delete().then(function() {
+              // User deleted. Redirect to login page...
+              history.push('/');
+            }).catch(function(error) {
+              // An error happened.
+              console.log("error deleting anonymous user",error);
+            });
+        }else{
+            //perform logout
+            auth.signOut();
+        }
     }
 
     const searchRoom = () => {
@@ -155,7 +168,7 @@ function Sidebar( { rooms }) {
                 
                 <div className="sidebar__headerRight">
                     <Status />
-                    <NewChat />
+                    <NewChat user={user}/>
                     <SidebarMenu menuLists={menuLists} />
                 </div>
             </div>
@@ -169,7 +182,7 @@ function Sidebar( { rooms }) {
             <div><p>{errorMessage}</p></div>
 
             <div className="sidebar__chats">
-                {loading?
+                {loading ?
                 <>
                     {rooms.length>0 ?          
                         <div className="sidebar__chatsContainer">
@@ -201,7 +214,7 @@ function Sidebar( { rooms }) {
                         </div>
                     }     
                 </>
-                :
+                :  
                     <div className="sidebar__chatsContainer_loading">
                         <div>
                             <CircularProgress />

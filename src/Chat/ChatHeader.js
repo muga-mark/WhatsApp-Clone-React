@@ -1,98 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { setDrawerRight, setDrawerBottom } from '../actions/drawerAction';
+import { setDrawerRight } from '../actions/drawerAction';
 import { setMenuChat } from "../actions/menuAction";
 import { toastInfo } from '../shared/toastInfo';
 import ChatMenu from '../Chat/ChatMenu';
-import DrawerBottom from './DrawerBottom';
 import DrawerRight from './DrawerRight';
 import TooltipCustom from '../shared/TooltipCustom';
-import Tooltip from '@material-ui/core/Tooltip';
 import Hidden from '@material-ui/core/Hidden';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Fab from '@material-ui/core/Fab';
-import Slide from '@material-ui/core/Slide';
 import Avatar from '@material-ui/core/Avatar';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import PhotoIcon from '@material-ui/icons/Photo';
-import CameraAltIcon from '@material-ui/icons/CameraAlt';
-import VideoCallIcon from '@material-ui/icons/VideoCall';
-import PersonIcon from '@material-ui/icons/Person';
-import IconButton from '@material-ui/core/IconButton';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import './ChatHeader.css';
 
-// const attachFileLists = [
-//     {
-//         title: "Photos & Videos",
-//         icon: <PhotoIcon />,
-//     },
-//     {
-//         title: "Camera",
-//         icon: <CameraAltIcon />,
-//     },
-//     {
-//         title: "Document",
-//         icon: <InsertDriveFileIcon />,
-//     },
-//     {
-//         title: "Contact",
-//         icon: <PersonIcon />,
-//     },
-//     {
-//         title: "Room",
-//         icon: <VideoCallIcon />,
-//     },
-// ]
 
-function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
+function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db, history }) {
     const [{ user },  dispatch] = useStateValue();
-    // const [showAttachFile, setShowAttachFile] = useState(false);
-    // const [fileUrl, setFileUrl] = useState(null);
+    const [role, setRole] = useState("");
+    
+    useEffect(() => {
+        const errorAbout = "errorAbout";
+        if(user.uid) {
+          db.collection("users")
+            .doc(user.uid)
+            .get().then(function(doc) {
+                if (doc.exists) {
+                    setRole(doc.data().role)
+                } 
+          }).catch(function(error) {
+                toastInfo(`${error}`, errorAbout, "top-center");
+          });  
+        }
+
+    }, [user.uid, user.displayName, user.isAnonymous]);
     
     const searchMessage = () => {
         const searchToastId = "search";
-        toastInfo("Search function is not available!", searchToastId, "top-center");
+        toastInfo("Search function is not yet available!", searchToastId, "top-center");
         dispatch(setDrawerRight(true));
     }
 
-    // const attachFile = () => {
-    //     const attachToastId = "attach";
-    //     toastInfo("All icons have the same functions, you can only upload images and gifs!",attachToastId, "bottom-right");
-    //     if(showAttachFile === false) {
-    //         setShowAttachFile(true);
-    //     } else {
-    //         setShowAttachFile(false);
-    //     }
-    // };
-
     const contactInfo = () => {
         const contactInfo = "contactInfo";
-        toastInfo("Contact Info is still not available!", contactInfo, "top-center");
+        toastInfo("Contact Info is not yet available!", contactInfo, "top-center");
     }
 
     const selectMessages = () => {
         const selectMessages = "selectMessages";
-        toastInfo("Select Messages is still not available!", selectMessages, "top-center");
+        toastInfo("Select Messages is not yet  available!", selectMessages, "top-center");
     }
 
     const muteNotifications = () => {
         const muteNotifications = "muteNotifications";
-        toastInfo("Mute Notifications still is not available!", muteNotifications, "top-center");
+        toastInfo("Mute Notifications is not yet available!", muteNotifications, "top-center");
     }
 
     const clearMessages = () => {
         const clearMessages = "clearMessages";
-        toastInfo("Clear Messages is still not available!", clearMessages, "top-center");
+        toastInfo("Clear Messages is not yet available!", clearMessages, "top-center");
     }
 
     const deleteRoom = () => {
         const roomDeleted = "roomDeleted";
 
-        if(roomId){
+        if(roomOwner===user.uid || role==="admin"){
             db.collection("rooms")
             .doc(roomId)
             .delete().then(function() {
@@ -101,10 +73,11 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
             }).catch(function(error) {
                 toastInfo(`Error removing room! ${error}`, roomDeleted, "top-center");
             });
+            dispatch(setMenuChat(null));
+            history.push('/');
+        }else{
+            toastInfo(`You are not allowed to delete room ${roomName}. Only the admin or room owner ${roomCreatedBy}`, roomDeleted, "top-center");
         }
-
-        dispatch(setMenuChat(null));
-        history.push('/');
     }
 
     const menuChatLists = [
@@ -130,30 +103,8 @@ function ChatHeader( { roomName, roomId, messages, db, storage, history }) {
         },
     ]
 
-    // const onFileChange = async (e) => {
-    //     const file = e.target.files[0];
-    //     const storageRef = storage.ref();
-    //     const imagesRef = storageRef.child(`rooms/${roomName}/images`);
-    //     const fileRef = imagesRef.child(file.name);
-    //     await fileRef.put(file);
-    //     setFileUrl(await fileRef.getDownloadURL());
-
-    //     dispatch(setDrawerBottom(true));
-    // };
-
-    // console.log("CHAT HEADER", fileUrl);
-
-    // const handleClickAway = ()  => {
-    //     setShowAttachFile(false);
-    // };
-
     return (
         <div className="chat__header">
-            {/* <DrawerBottom 
-                fileUrl={fileUrl} 
-                roomId={roomId} 
-            />  */}
-
             <DrawerRight />  
 
             <Hidden smUp>

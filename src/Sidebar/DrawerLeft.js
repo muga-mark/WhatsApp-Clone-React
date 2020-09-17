@@ -5,6 +5,7 @@ import { setMenuProfile } from '../actions/menuAction';
 import { auth } from '../firebase';
 import { toastInfo } from '../shared/toastInfo';
 import ProfileMenu from './ProfileMenu';
+import { storage } from '../firebase';
 import db from '../firebase';
 import Drawer from '@material-ui/core/Drawer';
 import Avatar from '@material-ui/core/Avatar';
@@ -45,7 +46,7 @@ const useStyles = makeStyles ((theme) => ({
 
 function DrawerLeft() {
     const classes = useStyles();
-    const [{ user, drawerLeft, menuProfile },  dispatch] = useStateValue();
+    const [{ user, drawerLeft },  dispatch] = useStateValue();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [showEditName, setShowEditName] = useState(false);
@@ -57,12 +58,6 @@ function DrawerLeft() {
         setName(user.displayName);
 
         if(user.uid) {
-            
-          db.collection("users").doc(user.uid).set({
-            name: user.displayName,
-            about: "Hey there! I am using WhatsApp.",
-          },{ merge: true });
-
           db.collection("users")
             .doc(user.uid)
             .get().then(function(doc) {
@@ -70,20 +65,33 @@ function DrawerLeft() {
                     setAbout(doc.data()?.about)
                 } else {
                     db.collection("users").doc(user.uid).set({
+                        name: user.displayName,
+                        photoURL: user.photoURL,
                         about: "Hey there! I am using WhatsApp.",
+                        role: "regular",
                     },{ merge: true });
                 }
           }).catch(function(error) {
                 toastInfo(`${error}`, errorAbout, "top-center");
           });  
         }
-
+        
         if(user.isAnonymous === true) {
-            db.collection("users").doc(user.uid).set({
+            db.collection("users")
+            .doc(user.uid)
+            .update({
                 name: user.displayName,
-                about: "Hey there! I am using WhatsApp.",
-            },{ merge: true });
+                role: "anonymous",
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
         }
+        
         
     }, [user.uid, user.displayName, user.isAnonymous]);
 
@@ -91,9 +99,18 @@ function DrawerLeft() {
         e.preventDefault();
         
         if(user.uid) {
-            db.collection("users").doc(user.uid).set({
+            db.collection("users")
+            .doc(user.uid)
+            .update({
                 name: name,
-            },{ merge: true });
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
 
             auth.currentUser.updateProfile({
                 displayName: name,
@@ -106,9 +123,18 @@ function DrawerLeft() {
         e.preventDefault();
          
         if(user.uid) {
-            db.collection("users").doc(user.uid).set({
+            db.collection("users")
+            .doc(user.uid)
+            .update({
                 about: about,
-            },{ merge: true });
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
         }
         setShowEditAbout(false);
     };
@@ -128,47 +154,29 @@ function DrawerLeft() {
     };
 
     const viewPhoto = () => {
-        setShowProfilePhoto(true);
+        const viewPhoto = "viewPhoto";
+        
+        if(user){
+            setShowProfilePhoto(true);
+        }else{
+            toastInfo("You have no photo!", viewPhoto, "top-center");
+        }
         dispatch(setMenuProfile(null));
     }
-
+    
     const viewPhotoClose = () => {
         setShowProfilePhoto(false);
     }
     
     const takePhoto = () => {
         const takePhoto = "takePhoto";
-        toastInfo("Take photo is not available!", takePhoto, "bottom-right");
-    }
-
-    const uploadPhoto = () => {
-        const uploadPhoto = "uploadPhoto";
-        toastInfo("Upload photo is not available!", uploadPhoto, "bottom-right");
+        toastInfo("Take photo is not yet available!", takePhoto, "top-center");
     }
 
     const removedPhoto = () => {
         const removedPhoto = "removedPhoto";
-        toastInfo("Removed photo is not available!", removedPhoto, "bottom-right");
+        toastInfo("Removed photo is not yet available!", removedPhoto, "top-center");
     }
-
-    const menuProfileLists = [
-        {
-            title: "View photo",
-            onClick: () => viewPhoto(),
-        },
-        {
-            title: "Take photo",
-            onClick: () => takePhoto(),
-        },
-        {
-            title: "Upload photo",
-            onClick: () => uploadPhoto(),
-        },
-        {
-            title: "Removed photo",
-            onClick: () => removedPhoto(),
-        },
-    ]
 
     return (
         <div>
@@ -192,9 +200,16 @@ function DrawerLeft() {
                     <div className="drawerLeft__content_photo">
                         {/* <Avatar src={user.photoURL} /> */}
                         <ProfileMenu 
-                            menuProfileLists={menuProfileLists} 
+                            // menuProfileLists={menuProfileLists} 
                             user={user}
-                            profilePhoto={user.photoURL}
+                            photo={user.photoURL}
+                            viewPhoto={() => viewPhoto()}
+                            takePhoto={() => takePhoto()}
+                            // handleUploadPhoto={() => handleUploadPhoto()}
+                            removedPhoto={() => removedPhoto()}
+                            toastInfo={toastInfo}
+                            db={db}
+                            storage={storage}
                         />
                         <Dialog
                             open={showProfilePhoto}

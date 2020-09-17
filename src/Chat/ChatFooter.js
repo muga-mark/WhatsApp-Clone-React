@@ -59,6 +59,15 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                     uid: user.uid,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 })
+                .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    db.collection("rooms").doc(roomId).collection('messages').doc(docRef.id).set({
+                        id: docRef.id
+                    },{ merge: true });
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
             }
         }
         setInput("");
@@ -66,7 +75,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
 
     const attachFile = () => {
         const attachToastId = "attach";
-        toastInfo("All icons have the same functions, you can only upload images and gifs!",attachToastId, "top-center");
+        toastInfo("All icons have the same functions, you can only upload images, gifs and videos!",attachToastId, "top-center");
         if(showAttachFile === false) {
             setShowAttachFile(true);
         } else {
@@ -77,33 +86,37 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
 
     const emoticons = () => {
         const emoticonToastId = "emoticon";
-        toastInfo("Emoticons is still not available!", emoticonToastId, "top-center");
+        toastInfo("Emoticons is not yet available!", emoticonToastId, "top-center");
     }
 
     const voiceMessage = () => {
         const voiceMessageToastId = "voiceMessage";
-        toastInfo("Voice Message is still not available!", voiceMessageToastId, "top-center");
+        toastInfo("Voice Message is not yet available!", voiceMessageToastId, "top-center");
     }
 
     const onFileChange = async (e) => {
+        const fileSizeToastId = "fileSizeToastId";
         const file = e.target.files[0];
-        const storageRef = storage.ref();
-        if(file.type.match('image.*')){
-            const imagesRef = storageRef.child(`rooms/${roomName}/images`);
-            const fileRef = imagesRef.child(file.name);
-            await fileRef.put(file);
-            setFileImageUrl(await fileRef.getDownloadURL());
-            console.log("uploading image", fileImageUrl);
+        if(file.size > 12 * 1024 * 1024){
+            toastInfo("File should not exceed more than 12MB", fileSizeToastId, "top-center"); 
+        }else{
+            const storageRef = storage.ref();
+            if(file.type.match('image.*')){
+                const imagesRef = storageRef.child(`rooms/${roomName}/images`);
+                const fileRef = imagesRef.child(file.name);
+                await fileRef.put(file);
+                setFileImageUrl(await fileRef.getDownloadURL());
+                console.log("uploading image", fileImageUrl);
+            }
+            else if(file.type.match('video.*')){
+                const videosRef = storageRef.child(`rooms/${roomName}/videos`);
+                const fileRef = videosRef.child(file.name);
+                await fileRef.put(file);
+                setFileVideoUrl(await fileRef.getDownloadURL());
+                console.log("uploading video", fileVideoUrl);
+            }
+            dispatch(setDrawerBottom(true));
         }
-        else if(file.type.match('video.*')){
-            const videosRef = storageRef.child(`rooms/${roomName}/videos`);
-            const fileVideoRef = videosRef.child(file.name);
-            await fileVideoRef.put(file);
-            setFileVideoUrl(await fileVideoRef.getDownloadURL());
-            console.log("uploading video", fileVideoUrl);
-        }
-        
-        dispatch(setDrawerBottom(true));
     };
 
     const handleClickAway = ()  => {
@@ -112,17 +125,13 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
 
     return (
         <div className="chat__footer">
-            {fileImageUrl? 
-                <DrawerBottom 
-                    fileImageUrl={fileImageUrl} 
-                    roomId={roomId} 
-                /> 
-                :
-                <DrawerBottom 
-                    fileVideoUrl={fileVideoUrl}
-                    roomId={roomId} 
-                /> 
-            }
+            <DrawerBottom 
+                fileVideoUrl={fileVideoUrl}
+                fileImageUrl={fileImageUrl}
+                setFileImageUrl={setFileImageUrl}
+                setFileVideoUrl={setFileVideoUrl}
+                roomId={roomId} 
+            /> 
             
             <TooltipCustom name="Emoticons" icon={<InsertEmoticonIcon />} onClick={() => emoticons()}/>
                 <div>
@@ -142,7 +151,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                                             placement="left">
                                         <Fab color="primary" aria-label="person">
                                             <div className="chat__icon">
-                                                <label for="file-input">
+                                                <label htmlFor="file-input">
                                                     {attachFileList.icon}
                                                 </label>
                                                 <input 
