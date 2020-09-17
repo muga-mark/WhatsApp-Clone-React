@@ -7,15 +7,21 @@
 .sidebarChat:hover {
     background-color: #ebebeb;
 }
+.sidebarChat__info{
+    width: 80% !important;
+}
 .sidebarChat__info > p, h2, h3 {
     margin: 0 0 0 15px;
     color: #4a4a4a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .sidebarChat__info > h2 {
     font-size: 16px;
 }
 .sidebarChat__info > p {
-    color: #A4A4A4;;
+    color: #A4A4A4;
 }
 .sideChat__photo {
     margin: 0 0 0 15px;

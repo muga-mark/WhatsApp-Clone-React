@@ -50,9 +50,28 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
 
     const sendMessage = (e) => {
         e.preventDefault();
-        
+        const youtubeLink = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
+        const facebookVideoLink = /^https?:\/\/www\.facebook\.com.*\/(video(s)?|watch|story)(\.php?|\/).+$/;
+
         if(roomId){
-            if(input){
+            if(youtubeLink.test(input) || facebookVideoLink.test(input)){
+                console.log("YOUTUBE LINK VALID");
+                db.collection("rooms").doc(roomId).collection('messages').add({
+                    video: input,
+                    name: user.displayName,
+                    uid: user.uid,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                })
+                .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    db.collection("rooms").doc(roomId).collection('messages').doc(docRef.id).set({
+                        id: docRef.id
+                    },{ merge: true });
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+            }else{
                 db.collection("rooms").doc(roomId).collection('messages').add({
                     message: input,
                     name: user.displayName,
