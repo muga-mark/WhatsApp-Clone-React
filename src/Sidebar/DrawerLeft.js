@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useStateValue } from '../StateProvider';
-import { setDrawerLeft } from '../actions/drawerAction';
-import { setMenuProfile } from '../actions/menuAction';
-import { auth } from '../firebase';
+//importing components
+import DropdownMenu from '../shared/DropdownMenu';
 import { toastInfo } from '../shared/toastInfo';
-import ProfileMenu from './ProfileMenu';
-import { storage } from '../firebase';
-import db from '../firebase';
+//importing material-ui
+import Zoom from '@material-ui/core/Zoom';
 import Drawer from '@material-ui/core/Drawer';
 import Avatar from '@material-ui/core/Avatar';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+//importing material-ui-icons
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@material-ui/core/styles';
-import Zoom from '@material-ui/core/Zoom';
+//importing styles
 import './DrawerLeft.css';
 
 const useStyles = makeStyles ((theme) => ({
@@ -44,14 +45,18 @@ const useStyles = makeStyles ((theme) => ({
     },
 }));
 
-function DrawerLeft() {
+function DrawerLeft({ drawerLeft, setDrawerLeft, db, auth, storage }) {
     const classes = useStyles();
-    const [{ user, drawerLeft },  dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [name, setName] = useState("");
     const [about, setAbout] = useState("");
     const [showEditName, setShowEditName] = useState(false);
     const [showEditAbout, setShowEditAbout] = useState(false);
     const [showProfilePhoto, setShowProfilePhoto] = useState(false);
+    const [uploadPhotoLink, setUploadPhotoLink] = useState(null);
+    const [showDialogUpload, setShowDialogUpload] = useState(false);
+    const [menuProfile, setMenuProfile] = useState(null);
+    const [photo, setPhoto] = useState("");
 
     useEffect(() => {
         const errorAbout = "errorAbout";
@@ -91,9 +96,16 @@ function DrawerLeft() {
                 console.error("Error updating document: ", error);
             });
         }
+
+        if(user.photoURL){
+            db.collection("users")
+            .doc(user.uid)
+            .onSnapshot(snapshot => (
+                setPhoto(snapshot.data()?.photoURL)
+            ));
+        }
         
-        
-    }, [user.uid, user.displayName, user.isAnonymous]);
+    }, [user.uid, user.displayName, user.isAnonymous, user.photoURL, db]);
 
     const updateName = (e) => {
         e.preventDefault();
@@ -148,7 +160,7 @@ function DrawerLeft() {
     };
 
     const handleDrawerClose = () => {
-        dispatch(setDrawerLeft(false));
+        setDrawerLeft(false);
         setShowEditName(false);
         setShowEditAbout(false);
     };
@@ -161,7 +173,7 @@ function DrawerLeft() {
         }else{
             toastInfo("You have no photo!", viewPhoto, "top-center");
         }
-        dispatch(setMenuProfile(null));
+        setMenuProfile(null);
     }
     
     const viewPhotoClose = () => {
@@ -177,6 +189,97 @@ function DrawerLeft() {
         const removedPhoto = "removedPhoto";
         toastInfo("Removed photo is not yet available!", removedPhoto, "top-center");
     }
+
+    const onFileChangeImage = async (e) => {
+        const imageFileSizeToastId = "imageFileSizeToastId";
+        const file = e.target.files[0];
+    
+        if(file.size > 3 * 1024 * 1024){
+            toastInfo("Image should not exceed more than 3Mb", imageFileSizeToastId, "top-center"); 
+        }else{
+            const storageRef = storage.ref();
+            if(user.isAnonymous === true){
+                const imagesRef = storageRef.child(`user/anonymous/${user.uid}`);
+                const fileRef = imagesRef.child(file.name);
+                await fileRef.put(file);
+                setUploadPhotoLink(await fileRef.getDownloadURL());
+                console.log("uploading image", uploadPhotoLink);
+            }else{
+                const imagesRef = storageRef.child(`user/regular/${user.uid}`);
+                const fileRef = imagesRef.child(file.name);
+                await fileRef.put(file);
+                setUploadPhotoLink(await fileRef.getDownloadURL());
+                console.log("uploading image", uploadPhotoLink);
+            }
+        }
+        setMenuProfile(null);
+        setShowDialogUpload(true);
+    };
+
+    const uploadPhoto = () => {
+        return <div className="profileMenu_uploadPhoto">
+                    <label htmlFor="file-input">
+                        Upload photo
+                    </label>
+                    <input 
+                        id="file-input"
+                        type="file" 
+                        onChange={onFileChangeImage} 
+                        accept="image/*"
+                    />
+                </div>
+    }
+
+    const handleUploadPhoto = () => {
+        const uploadPhotoError = "uploadPhotoError";
+        
+        if(uploadPhotoLink) {
+            auth.currentUser.updateProfile({
+                photoURL: uploadPhotoLink,
+            });
+            db.collection("users").doc(user.uid).set({
+                photoURL: uploadPhotoLink,
+            },{ merge: true });
+            setShowDialogUpload(false);
+        }else{
+            toastInfo("Select photo to upload!", uploadPhotoError, "top-center");
+        }
+    }
+
+    const handleDialogUploadClose = () => {
+        setShowDialogUpload(false);
+    };
+
+    const handleProfileMenu = (event) => {
+        setMenuProfile(event.currentTarget);
+    };
+
+    const handleProfileMenuClose = () => {
+        setMenuProfile(null);
+    };
+
+    const menuLists = [
+        {
+            title: "View Photo",
+            onClick: () => viewPhoto(),
+            id: Math.random()*100000,
+        },
+        {
+            title: "Take photo",
+            onClick: () => takePhoto(),
+            id: Math.random()*100000,
+        },
+        {
+            title: uploadPhoto(),
+            onClick: () => handleUploadPhoto(),
+            id: Math.random()*100000,
+        },
+        {
+            title: "Removed photo",
+            onClick: () => removedPhoto(),
+            id: Math.random()*100000,
+        },
+    ]
 
     return (
         <div>
@@ -198,29 +301,42 @@ function DrawerLeft() {
                 
                 <div className="drawerLeft__content">
                     <div className="drawerLeft__content_photo">
-                        {/* <Avatar src={user.photoURL} /> */}
-                        <ProfileMenu 
-                            // menuProfileLists={menuProfileLists} 
-                            user={user}
-                            photo={user.photoURL}
-                            viewPhoto={() => viewPhoto()}
-                            takePhoto={() => takePhoto()}
-                            // handleUploadPhoto={() => handleUploadPhoto()}
-                            removedPhoto={() => removedPhoto()}
-                            toastInfo={toastInfo}
-                            db={db}
-                            storage={storage}
+                        <div className="profilePhoto">
+                            <Zoom in={drawerLeft} style={{ transitionDelay: drawerLeft ? '300ms' : '0ms' }}>
+                                {photo?
+                                    <Avatar 
+                                        src={photo} 
+                                        className="profilePhoto__layer_bottom"
+                                    />
+                                :
+                                    <Avatar />    
+                                }
+                            </Zoom>
+                            <div className="profilePhoto__layer_top" onClick={handleProfileMenu}>
+                                <div className="profilePhoto__text">
+                                    <PhotoCameraIcon />
+                                    <p>CHANGE</p>
+                                    <p>PROFILE PHOTO</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <DropdownMenu 
+                            menuLists={menuLists}
+                            menu={menuProfile}
+                            handleMenuClose={handleProfileMenuClose}
                         />
+
                         <Dialog
                             open={showProfilePhoto}
                             fullScreen 
                             onClose={viewPhotoClose}
                             aria-labelledby="alert-dialog-title"
                             aria-describedby="alert-dialog-description"
-                        >
+                            >
                             <DialogTitle id="alert-dialog-title">
                                 <div>
-                                    <Avatar src={user.photoURL}/>
+                                    <Avatar src={photo}/>
                                 </div>
                                 <div>
                                     <IconButton edge="end" color="inherit" onClick={viewPhotoClose} aria-label="close">
@@ -230,9 +346,27 @@ function DrawerLeft() {
                             </DialogTitle>
                             <DialogContent>
                                 <Zoom in={showProfilePhoto} style={{ transitionDelay: showProfilePhoto ? '300ms' : '0ms' }}>
-                                    <img src={user.photoURL} alt="" className="drawerLeft__content_photo_img"/>
+                                    <img src={photo} alt="" className="drawerLeft__content_photo_img"/>
                                 </Zoom>
                             </DialogContent>
+                        </Dialog>
+                    </div>
+
+                    <div className="profileMenu__diaglog">
+                        <Dialog open={showDialogUpload} onClose={handleDialogUploadClose} aria-labelledby="form-dialog-title">
+                            <DialogTitle id="form-dialog-title">Upload Photo</DialogTitle>
+                            <DialogContent id="form-dialog-content">
+                                <div className="profileMenu__uploadPhoto_dialog">
+                                    <img src={uploadPhotoLink} alt="" />
+                                </div>
+                            </DialogContent>
+                            <DialogActions>
+                                <div className="profileMenu_uploadPhoto_iconButton">
+                                    <IconButton onClick={handleUploadPhoto} >
+                                        <CheckIcon />
+                                    </IconButton>
+                                </div>
+                            </DialogActions>
                         </Dialog>
                     </div>
 
@@ -240,20 +374,20 @@ function DrawerLeft() {
                         <p>Your Name</p>
                         <form>
                             { showEditName ? 
-                            <>
-                                <input 
-                                    value={name} 
-                                    onChange={e => setName(e.target.value)} 
-                                    type="text"
-                                    styles={{borderBottom: '1px solid green !important'}}
-                                />
-                                <CheckIcon onClick={updateName} /> 
-                            </>
+                                <>
+                                    <input 
+                                        value={name} 
+                                        onChange={e => setName(e.target.value)} 
+                                        type="text"
+                                        styles={{borderBottom: '1px solid green !important'}}
+                                    />
+                                    <CheckIcon onClick={updateName} /> 
+                                </>
                             :
-                            <>
-                                <span>{name}</span>
-                                <EditIcon onClick={editName}/> 
-                            </>
+                                <>
+                                    <span>{name}</span>
+                                    <EditIcon onClick={editName}/> 
+                                </>
                             }   
                         </form>          
                     </div>
@@ -268,19 +402,19 @@ function DrawerLeft() {
                         <p>About</p>
                         <form>
                             { showEditAbout ? 
-                            <>
-                                <input 
-                                    value={about} 
-                                    onChange={e => setAbout(e.target.value)} 
-                                    type="text" 
-                                />
-                                <CheckIcon onClick={updateAbout} /> 
-                            </>
+                                <>
+                                    <input 
+                                        value={about} 
+                                        onChange={e => setAbout(e.target.value)} 
+                                        type="text" 
+                                    />
+                                    <CheckIcon onClick={updateAbout} /> 
+                                </>
                             :
-                            <>
-                                <span>{about}</span>
-                                <EditIcon onClick={editAbout}/> 
-                            </>
+                                <>
+                                    <span>{about}</span>
+                                    <EditIcon onClick={editAbout}/> 
+                                </>
                             }   
                         </form>
                     </div>

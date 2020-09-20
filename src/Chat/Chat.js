@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 import { useHistory } from 'react-router-dom';
+//importing firebase
 import { storage, firebase } from '../firebase';
 import db from '../firebase';
+//importing components
 import ChatHeader from './ChatHeader';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import ChatLandingScreen from './ChatLandingScreen';
+//importing material-ui
 import CircularProgress from '@material-ui/core/CircularProgress';
+//importing styles
 import 'react-toastify/dist/ReactToastify.css';
 import './Chat.css';
 
@@ -48,7 +52,7 @@ function Chat() {
             history.push('/');
         }
     }, [roomId, history]);
-
+    console.log("CHAT MESSAGE-->", messages)
     return (
         <div className="chat">
             {roomId ? 

@@ -31,6 +31,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    border-radius: 20%!important;
 }
 .chat__body_video_container {
     display: flex;
@@ -39,16 +40,23 @@
 }
 .chat__message_box {
     display: flex;
+    padding-bottom: 2px;
+}
+.chat__message_box_media {
+    display: flex;
+    padding-bottom: 10px;
 }
 .chat__message {
     position: relative;
     font-size: 16px;
     padding: 5px 10px 2px 10px ;
-    border-radius: 5px;
-    width: fit-content ;
+    border-radius: 6px;
+    width: fit-content;
+    max-width: 500px;
     background-color: #ffffff;
     margin-bottom: 30px;
     color: #4a4a4a;
+    white-space: normal;
 }
 .chat__receiver{ 
     background-color: #DCF8C6;
@@ -66,14 +74,32 @@
     right: 10px;
 }
 .chat__timestamp_container {
-    margin-left: auto;
+    width: fit-content; 
+    white-space: nowrap;
+    margin-left: 50px;
+    margin-right: 5px;
 }
+
 .chat__timestamp {
-    margin-left: 10px;
-    font-size: xx-small;
-    margin-top: 22px;
+    font-size: 10px;
+    font-weight: 500;
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
     color: gray;
 }
+
+.chat__timestamp_media {
+    color: #EEEEE3 !important;
+    font-weight: 600;
+    font-size: 12px;
+    bottom: 8px;
+}
+
+.chat__timestamp_media_display {
+    display: none;
+}
+
 @media screen and (max-width: 600px) {
     .chat__message_reminder {
         font-size: 12px;

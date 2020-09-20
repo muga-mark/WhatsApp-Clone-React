@@ -1,61 +1,73 @@
 import React, { useState } from 'react';
 import { useStateValue } from '../StateProvider';
 import { toastInfo } from '../shared/toastInfo';
+//importing components
+import DrawerBottom from './DrawerBottom';
 import TooltipCustom from '../shared/TooltipCustom';
+//importing material-ui
+import Tooltip from '@material-ui/core/Tooltip';
+import Fab from '@material-ui/core/Fab';
+import Slide from '@material-ui/core/Slide';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+//importing material-ui-icons
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import { setDrawerBottom } from '../actions/drawerAction';
-import DrawerBottom from './DrawerBottom';
-import Tooltip from '@material-ui/core/Tooltip';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Fab from '@material-ui/core/Fab';
-import Slide from '@material-ui/core/Slide';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import PhotoIcon from '@material-ui/icons/Photo';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import PersonIcon from '@material-ui/icons/Person';
+//importing styles
 import './ChatFooter.css';
 
 const attachFileLists = [
     {
         title: "Room",
         icon: <VideoCallIcon />,
+        id: Math.random()*100000,
     },
     {
         title: "Contact",
         icon: <PersonIcon />,
+        id: Math.random()*100000,
     },
     {
         title: "Document",
         icon: <InsertDriveFileIcon />,
+        id: Math.random()*100000,
     },
     {
         title: "Camera",
         icon: <CameraAltIcon />,
+        id: Math.random()*100000,
     },
     {
         title: "Photos & Videos",
         icon: <PhotoIcon />,
+        id: Math.random()*100000,
     },
 ]
 
 function ChatFooter( { roomName, roomId, db, firebase, storage }) {
-    const [{ user },  dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [input, setInput] = useState('');
     const [showAttachFile, setShowAttachFile] = useState(false);
     const [fileImageUrl, setFileImageUrl] = useState(null);
     const [fileVideoUrl, setFileVideoUrl] = useState(null);
+    const [drawerBottom, setDrawerBottom] = useState(false);
 
     const sendMessage = (e) => {
         e.preventDefault();
         const youtubeLink = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
         const facebookVideoLink = /^https?:\/\/www\.facebook\.com.*\/(video(s)?|watch|story)(\.php?|\/).+$/;
+        const vimeoLink =  /(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
+        const soundcloudLink = /^https?:\/\/(soundcloud\.com|snd\.sc)\/(.*)$/;
+        const dailymotionLink = /^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
 
         if(roomId){
-            if(youtubeLink.test(input) || facebookVideoLink.test(input)){
-                console.log("YOUTUBE LINK VALID");
+            if(youtubeLink.test(input) || facebookVideoLink.test(input) || vimeoLink.test(input) || soundcloudLink.test(input) || dailymotionLink.test(input)){
+                // console.log("YOUTUBE LINK VALID");
                 db.collection("rooms").doc(roomId).collection('messages').add({
                     video: input,
                     name: user.displayName,
@@ -134,7 +146,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                 setFileVideoUrl(await fileRef.getDownloadURL());
                 console.log("uploading video", fileVideoUrl);
             }
-            dispatch(setDrawerBottom(true));
+            setDrawerBottom(true);
         }
     };
 
@@ -145,11 +157,16 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
     return (
         <div className="chat__footer">
             <DrawerBottom 
+                drawerBottom={drawerBottom}
+                setDrawerBottom={setDrawerBottom}
                 fileVideoUrl={fileVideoUrl}
                 fileImageUrl={fileImageUrl}
                 setFileImageUrl={setFileImageUrl}
                 setFileVideoUrl={setFileVideoUrl}
                 roomId={roomId} 
+                db={db}
+                firebase={firebase}
+                storage={storage}
             /> 
             
             <TooltipCustom name="Emoticons" icon={<InsertEmoticonIcon />} onClick={() => emoticons()}/>
@@ -163,7 +180,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                         <ClickAwayListener onClickAway={handleClickAway}>
                             <div className="chat__attachFile">
                                 {attachFileLists.map((attachFileList) => 
-                                <Slide direction="up" in={attachFile} mountOnEnter unmountOnExit>
+                                <Slide key={attachFileList.id} direction="up" in={attachFile} mountOnEnter unmountOnExit>
                                     <Tooltip title={<span style={{fontSize: '14px', padding: '8px 5px 8px 5px'}}>
                                                         {attachFileList.title}
                                                     </span>} 

@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { setDrawerRight } from '../actions/drawerAction';
-import { setMenuChat } from "../actions/menuAction";
-import { toastInfo } from '../shared/toastInfo';
-import ChatMenu from '../Chat/ChatMenu';
+//importing components
+import DropdownMenu from '../shared/DropdownMenu';
 import DrawerRight from './DrawerRight';
 import TooltipCustom from '../shared/TooltipCustom';
+import { toastInfo } from '../shared/toastInfo';
+//importing material-ui
 import Hidden from '@material-ui/core/Hidden';
 import Avatar from '@material-ui/core/Avatar';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import IconButton from '@material-ui/core/IconButton';
+//importing material-ui-icons
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+//importing styles
 import './ChatHeader.css';
 
-
 function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db, history }) {
-    const [{ user },  dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
+    const [drawerRight, setDrawerRight] = useState(false);
+    const [menuChat, setMenuChat] = useState(null);
     const [role, setRole] = useState("");
     
     useEffect(() => {
@@ -33,12 +37,12 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
           });  
         }
 
-    }, [user.uid, user.displayName, user.isAnonymous]);
+    }, [user.uid, user.displayName, user.isAnonymous, db]);
     
     const searchMessage = () => {
         const searchToastId = "search";
         toastInfo("Search function is not yet available!", searchToastId, "top-center");
-        dispatch(setDrawerRight(true));
+        setDrawerRight(true);
     }
 
     const contactInfo = () => {
@@ -73,39 +77,54 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
             }).catch(function(error) {
                 toastInfo(`Error removing room! ${error}`, roomDeleted, "top-center");
             });
-            dispatch(setMenuChat(null));
             history.push('/');
         }else{
             toastInfo(`You are not allowed to delete room ${roomName}. Only the admin or room owner ${roomCreatedBy}`, roomDeleted, "top-center");
         }
     }
 
+    const handleMenuClose = () => {
+        setMenuChat(null);
+    };
+
+    const handleMenuOpen = (event) => {
+        setMenuChat(event.currentTarget);
+    };
+
     const menuChatLists = [
         {
             title: "Contact info",
             onClick: () => contactInfo(),
+            id: Math.random()*100000,
         },
         {
             title: "Select messages",
             onClick: () => selectMessages(),
+            id: Math.random()*100000,
         },
         {
             title: "Mute notifications",
             onClick: () => muteNotifications(),
+            id: Math.random()*100000,
         },
         {
             title: "Clear messages",
             onClick: () => clearMessages(),
+            id: Math.random()*100000,
         },
         {
             title: "Delete Room",
             onClick: () => deleteRoom(),
+            id: Math.random()*100000,
         },
     ]
 
     return (
         <div className="chat__header">
-            <DrawerRight />  
+            <DrawerRight 
+                drawerRight={drawerRight} 
+                setDrawerRight={setDrawerRight}
+            />  
 
             <Hidden smUp>
                 <Link to='/'>
@@ -144,7 +163,17 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
                     icon={<SearchOutlinedIcon/>} 
                     onClick={searchMessage}
                 />
-                <ChatMenu menuChatLists={menuChatLists} />
+                <TooltipCustom 
+                    name="Menu" 
+                    icon={<MoreVertIcon />} 
+                    onClick={handleMenuOpen}
+                />
+                <DropdownMenu 
+                    menuLists={menuChatLists} 
+                    menu={menuChat}
+                    handleMenuOpen={handleMenuOpen}
+                    handleMenuClose={handleMenuClose}
+                />
             </div>
         </div>
     )

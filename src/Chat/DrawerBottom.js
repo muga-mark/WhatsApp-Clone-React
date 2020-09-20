@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { setDrawerBottom } from '../actions/drawerAction';
-import firebase from 'firebase';
-import db from '../firebase';
+import ReactPlayer from 'react-player';
+//importing material-ui
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
+import { makeStyles } from '@material-ui/core/styles';
+//importing material-ui-icons
 import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
-import { makeStyles } from '@material-ui/core/styles';
-import ReactPlayer from 'react-player'
+//importing styles
 import './DrawerBottom.css';
 
 const useStyles = makeStyles ((theme) => ({
@@ -49,14 +49,11 @@ const useStyles = makeStyles ((theme) => ({
     }
 }));
 
-function DrawerBottom( {fileImageUrl, fileVideoUrl, setFileVideoUrl, setFileImageUrl} ) {
+function DrawerBottom({ drawerBottom, setDrawerBottom, fileImageUrl, fileVideoUrl, setFileVideoUrl, setFileImageUrl, firebase, db, storage }) {
     const classes = useStyles();
-    const [{ user, drawerBottom },  dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [caption, setCaption] = useState(""); 
     const { roomId } = useParams();
-
-    console.log("fileImageUrl",fileImageUrl);
-    console.log("fileVideoUrl",fileVideoUrl);
 
     const handleUpload = (e) => {
         e.preventDefault();
@@ -81,11 +78,11 @@ function DrawerBottom( {fileImageUrl, fileVideoUrl, setFileVideoUrl, setFileImag
             setFileVideoUrl(null);
         }
         setCaption("");
-        dispatch(setDrawerBottom(false));
+        setDrawerBottom(false);
     }
 
     const handleDrawerClose = () => {
-        dispatch(setDrawerBottom(false));
+        setDrawerBottom(false);
     };
 
     return (
@@ -98,8 +95,8 @@ function DrawerBottom( {fileImageUrl, fileVideoUrl, setFileVideoUrl, setFileImag
                 >
                 <div className="drawerBottom__header">
                     <div className="drawerBottom__header_container">
-                        <IconButton>
-                            <CloseIcon onClick={handleDrawerClose}/> 
+                        <IconButton onClick={handleDrawerClose}>
+                            <CloseIcon /> 
                         </IconButton>
                         <p>Preview</p>
                     </div>

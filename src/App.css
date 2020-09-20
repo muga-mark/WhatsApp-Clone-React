@@ -46,4 +46,7 @@
   .app__body {
       display: inline;
   }
+  .app__loading {
+    width: 200px;
+  }
 }

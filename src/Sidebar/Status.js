@@ -5,7 +5,10 @@ import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 function Status() {
     return (
         <div>
-            <TooltipCustom name="Status" icon={<DonutLargeIcon />} />
+            <TooltipCustom 
+                name="Status" 
+                icon={<DonutLargeIcon />} 
+            />
         </div>
     )
 }

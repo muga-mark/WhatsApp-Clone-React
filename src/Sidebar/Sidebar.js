@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import { useStateValue } from '../StateProvider';
-import { setDrawerLeft } from "../actions/drawerAction";
-import { setMenuSidebar } from "../actions/menuAction";
-import { toastInfo } from '../shared/toastInfo';
-import db from '../firebase';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { auth } from '../firebase';
-import SearchBar from '../shared/SearchBar';
-import DrawerLeft from './DrawerLeft';
-// import searchRoom from '../shared/searchRoom';
-import UserProfile from './UserProfile';
+import { useStateValue } from '../StateProvider';
+//importing firebase
+import db from '../firebase';
+import { auth, storage } from '../firebase';
+//importing components
+import UserAvatar from './UserAvatar';
 import NewChat from './NewChat';
 import Status from './Status';
-import SidebarMenu from './SidebarMenu';
+import DropdownMenu from '../shared/DropdownMenu';
+import DrawerLeft from './DrawerLeft';
+import SearchBar from '../shared/SearchBar';
 import SidebarChat from './SidebarChat';
+import { toastInfo } from '../shared/toastInfo';
+import TooltipCustom from '../shared/TooltipCustom';
+//importing material-ui
 import CircularProgress from '@material-ui/core/CircularProgress';
-// import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+//importing styles
 import './Sidebar.css';
 
 function Sidebar( { rooms }) {
     const history = useHistory();
     const [searchedRoom, setSearchedRoom] = useState([]);
     const [search, setSearch] = useState('');
-    const [{ user },  dispatch] = useStateValue();
+    const [{ user }] = useStateValue();
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    
+    const [drawerLeft, setDrawerLeft] = useState(false);
+    const [menuSidebar, setMenuSidebar] = useState(null);
+
     useEffect(() => {
         if(rooms.length>0){
             setLoading(true);
@@ -80,8 +83,16 @@ function Sidebar( { rooms }) {
     }
 
     const handleDrawerLeftOpen = () => {
-        dispatch(setDrawerLeft(true));
-        dispatch(setMenuSidebar(null));
+        setMenuSidebar(null);
+        setDrawerLeft(true);
+    }
+
+    const handleMenuOpen = (event) => {
+        setMenuSidebar(event.currentTarget);
+    }
+
+    const handleMenuClose = () => {
+        setMenuSidebar(null);
     }
 
     const archive = () => {
@@ -123,53 +134,65 @@ function Sidebar( { rooms }) {
         {
             title: "New Group",
             onClick: () => newGroup(),
+            id: Math.random()*100000,
         },
         {
             title: "Profile",
             onClick: () => handleDrawerLeftOpen(),
+            id: Math.random()*100000,
         },
         {
             title: "Archived",
             onClick: () => archive(),
+            id: Math.random()*100000,
         },
         {
             title: "Starred",
             onClick: () => starred(),
+            id: Math.random()*100000,
         },
         {
             title: "Settings",
             onClick: () => settings(),
+            id: Math.random()*100000,
         },
         {
             title: "Logout",
             onClick: () => logout(),
+            id: Math.random()*100000,
         },
     ]
 
     return (
         <div className="sidebar">
-            {/* <ToastContainer 
-                position="bottom-right"
-                autoClose={5000}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-            /> */}
-
             <div className="sidebar__header">
-                <UserProfile 
+                <UserAvatar 
                     id="UserProfile"
                     photoURL={user.photoURL} 
                     onClick={() => handleDrawerLeftOpen()}
                 />
-                <DrawerLeft />
+                <DrawerLeft 
+                    drawerLeft={drawerLeft} 
+                    setDrawerLeft={setDrawerLeft} 
+                    db={db}
+                    auth={auth}
+                    storage={storage}
+                />
                 
                 <div className="sidebar__headerRight">
                     <Status />
                     <NewChat user={user}/>
-                    <SidebarMenu menuLists={menuLists} />
+                    <TooltipCustom 
+                        name="Menu" 
+                        icon={<MoreVertIcon />} 
+                        onClick={handleMenuOpen}
+                    />
+                    <DropdownMenu 
+                        menuLists={menuLists}
+                        menu={menuSidebar}
+                        handleMenuOpen={handleMenuOpen}
+                        handleMenuClose={handleMenuClose}
+                    />
                 </div>
             </div>
 

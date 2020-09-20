@@ -157,7 +157,8 @@
     display: flex;
 }
 .MuiTypography-h6 div:last-child {
-    margin-left: auto;;
+    margin-left: auto;
+    margin-right: 15px;
 }
 .drawerLeft__content_photo_img {
     width: 100%;

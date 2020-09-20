@@ -1,11 +1,12 @@
 import React from 'react';
-import { useStateValue } from '../StateProvider';
-import { setDrawerRight } from '../actions/drawerAction';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+//importing material-ui
 import Drawer from '@material-ui/core/Drawer';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
+//importing material-ui-icons
+import CloseIcon from '@material-ui/icons/Close';
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+//importing styles
 import './DrawerRight.css';
 
 const useStyles = makeStyles ((theme) => ({
@@ -31,12 +32,11 @@ const useStyles = makeStyles ((theme) => ({
     },
 }));
 
-function DrawerRight({ searchMessage }) {
+function DrawerRight({ drawerRight, setDrawerRight }) {
     const classes = useStyles();
-    const [{ drawerRight },  dispatch] = useStateValue();
     
     const handleDrawerClose = () => {
-        dispatch(setDrawerRight(false))
+        setDrawerRight(false);
     };
     
     return (
