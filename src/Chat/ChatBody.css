@@ -75,10 +75,12 @@
     right: 10px;
 }
 .chat__timestamp_container {
-    width: fit-content; 
-    white-space: nowrap;
+    /* width: fit-content;  */
+    /* white-space: nowrap; */
     margin-left: 60px;
     margin-right: 5px;
+    /* height: fit-content; */
+    /* margin-top: 10px; */
 }
 .chat__timestamp_container > .chat__timestamp > .MuiSvgIcon-root {
     font-size: 13px !important;

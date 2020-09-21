@@ -37,13 +37,10 @@
     display: none;  /* Safari and Chrome */
 }
 .sidebar__chatsContainer_empty {
-    /* align-content: center; */
-    /* margin: 0 auto; */
     text-align: center;
     height: 100%;
     width: 100%;
     display: table;
-    /* background-color: black; */
 }
 .sidebar__chatsContainer_empty > span {
     display: table-cell;
@@ -66,6 +63,7 @@
     .sidebar {
         flex: 1 !important;
         width: 100vw;
+        height: 100%;
         background-color: #045E54;
     }
     .sidebar__headerRight {

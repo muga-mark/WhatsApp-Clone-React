@@ -29,6 +29,26 @@ function Sidebar( { rooms }) {
     const [loading, setLoading] = useState(false);
     const [drawerLeft, setDrawerLeft] = useState(false);
     const [menuSidebar, setMenuSidebar] = useState(null);
+    const [isSearchFound, setIsSetSearchFound] = useState(false);
+
+    const findRoom = function(myRooms){
+        return function(x){
+            var searchRoom = x.data.name + '';
+            return searchRoom.toLowerCase().includes(myRooms.toLowerCase()) || !myRooms;
+        }
+    }
+    
+    const rooomResult = () => {
+        return (
+            <>
+                {rooms.filter(findRoom(search)).map(room => (
+                    <p key={room.id}>
+                        {room.name}
+                    </p>
+                ))}
+            </>
+        )
+    }
 
     useEffect(() => {
         if(rooms.length>0){
@@ -36,46 +56,56 @@ function Sidebar( { rooms }) {
         }
 
         if(search) {
-            db.collection("rooms")
-            .where("name", ">=", `${search}`)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    setSearchedRoom(querySnapshot.docs.map(doc => 
-                          ({
-                              id: doc.id,
-                              data: doc.data(),
-                          }))
-                      )
-                });
-            })
-            .catch(function(error) {
-                setErrorMessage(error);
-            });
+            // db.collection("rooms")
+            // .where("name", ">=", `${search}`)
+            // .get()
+            // .then(function(querySnapshot) {
+            //     querySnapshot.forEach(function(doc) {
+            //         setSearchedRoom(querySnapshot.docs.map(doc => 
+            //               ({
+            //                   id: doc.id,
+            //                   data: doc.data(),
+            //               }))
+            //           )
+            //     });
+            // })
+            // .catch(function(error) {
+            //     setErrorMessage(error);
+            // });
 
-            db.collection("rooms")
-            .where("name", "==", `${search}`)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    setSearchedRoom(querySnapshot.docs.map(doc => 
-                          ({
-                              id: doc.id,
-                              data: doc.data(),
-                          }))
-                      )
-                });
-            })
-            .catch(function(error) {
-                setErrorMessage(error);
-            });
+            // db.collection("rooms")
+            // .where("name", "==", `${search}`)
+            // .get()
+            // .then(function(querySnapshot) {
+            //     querySnapshot.forEach(function(doc) {
+            //         setSearchedRoom(querySnapshot.docs.map(doc => 
+            //               ({
+            //                   id: doc.id,
+            //                   data: doc.data(),
+            //               }))
+            //           )
+            //     });
+            // })
+            // .catch(function(error) {
+            //     setErrorMessage(error);
+            // });
+
+            var result = rooomResult();
+            console.log("result", result)
+            if(result.props.children.length>0){
+                setIsSetSearchFound(true);
+                console.log("search sucess");
+            }else{
+                setIsSetSearchFound(false);
+                console.log("search fail");
+            }
                
-        } else if (!search) {
-            setSearchedRoom([]);
-        }
+        } 
 
 
     }, [search, rooms]);
+    console.log("ROOOOMS", rooms);
+    
     
     const newGroup = () => {
         const newGroup = "newGroup";
@@ -212,19 +242,27 @@ function Sidebar( { rooms }) {
                 {loading ?
                 <>
                     {rooms.length>0 ?          
-                        <div className="sidebar__chatsContainer">
-                            {search ? 
-                                <div>
-                                    {searchedRoom.map(room => (
-                                        <SidebarChat 
-                                            key={room.id} 
-                                            id={room.id} 
-                                            name={room.data.name} 
-                                        />
-                                    ))}
-                                </div>  
-                            : 
-                                <div> 
+                        <>
+                            {search?
+                                <>
+                                    {isSearchFound ? 
+                                        <div>
+                                            {rooms.filter(findRoom(search)).map(room => (
+                                                <SidebarChat 
+                                                    key={room.id} 
+                                                    id={room.id} 
+                                                    name={room.data.name} 
+                                                />
+                                            ))}
+                                        </div>  
+                                    : 
+                                        <div className="sidebar__chatsContainer_empty">
+                                            <span>No chat found</span>
+                                        </div>  
+                                    }
+                                </>
+                            :
+                                <>
                                     {rooms.map(room => (
                                         <SidebarChat 
                                             key={room.id} 
@@ -232,9 +270,9 @@ function Sidebar( { rooms }) {
                                             name={room.data.name} 
                                         />
                                     ))}
-                                </div>  
+                                </>
                             }
-                        </div>
+                        </>
                     :
                         <div className="sidebar__chatsContainer_empty">
                             <span>No chats</span>
