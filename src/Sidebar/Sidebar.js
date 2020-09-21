@@ -257,7 +257,7 @@ function Sidebar( { rooms }) {
                                         </div>  
                                     : 
                                         <div className="sidebar__chatsContainer_empty">
-                                            <span>No chat found</span>
+                                            <span>No chat room found</span>
                                         </div>  
                                     }
                                 </>
