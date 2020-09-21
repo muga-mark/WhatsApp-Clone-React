@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 //importing firebase
 import db from '../firebase';
-import { auth, storage } from '../firebase';
+import { auth, storage, firebase } from '../firebase';
 //importing components
 import UserAvatar from './UserAvatar';
 import NewChat from './NewChat';
@@ -125,10 +125,10 @@ function Sidebar( { rooms }) {
         }
     }
 
-    const searchRoom = () => {
-        const searchedRoom = "searchedRoom";
-        toastInfo("Search is case-sensitive!", searchedRoom, "top-center");
-    }
+    // const searchRoom = () => {
+    //     const searched = "searchedRoom";
+    //     toastInfo("Search is case-sensitive!", searched, "top-center");
+    // }
 
     const menuLists = [
         {
@@ -162,7 +162,7 @@ function Sidebar( { rooms }) {
             id: Math.random()*100000,
         },
     ]
-
+    // console.log("sidebar room search", searchedRoom);
     return (
         <div className="sidebar">
             <div className="sidebar__header">
@@ -181,7 +181,11 @@ function Sidebar( { rooms }) {
                 
                 <div className="sidebar__headerRight">
                     <Status />
-                    <NewChat user={user}/>
+                    <NewChat 
+                        db ={db}
+                        user={user}
+                        firebase={firebase}
+                    />
                     <TooltipCustom 
                         name="Menu" 
                         icon={<MoreVertIcon />} 
@@ -197,7 +201,7 @@ function Sidebar( { rooms }) {
             </div>
 
             <SearchBar 
-                searchRoom={() => searchRoom()} 
+                // onClick={() => searchRoom()} 
                 search={search} 
                 setSearch={setSearch} 
                 placeholder="Search or start new chat" 

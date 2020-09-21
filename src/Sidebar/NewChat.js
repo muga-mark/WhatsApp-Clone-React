@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TooltipCustom from '../shared/TooltipCustom';
-import db from '../firebase';
+// import db from '../firebase';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,9 +8,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChatIcon from '@material-ui/icons/Chat';
-import { firebase } from '../firebase';
+// import { firebase } from '../firebase';
 
-function NewChat({ user }) {
+function NewChat({ user, db, firebase }) {
     const [roomName, setRoomName] = useState("");
     const [open, setOpen] = useState(false);
     

@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+//importing components
+import SearchBar from '../shared/SearchBar';
+import { toastInfo } from '../shared/toastInfo';
 //importing material-ui
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 //importing material-ui-icons
 import CloseIcon from '@material-ui/icons/Close';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import DoneIcon from '@material-ui/icons/Done';
 //importing styles
 import './DrawerRight.css';
 
@@ -32,13 +36,52 @@ const useStyles = makeStyles ((theme) => ({
     },
 }));
 
-function DrawerRight({ drawerRight, setDrawerRight }) {
+function DrawerRight({ drawerRight, setDrawerRight, roomId, messages, db, user }) {
     const classes = useStyles();
+    // const [searchedMessage, setSearchedMessage] = useState([]);
+    const [search, setSearch] = useState('');
+    // const [errorMessage, setErrorMessage] = useState("");
+    const [isFoundMessage, setIsFoundMessage] = useState(false);
+    
+    const findMessage = function(myMessages){
+        return function(x){
+            var searchMessage = x.message + '' + x.caption;
+            return searchMessage.toLowerCase().includes(myMessages.toLowerCase()) || !myMessages;
+        }
+    }
+    
+    const messageResult = () => {
+        return (
+            <>
+                {messages.filter(findMessage(search)).map(message => (
+                    <p key={message.id}>
+                        {message.message}
+                        {message.caption}
+                    </p>
+                ))}
+            </>
+        )
+    }
+    
+    useEffect(() => {
+        if(search) {
+            var result = messageResult();
+            // console.log("result", result.props.children)
+            if(result.props.children.length>0){
+                setIsFoundMessage(true);
+                console.log("search message sucess");
+            }else{
+                setIsFoundMessage(false);
+                console.log("search message fail");
+            }
+        }
+    }, [search]);
+
     
     const handleDrawerClose = () => {
         setDrawerRight(false);
     };
-    
+
     return (
         <div>
             <Drawer
@@ -54,15 +97,48 @@ function DrawerRight({ drawerRight, setDrawerRight }) {
                     <p>Search Messages</p>
                 </div>
 
-                <div className="drawerRight__search">
-                    <div className="drawerRight__searchContainer">
-                        <SearchOutlinedIcon />
-                        <input type="text" placeholder="Search..." />
-                    </div>
-                </div>
+                <SearchBar 
+                    // onClick={() => searchMessage()} 
+                    search={search} 
+                    setSearch={setSearch} 
+                    placeholder="Search..." 
+                />
 
-                <div className="drawerRight__content">
-                    <p>Search for messages in this room.</p>
+                <div className={`drawerRight__content ${(isFoundMessage===true && search.length>0) && "drawerRight__content_searched"}`}>
+                    {search.length>0? 
+                        <>
+                            {isFoundMessage? 
+                                <>
+                                    {messages.filter(findMessage(search)).map(message => (
+                                        <div key={message.id} className="drawerRight__content_searched_message">
+                                            <p>
+                                                {new Date(message.timestamp?.toDate())
+                                                        .toLocaleTimeString('en-US', 
+                                                            { 
+                                                                hour: 'numeric', 
+                                                                hour12: true, 
+                                                                minute: 'numeric' 
+                                                            }
+                                                        )
+                                                }<br/>
+                                            </p>
+                                            <p id="last_p">
+                                                {message.uid === user.uid ?
+                                                    <DoneIcon />
+                                                :null}
+                                                {message.message}
+                                                {message.caption}
+                                            </p>
+                                            <Divider />
+                                        </div>
+                                    ))}
+                                </>
+                                : <p>No message found</p>
+                            }
+                        
+                        </>
+                        : <p>Search for messages in this room.</p>
+                    }
                 </div>
             </Drawer>
         </div>

@@ -43,7 +43,7 @@
 .drawerRight__searchContainer > .MuiSvgIcon-root {
     color: grey;
     padding: 10px;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 .drawerRight__content {
     display: flex;
@@ -61,6 +61,31 @@
 }
 .drawerRight__content::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
+}
+.drawerRight__content_searched {
+    padding: 0;
+    
+}
+.drawerRight__content_searched_message {
+    margin: 10px 0 10px 0;
+    text-align: left;
+}
+.drawerRight__content_searched_message > p {
+    padding-left: 10px;
+    color: gray;
+    font-size: 14px;
+}
+.drawerRight__content_searched_message > .MuiDivider-root {
+    margin-top: 10px;
+}
+#last_p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#last_p > .MuiSvgIcon-root{
+    font-size: 14px;
+    margin-right: 2px;
 }
 .drawerRight__content_photo {
     height: 180px;

@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
+//importing component
+import DialogCustom from '../shared/DialogCustom';
+//importing material-ui-icon
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
+import AlarmIcon from '@material-ui/icons/Alarm';
+import DoneIcon from '@material-ui/icons/Done';
+//importing styles
 import './ChatBody.css'
 
 function ChatBody({ messages, user, roomId }) {
     const messagesEndRef = useRef(null);
+    // const { roomId } = useParams();
     const [playing, setPlaying] = useState(false);
+    const [showDialog, setShowDialog] = useState(false);
+    
 
     const handlePlay = () => {
         setPlaying(true);
@@ -15,11 +24,27 @@ function ChatBody({ messages, user, roomId }) {
         setPlaying(false);
     }
 
-    console.log("reactplayer", playing);
+    const handleDialogOpen = () => {
+        setShowDialog(true);
+    }
+    
+    const handleDialogClose = () => {
+        setShowDialog(false);
+        console.log("CLICK CLOSE");
+    }
+
+    console.log("showDialog", showDialog);
+
+    // useEffect(() => {
+    //     if(roomId !== roomId){
+    //         setPlaying(false);
+    //     }
+    // }, [messages])
+    // console.log("reactplayer", playing);
 
     const scrollToBottom = () => {
         if(roomId){
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+            messagesEndRef.current.scrollIntoView({ behavior: "auto" })
         }
     }
     useEffect(scrollToBottom, [messages]);
@@ -40,44 +65,72 @@ function ChatBody({ messages, user, roomId }) {
                     
                     <div className="chat__body_image_container">
                         {message.photo? 
-                            <img className="chat__body_image"src={message.photo} alt=""/>
+                            <>
+                            <img className="chat__body_image"src={message.photo} alt="" onClick={handleDialogOpen} />
+                            <DialogCustom 
+                                open={showDialog}
+                                close={handleDialogClose}
+                                photo={message.photo}
+                                user={user}
+                            />
+                            </>
                         : null}
                     </div>  
 
                     <div className="chat__body_video_container">
                         {message.video?
-                            <div className='player-wrapper'>
-                                <ReactPlayer
-                                    className='react-player'
-                                    width='100%'
-                                    height='100%'
-                                    url={message.video} 
-                                    controls={true}
-                                    onPlay={handlePlay}
-                                    onPause={handlePause}
-                                />
-                            </div>  
+                            <>
+                                <div className='player-wrapper'>
+                                    <ReactPlayer
+                                        className='react-player'
+                                        width='100%'
+                                        height='100%'
+                                        url={message.video} 
+                                        controls={true}
+                                        onPlay={handlePlay}
+                                        onPause={handlePause}
+                                        onEnded={handlePause}
+                                    />
+                                </div> 
+                            </>
                         : null}
                     </div>
 
-                    <div className={`${(message.video || message.photo) && !message.caption? "chat__message_box": "chat__message_box_media"}`}>
+                    
+
+                    <div className={`${(message.video || message.photo) && !message.caption? "chat__message_box_media": "chat__message_box"}`}>
                         <div>
                             {message.message}
                             {message.caption}
                         </div>
                         
                         <div className="chat__timestamp_container">
-                            <span className={`chat__timestamp ${(message.photo || message.video) && !message.caption? "chat__timestamp_media": ''} ${(message.photo || message.video) && playing===true? "chat__timestamp_media_display":''}`}>
-                                {new Date(message.timestamp?.toDate())
-                                    .toLocaleTimeString('en-US', 
-                                        { 
-                                            hour: 'numeric', 
-                                            hour12: true, 
-                                            minute: 'numeric' 
-                                        }
-                                    )
-                                }
-                            </span>
+                            {message.timestamp?
+                                <span className={`chat__timestamp ${(message.photo || message.video) && !message.caption? "chat__timestamp_media": ''} ${message.video && !message.caption && playing===true? "chat__timestamp_media_display":''}`}>
+                                    {new Date(message.timestamp.toDate())
+                                        .toLocaleTimeString('en-US', 
+                                            { 
+                                                hour: 'numeric', 
+                                                hour12: true, 
+                                                minute: 'numeric' 
+                                            }
+                                        )
+                                    }
+                                    <DoneIcon />
+                                </span>
+                            :   
+                                <span className="chat__timestamp">
+                                    {new Date().toLocaleTimeString('en-US', 
+                                            { 
+                                                hour: 'numeric', 
+                                                hour12: true, 
+                                                minute: 'numeric' 
+                                            }
+                                        )
+                                    }
+                                    <AlarmIcon />
+                                </span>
+                            }
                         </div>
 
                     </div>   

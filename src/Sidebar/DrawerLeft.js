@@ -3,6 +3,7 @@ import { useStateValue } from '../StateProvider';
 //importing components
 import DropdownMenu from '../shared/DropdownMenu';
 import { toastInfo } from '../shared/toastInfo';
+import DialogCustom from '../shared/DialogCustom';
 //importing material-ui
 import Zoom from '@material-ui/core/Zoom';
 import Drawer from '@material-ui/core/Drawer';
@@ -327,34 +328,17 @@ function DrawerLeft({ drawerLeft, setDrawerLeft, db, auth, storage }) {
                             handleMenuClose={handleProfileMenuClose}
                         />
 
-                        <Dialog
+                        <DialogCustom 
                             open={showProfilePhoto}
-                            fullScreen 
-                            onClose={viewPhotoClose}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
-                            >
-                            <DialogTitle id="alert-dialog-title">
-                                <div>
-                                    <Avatar src={photo}/>
-                                </div>
-                                <div>
-                                    <IconButton edge="end" color="inherit" onClick={viewPhotoClose} aria-label="close">
-                                        <CloseIcon />
-                                    </IconButton>
-                                </div>
-                            </DialogTitle>
-                            <DialogContent>
-                                <Zoom in={showProfilePhoto} style={{ transitionDelay: showProfilePhoto ? '300ms' : '0ms' }}>
-                                    <img src={photo} alt="" className="drawerLeft__content_photo_img"/>
-                                </Zoom>
-                            </DialogContent>
-                        </Dialog>
+                            close={viewPhotoClose}
+                            photo={photo}
+                            user={user}
+                        />
                     </div>
 
                     <div className="profileMenu__diaglog">
                         <Dialog open={showDialogUpload} onClose={handleDialogUploadClose} aria-labelledby="form-dialog-title">
-                            <DialogTitle id="form-dialog-title">Upload Photo</DialogTitle>
+                            <DialogTitle id="form-dialog-title-drawerLeft">Upload Photo</DialogTitle>
                             <DialogContent id="form-dialog-content">
                                 <div className="profileMenu__uploadPhoto_dialog">
                                     <img src={uploadPhotoLink} alt="" />

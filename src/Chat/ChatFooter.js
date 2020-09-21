@@ -69,6 +69,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
             if(youtubeLink.test(input) || facebookVideoLink.test(input) || vimeoLink.test(input) || soundcloudLink.test(input) || dailymotionLink.test(input)){
                 // console.log("YOUTUBE LINK VALID");
                 db.collection("rooms").doc(roomId).collection('messages').add({
+                    message: "",
                     video: input,
                     name: user.displayName,
                     uid: user.uid,
@@ -83,7 +84,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                 .catch(function(error) {
                     console.error("Error adding document: ", error);
                 });
-            }else{
+            }else if(input){
                 db.collection("rooms").doc(roomId).collection('messages').add({
                     message: input,
                     name: user.displayName,

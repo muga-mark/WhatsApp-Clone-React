@@ -10,6 +10,7 @@ import { toastInfo } from '../shared/toastInfo';
 import Hidden from '@material-ui/core/Hidden';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 //importing material-ui-icons
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -22,6 +23,8 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
     const [drawerRight, setDrawerRight] = useState(false);
     const [menuChat, setMenuChat] = useState(null);
     const [role, setRole] = useState("");
+    const [showDate, setShowDate] = useState(false);
+    const [isLastMessage, setIsLastMessage] = useState(false);
     
     useEffect(() => {
         const errorAbout = "errorAbout";
@@ -37,11 +40,48 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
           });  
         }
 
-    }, [user.uid, user.displayName, user.isAnonymous, db]);
+        if(messages[messages.length-1]?.timestamp){
+            setShowDate(true);
+        }else{
+            setShowDate(false);
+        }
+
+        if(messages[messages.length-1]){
+            setIsLastMessage(true);
+        }else{
+            setIsLastMessage(false);
+        }
+
+    }, [user.uid, user.displayName, user.isAnonymous, db, messages]);
+
+    // console.log("mesage timestamp",messages[messages.length-1]?.timestamp)
+    // console.log("last message >>", isLastMessage);
+
+    const getDateFromMessage = () => {
+        return (new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleTimeString([], { 
+            weekday: "long",
+            year: "numeric",
+            month:"long",
+            day:"numeric",
+            hour: 'numeric', 
+            hour12: true, 
+            minute: 'numeric'
+        }))
+    }
+
+    const getDateLocal = () => {
+        return (new Date().toLocaleTimeString([], { 
+            weekday: "long",
+            year: "numeric",
+            month:"long",
+            day:"numeric",
+            hour: 'numeric', 
+            hour12: true, 
+            minute: 'numeric'
+        }))
+    }
     
     const searchMessage = () => {
-        const searchToastId = "search";
-        toastInfo("Search function is not yet available!", searchToastId, "top-center");
         setDrawerRight(true);
     }
 
@@ -124,6 +164,10 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
             <DrawerRight 
                 drawerRight={drawerRight} 
                 setDrawerRight={setDrawerRight}
+                roomId={roomId}
+                messages={messages}
+                db={db}
+                user={user}
             />  
 
             <Hidden smUp>
@@ -140,10 +184,10 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
             <div className="chat__headerInfo">
                 <h3>{roomName}</h3>
                 <Hidden only={['xs']}>
-                    <p>
-                        {messages[messages.length-1]? <>Last seen {" "} </>: null}
-                        {messages[messages.length-1]? 
-                            (new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleTimeString([], { 
+                    {/* <p>
+                        {showDate? <>Last seen {" "} </>: null}
+                        {showDate? 
+                            (new Date(messages[messages.length-1].timestamp.toDate()).toLocaleTimeString([], { 
                                 weekday: "long",
                                 year: "numeric",
                                 month:"long",
@@ -151,9 +195,30 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
                                 hour: 'numeric', 
                                 hour12: true, 
                                 minute: 'numeric'
-                            })):(" ")
+                            }))
+                            :
+                            (new Date().toLocaleTimeString([], { 
+                                weekday: "long",
+                                year: "numeric",
+                                month:"long",
+                                day:"numeric",
+                                hour: 'numeric', 
+                                hour12: true, 
+                                minute: 'numeric'
+                            }))
                         }
-                    </p>
+                    </p> */}
+                    
+                        {isLastMessage?
+                            <>
+                                {showDate?
+                                  <p>Last seen {" "} {getDateFromMessage()}</p>
+                                  :
+                                  <p>Last seen {" "} {getDateLocal()}</p>
+                                }
+                            </>
+                        :null}
+                    
                 </Hidden>
             </div>
             
