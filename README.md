@@ -4,7 +4,7 @@
 * [Technologies](#technologies)
 
 ## General info
-This project is a WhatsApp Web clone that is still a work in progress. 
+This a WhatsApp Web clone that is still a work in progress. Users can only create public rooms.
 
 ## Features
 * Add/Delete Room (only admin or room owner can delete the room)
