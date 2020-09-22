@@ -7,10 +7,10 @@
 This project is a WhatsApp Web clone that is still a work in progress. 
 
 ## Features
-Add/Delete Room (only admin or room owner can delete the room)
-Update User Profile: Name, About, Profile Photo
-Upload photos and videos (cannot upload multiple files)
-Search rooms and messages
+*Add/Delete Room (only admin or room owner can delete the room)
+*Update User Profile: Name, About, Profile Photo
+*Upload photos and videos (cannot upload multiple files)
+*Search rooms and messages
 
 ## Technologies
 Project is created with:
