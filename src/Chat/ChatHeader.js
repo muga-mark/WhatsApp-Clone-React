@@ -10,7 +10,6 @@ import { toastInfo } from '../shared/toastInfo';
 import Hidden from '@material-ui/core/Hidden';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import CircularProgress from '@material-ui/core/CircularProgress';
 //importing material-ui-icons
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -53,9 +52,6 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
         }
 
     }, [user.uid, user.displayName, user.isAnonymous, db, messages]);
-
-    // console.log("mesage timestamp",messages[messages.length-1]?.timestamp)
-    // console.log("last message >>", isLastMessage);
 
     const getDateFromMessage = () => {
         return (new Date(messages[messages.length-1]?.timestamp?.toDate()).toLocaleTimeString([], { 

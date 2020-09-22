@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
 //importing firebase
 import db from '../firebase';
@@ -22,10 +22,9 @@ import './Sidebar.css';
 
 function Sidebar( { rooms }) {
     const history = useHistory();
-    const [searchedRoom, setSearchedRoom] = useState([]);
-    const [search, setSearch] = useState('');
+    const { roomId } = useParams();
     const [{ user }] = useStateValue();
-    const [errorMessage, setErrorMessage] = useState("");
+    const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [drawerLeft, setDrawerLeft] = useState(false);
     const [menuSidebar, setMenuSidebar] = useState(null);
@@ -38,7 +37,7 @@ function Sidebar( { rooms }) {
         }
     }
     
-    const rooomResult = () => {
+    const roomResult = () => {
         return (
             <>
                 {rooms.filter(findRoom(search)).map(room => (
@@ -56,62 +55,35 @@ function Sidebar( { rooms }) {
         }
 
         if(search) {
-            // db.collection("rooms")
-            // .where("name", ">=", `${search}`)
-            // .get()
-            // .then(function(querySnapshot) {
-            //     querySnapshot.forEach(function(doc) {
-            //         setSearchedRoom(querySnapshot.docs.map(doc => 
-            //               ({
-            //                   id: doc.id,
-            //                   data: doc.data(),
-            //               }))
-            //           )
-            //     });
-            // })
-            // .catch(function(error) {
-            //     setErrorMessage(error);
-            // });
-
-            // db.collection("rooms")
-            // .where("name", "==", `${search}`)
-            // .get()
-            // .then(function(querySnapshot) {
-            //     querySnapshot.forEach(function(doc) {
-            //         setSearchedRoom(querySnapshot.docs.map(doc => 
-            //               ({
-            //                   id: doc.id,
-            //                   data: doc.data(),
-            //               }))
-            //           )
-            //     });
-            // })
-            // .catch(function(error) {
-            //     setErrorMessage(error);
-            // });
-
-            var result = rooomResult();
-            console.log("result", result)
+            var result = roomResult();
+            // console.log("result", result)
             if(result.props.children.length>0){
                 setIsSetSearchFound(true);
-                console.log("search sucess");
+                // console.log("search sucess");
             }else{
                 setIsSetSearchFound(false);
-                console.log("search fail");
+                // console.log("search fail");
             }
-               
         } 
 
+        //checks if room exists, else will redirect to landing screen
+        var roomExist = rooms;
+        if(roomExist){ 
 
-    }, [search, rooms]);
-    console.log("ROOOOMS", rooms);
-    
-    
-    const newGroup = () => {
-        const newGroup = "newGroup";
-        toastInfo("New Group is not yet available!", newGroup, "top-center");
-    }
+            //checks if the current route(roomId) exist in rooms
+            const index = roomExist.findIndex(function(id, index){
+                return id.id === roomId
+            })
+            
+            if(index === -1){
+                history.push('/');
+                // console.log("ROOM DOES NOT EXIST");
+            }
+            
+        }
 
+    }, [search, rooms, roomId]);
+    
     const handleDrawerLeftOpen = () => {
         setMenuSidebar(null);
         setDrawerLeft(true);
@@ -143,29 +115,18 @@ function Sidebar( { rooms }) {
     const logout = () => {
         if(user.isAnonymous){
             auth.currentUser.delete().then(function() {
-              // User deleted. Redirect to login page...
               history.push('/');
             }).catch(function(error) {
               // An error happened.
               console.log("error deleting anonymous user",error);
             });
         }else{
-            //perform logout
             auth.signOut();
         }
     }
 
-    // const searchRoom = () => {
-    //     const searched = "searchedRoom";
-    //     toastInfo("Search is case-sensitive!", searched, "top-center");
-    // }
 
     const menuLists = [
-        {
-            title: "New Group",
-            onClick: () => newGroup(),
-            id: Math.random()*100000,
-        },
         {
             title: "Profile",
             onClick: () => handleDrawerLeftOpen(),
@@ -192,7 +153,7 @@ function Sidebar( { rooms }) {
             id: Math.random()*100000,
         },
     ]
-    // console.log("sidebar room search", searchedRoom);
+    
     return (
         <div className="sidebar">
             <div className="sidebar__header">
@@ -231,12 +192,10 @@ function Sidebar( { rooms }) {
             </div>
 
             <SearchBar 
-                // onClick={() => searchRoom()} 
                 search={search} 
                 setSearch={setSearch} 
                 placeholder="Search or start new chat" 
             />
-            <div><p>{errorMessage}</p></div>
 
             <div className="sidebar__chats">
                 {loading ?

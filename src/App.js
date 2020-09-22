@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useStateValue } from './StateProvider';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import {Helmet} from "react-helmet";
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 //importing firebase
 import db from './firebase';
 import { auth } from './firebase';
@@ -63,14 +62,6 @@ function App() {
   return (
     <div className="app">
       {loading? <>
-        {/* <Helmet>
-          <meta charSet="utf-8" />
-          <title>WhatsApp Web Clone</title>
-          <meta itemprop="image" content="https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-d4817.appspot.com/o/whatsapp.png?alt=media&token=eb6fa39a-aa7e-4a9f-9d53-282bb6c73730"  />
-          <meta name="description" content="Quickly send and receive WhatsApp messages right from your computer." />
-          <meta name="theme-color" content="#1EBEA5" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Helmet> */}
         <ToastContainer 
             position="top-center"
             autoClose={5000}
@@ -88,19 +79,21 @@ function App() {
                 <Switch>
 
                   <Route exact path="/">
-                    <Sidebar rooms={rooms} loading={loading} />
-                    {/* Chat component will be hidden in mobile view */}
-                    <Hidden only={['xs']}>
+                    <Sidebar rooms={rooms} loading={loading} /> 
+                    <Hidden only={['xs']}> {/* Chat component will be hidden in mobile view */}
                       <Chat />
                     </Hidden>
                   </Route>
 
                   <Route exact path="/rooms/:roomId">  
-                    {/* Sidebar component will be hidden in mobile view */}
-                    <Hidden only={['xs']}> 
+                    <Hidden only={['xs']}> {/* Sidebar component will be hidden in mobile view */}
                       <Sidebar rooms={rooms} loading={loading} />
                     </Hidden>
                     <Chat />
+                  </Route>
+
+                  <Route path="*">
+                    <Redirect to="/" />
                   </Route>
 
                 </Switch>

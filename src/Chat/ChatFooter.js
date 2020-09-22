@@ -84,7 +84,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                 .catch(function(error) {
                     console.error("Error adding document: ", error);
                 });
-            }else if(input){
+            }else if(/\S/.test(input)){
                 db.collection("rooms").doc(roomId).collection('messages').add({
                     message: input,
                     name: user.displayName,
@@ -92,7 +92,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 })
                 .then(function(docRef) {
-                    console.log("Document written with ID: ", docRef.id);
+                    // console.log("Document written with ID: ", docRef.id);
                     db.collection("rooms").doc(roomId).collection('messages').doc(docRef.id).set({
                         id: docRef.id
                     },{ merge: true });

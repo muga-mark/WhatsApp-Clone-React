@@ -9,7 +9,7 @@ h3, p {
 .Toastify__toast {
     font-size: 14px;
     min-height: 30px!important;
-    max-height: 50px!important;
+    max-height: 80px!important;
     top: 60px;
 }
 
@@ -26,7 +26,8 @@ h3, p {
 /* Start: Chat Body */
 .chat__body {
     flex: 1;
-    background-image: url('../images/whatsapp-chat-bg.png');
+    /* background-image: url('../images/whatsapp-chat-bg.png'); */
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-d4817.appspot.com/o/whatsapp-chat-bg.png?alt=media&token=e3a0e229-1c1e-4128-8e3f-ef37b3742590');
     background-repeat: repeat;
     background-position: center;
     padding: 40px 90px 0px 90px;

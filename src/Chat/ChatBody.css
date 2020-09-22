@@ -11,91 +11,85 @@
     color: #4a4a4a;
     font-size: small;
 }
+
+
+.chat__message {
+    position: relative;
+    color: #4a4a4a;
+    font-size: 14px;
+    padding: 6px 7px 8px 9px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    white-space: normal;
+    width: fit-content;
+}
+.chat__receiver{ 
+    margin-left: auto;
+    background-color: #DCF8C6;
+}
+.chat__message_media_image {
+    padding: 4px !important;
+    border-radius: 10px !important;
+}
+.chat__message_media_video {
+    padding: 4px !important;
+    border-radius: 4px !important;
+}
+
+
+.chat__name {
+    top: -15px;
+    font-size: xx-small;
+    font-weight: 800;
+    white-space: nowrap;
+    position: absolute;
+}
+.chat__name_sender {
+    right: 10px;
+}
+
+
+.chat__body_image_container {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
 .chat__body_image {
     max-height: 186px;
     max-width: 330px;
     border-radius: 8px;
 }
-.chat__body_image_container {
+
+
+.chat__body_video_container {
     display: flex;
     flex-direction: column;
-    margin: 0px -5px 0 -5px;
-    cursor: pointer;
 }
 .player-wrapper {
     position: relative;
     width: 35vw;
     padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
-}
-   
+}  
 .react-player {
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: 20%!important;
 }
-.chat__body_video_container {
-    display: flex;
-    flex-direction: column;
-    margin: 0px -5px 0 -5px;
-}
-.chat__message_box_media {
-    display: flex;
-    padding-bottom: 2px !important;
-}
+
+
 .chat__message_box {
     display: flex;
-    padding-bottom: 10px;
-}
-.chat__message {
-    position: relative;
-    font-size: 16px;
-    padding: 5px 10px 2px 10px ;
-    border-radius: 6px;
-    width: fit-content;
-    max-width: 500px;
-    background-color: #ffffff;
-    margin-bottom: 30px;
-    color: #4a4a4a;
-    white-space: normal;
-}
-.chat__receiver{ 
-    background-color: #DCF8C6;
-    margin-left: auto;
-    color: #4a4a4a;
-}
-.chat__name {
-    position: absolute;
-    top: -15px;
-    font-size: xx-small;
-    font-weight: 800;
-    white-space: nowrap;
-}
-.chat__name_sender {
-    right: 10px;
 }
 .chat__timestamp_container {
-    /* width: fit-content;  */
-    /* white-space: nowrap; */
-    margin-left: 60px;
-    margin-right: 5px;
-    /* height: fit-content; */
-    /* margin-top: 10px; */
-}
-.chat__timestamp_container > .chat__timestamp > .MuiSvgIcon-root {
-    font-size: 13px !important;
-    margin-left: 2px;
-}
-.chat__timestamp_container > .MuiSvgIcon-root {
-    font-size: 13px !important;
-    margin-left: 2px;
+    margin-left: 65px;
 }
 .chat__timestamp {
     font-size: 10px;
     font-weight: 500;
     position: absolute;
     bottom: 3px;
-    right: 10px;
+    right: 7px;
     color: rgb(155, 153, 153);
 }
 .chat__timestamp_media {
@@ -107,34 +101,29 @@
 .chat__timestamp_media_display {
     display: none;
 }
+.chat__timestamp_container > .chat__timestamp > .MuiSvgIcon-root {
+    font-size: 13px !important;
+    margin-left: 2px;
+}
+
 
 @media screen and (max-width: 600px) {
     .chat__message_reminder {
         font-size: 12px;
-        padding: 5px 10px 5px 10px ;
-        border-radius: 5px;
-        width: fit-content ;
-        margin-bottom: 70px !important;
-        margin: 0 auto;
+        margin-bottom: 50px !important;
     }
-    .chat__message_reminder > .MuiSvgIcon-root {
-        color: #4a4a4a;
-        font-size: small;
-    }
+
+
     .chat__message {
         font-size: 12px;
-        padding: 5px 10px 2px 10px ;
-        border-radius: 5px;
-        width: fit-content ;
-        background-color: #ffffff;
-        margin-bottom: 30px;
-        color: #4a4a4a;
+        padding: 4px 5px 6px 7px ;
     }
-    .chat__receiver{ 
-        background-color: #DCF8C6;
-        margin-left: auto;
-        color: #4a4a4a;
+    .chat__message_media {
+        padding: 4px !important;
+        border-radius: 4px !important;
     }
+
+
     .chat__body_image {
         max-height: 150px;
         max-width: 200px;
@@ -142,5 +131,9 @@
     }
     .player-wrapper {
         width: 75vw;
+    }
+    .chat__timestamp_container {
+        margin-left: 65px;
+        margin-right: 5px;
     }
 }

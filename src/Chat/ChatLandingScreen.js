@@ -1,18 +1,17 @@
 import React from 'react';
 import LaptopIcon from '@material-ui/icons/Laptop';
 import Divider from '@material-ui/core/Divider';
-import whatsAppConnected from '../images/whatsapp-connect.jpg';
+// import whatsAppConnected from '../images/whatsapp-connect.jpg';
 import './ChatLandingScreen.css';
 import Zoom from '@material-ui/core/Zoom';
 
 function ChatLandingScreen({ showLandingScreenPhoto }) {
 
-    console.log("showLandingScreenPhoto", showLandingScreenPhoto);
     return (
         <div className="chat__landingScreen"> 
             <div>
                 <Zoom in={showLandingScreenPhoto} style={{ transitionDelay: showLandingScreenPhoto ? '300ms' : '0ms' }}>
-                    <img src={whatsAppConnected} alt="whatsAppConnected" />
+                    <img src="https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-d4817.appspot.com/o/whatsapp-connect.jpg?alt=media&token=54c70d0e-2573-4306-a048-715b023f9509" alt="whatsAppConnected" />
                 </Zoom>                
             </div>
 

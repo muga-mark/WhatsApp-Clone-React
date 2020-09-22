@@ -15,7 +15,6 @@ function ChatBody({ messages, user, roomId }) {
     const [playing, setPlaying] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     
-
     const handlePlay = () => {
         setPlaying(true);
     }
@@ -33,15 +32,6 @@ function ChatBody({ messages, user, roomId }) {
         console.log("CLICK CLOSE");
     }
 
-    console.log("showDialog", showDialog);
-
-    // useEffect(() => {
-    //     if(roomId !== roomId){
-    //         setPlaying(false);
-    //     }
-    // }, [messages])
-    // console.log("reactplayer", playing);
-
     const scrollToBottom = () => {
         if(roomId){
             messagesEndRef.current.scrollIntoView({ behavior: "auto" })
@@ -52,13 +42,13 @@ function ChatBody({ messages, user, roomId }) {
     return (
         <div>
             {messages.length>0 ?
-            <p className="chat__message_reminder">
-                <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
-            </p>
+                <p className="chat__message_reminder">
+                    <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
+                </p>
             :null}
                
             {messages.map((message) => (
-                <div key={message.id} className={`chat__message ${ message.uid === user.uid && "chat__receiver"}`}>
+                <div key={message.id} className={`chat__message ${ message.uid === user.uid && "chat__receiver"} ${(message.photo && "chat__message_media_image") || (message.video && "chat__message_media_video")}`}>
                     <span className={`chat__name ${ message.uid === user.uid && "chat__name_sender"}`}>
                         {message.name}
                     </span>
@@ -96,9 +86,7 @@ function ChatBody({ messages, user, roomId }) {
                         : null}
                     </div>
 
-                    
-
-                    <div className={`${(message.video || message.photo) && !message.caption? "chat__message_box_media": "chat__message_box"}`}>
+                    <div className="chat__message_box">
                         <div>
                             {message.message}
                             {message.caption}
@@ -116,7 +104,7 @@ function ChatBody({ messages, user, roomId }) {
                                             }
                                         )
                                     }
-                                    <DoneIcon />
+                                    {message.uid === user.uid? <DoneIcon />: null}
                                 </span>
                             :   
                                 <span className="chat__timestamp">
@@ -128,7 +116,7 @@ function ChatBody({ messages, user, roomId }) {
                                             }
                                         )
                                     }
-                                    <AlarmIcon />
+                                    {message.uid === user.uid? <AlarmIcon />: null}
                                 </span>
                             }
                         </div>

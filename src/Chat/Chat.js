@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
 import { useStateValue } from '../StateProvider';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 //importing firebase
 import { storage, firebase } from '../firebase';
 import db from '../firebase';
@@ -23,10 +22,13 @@ function Chat() {
     const [roomName, setRoomName] = useState("");
     const [roomCreatedBy, setRoomCreatedBy] = useState("");
     const [roomOwner, setRoomOwner] = useState("");
+    const [roomIdFromDb, setRoomIdFromDb] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showLandingScreenPhoto, setShowLandingScreenPhoto] = useState(false);
   
+    
+
     useEffect(() => {
         if(roomId) {
           db.collection("rooms")
@@ -34,7 +36,8 @@ function Chat() {
             .onSnapshot(snapshot => (
                 setRoomName(snapshot.data()?.name),
                 setRoomCreatedBy(snapshot.data()?.createdBy),
-                setRoomOwner(snapshot.data()?.roomOwner)
+                setRoomOwner(snapshot.data()?.roomOwner),
+                setRoomIdFromDb(snapshot.data()?.id)
             ));
           
           db.collection("rooms")
@@ -46,13 +49,25 @@ function Chat() {
                     doc.data())),
                 setLoading(true)
             ));
-
+            
         }else{
             setShowLandingScreenPhoto(true);
             history.push('/');
         }
+
     }, [roomId, history]);
-    console.log("CHAT MESSAGE-->", messages)
+
+    // useEffect(() => {
+    //     if(roomId){
+    //         if(roomIdFromDb !== roomId){
+    //             console.log(" route not matched ");
+    //             history.push('/');
+    //         }
+    //         console.log("room id", roomId);
+    //         console.log("room id from db", roomIdFromDb);
+    //     }
+    // }, [roomId, roomIdFromDb])
+    
     return (
         <div className="chat">
             {roomId ? 

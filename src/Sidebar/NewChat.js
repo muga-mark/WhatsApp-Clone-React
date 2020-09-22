@@ -34,6 +34,15 @@ function NewChat({ user, db, firebase }) {
                 name: roomName,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                db.collection("rooms").doc(docRef.id).set({
+                    id: docRef.id
+                },{ merge: true });
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
         }
         setOpen(false);
         setRoomName("");
