@@ -134,15 +134,15 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
         }else{
             const storageRef = storage.ref();
             if(file.type.match('image.*')){
-                const imagesRef = storageRef.child(`rooms/${roomName}/images`);
-                const fileRef = imagesRef.child(file.name);
+                const imagesRef = storageRef.child(`rooms/${roomName}/images/`);
+                const fileRef = imagesRef.child(new Date().getTime() + ' ' + file.name);
                 await fileRef.put(file);
                 setFileImageUrl(await fileRef.getDownloadURL());
                 console.log("uploading image", fileImageUrl);
             }
             else if(file.type.match('video.*')){
                 const videosRef = storageRef.child(`rooms/${roomName}/videos`);
-                const fileRef = videosRef.child(file.name);
+                const fileRef = videosRef.child(new Date().getTime() + ' ' + file.name);
                 await fileRef.put(file);
                 setFileVideoUrl(await fileRef.getDownloadURL());
                 console.log("uploading video", fileVideoUrl);

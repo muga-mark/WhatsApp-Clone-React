@@ -48,7 +48,12 @@ function ChatBody({ messages, user, roomId }) {
             :null}
                
             {messages.map((message) => (
-                <div key={message.id} className={`chat__message ${ message.uid === user.uid && "chat__receiver"} ${(message.photo && "chat__message_media_image") || (message.video && "chat__message_media_video")}`}>
+                <div key={message.id} className={`chat__message 
+                    ${ message.uid === user.uid && "chat__receiver"} 
+                    ${ message.photo && "chat__message_media_image"}
+                    ${ message.video && "chat__message_media_video"}
+                    ${ (message.video && !message.caption) && "chat__message_media_video_noCaption"} `}>
+
                     <span className={`chat__name ${ message.uid === user.uid && "chat__name_sender"}`}>
                         {message.name}
                     </span>
@@ -94,30 +99,39 @@ function ChatBody({ messages, user, roomId }) {
                         
                         <div className="chat__timestamp_container">
                             {message.timestamp?
-                                <span className={`chat__timestamp ${(message.photo || message.video) && !message.caption? "chat__timestamp_media": ''} ${message.video && !message.caption && playing===true? "chat__timestamp_media_display":''}`}>
-                                    {new Date(message.timestamp.toDate())
-                                        .toLocaleTimeString('en-US', 
-                                            { 
-                                                hour: 'numeric', 
-                                                hour12: true, 
-                                                minute: 'numeric' 
-                                            }
-                                        )
-                                    }
-                                    {message.uid === user.uid? <DoneIcon />: null}
-                                </span>
+                                <div className={`chat__timestamp 
+                                    ${(message.photo && !message.caption) && "chat__timestamp_media_photo"}  
+                                    ${(message.video && !message.caption) && "chat__timestamp_media_video"}
+                                    ${(message.video && !message.caption && playing===true) 
+                                    && "chat__timestamp_media_display"}`}>
+
+                                    <span>
+                                        {new Date(message.timestamp.toDate())
+                                            .toLocaleTimeString('en-US', 
+                                                { 
+                                                    hour: 'numeric', 
+                                                    hour12: true, 
+                                                    minute: 'numeric' 
+                                                }
+                                            )
+                                        }
+                                        {message.uid === user.uid? <DoneIcon />: null}
+                                    </span>
+                                </div>
                             :   
-                                <span className="chat__timestamp">
-                                    {new Date().toLocaleTimeString('en-US', 
-                                            { 
-                                                hour: 'numeric', 
-                                                hour12: true, 
-                                                minute: 'numeric' 
-                                            }
-                                        )
-                                    }
-                                    {message.uid === user.uid? <AlarmIcon />: null}
-                                </span>
+                                <div className="chat__timestamp">
+                                    <span>
+                                        {new Date().toLocaleTimeString('en-US', 
+                                                { 
+                                                    hour: 'numeric', 
+                                                    hour12: true, 
+                                                    minute: 'numeric' 
+                                                }
+                                            )
+                                        }
+                                        {message.uid === user.uid? <AlarmIcon />: null}
+                                    </span>
+                                </div>
                             }
                         </div>
 
