@@ -3,7 +3,7 @@
 * [Features](#features)
 * [Technologies](#technologies)
 * [Steps on how to clone](#clone)
-* [Steps on how to clone](#clone)
+* [Steps on how to setup hosting](#hosting)
 
 ## General info
 This a WhatsApp Web clone that is still a work in progress. Users can only create public rooms.
@@ -25,8 +25,6 @@ Project is created with:
 * Firebase: Authentication, Cloud Firestore(db), Storage, Hosting
 
 ## Steps on how to clone
-
-
 #### 1: Clone this repo using this command 
 `git clone https://github.com/muga-mark/WhatsApp-Clone-React.git`
 
