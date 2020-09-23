@@ -22,23 +22,19 @@ function Chat() {
     const [roomName, setRoomName] = useState("");
     const [roomCreatedBy, setRoomCreatedBy] = useState("");
     const [roomOwner, setRoomOwner] = useState("");
-    const [roomIdFromDb, setRoomIdFromDb] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showLandingScreenPhoto, setShowLandingScreenPhoto] = useState(false);
-  
-    
 
     useEffect(() => {
         if(roomId) {
           db.collection("rooms")
             .doc(roomId)
-            .onSnapshot(snapshot => (
-                setRoomName(snapshot.data()?.name),
-                setRoomCreatedBy(snapshot.data()?.createdBy),
-                setRoomOwner(snapshot.data()?.roomOwner),
-                setRoomIdFromDb(snapshot.data()?.id)
-            ));
+            .onSnapshot(function(doc) {
+                setRoomName(doc.data()?.name);
+                setRoomCreatedBy(doc.data()?.createdBy);
+                setRoomOwner(doc.data()?.roomOwner);
+            });
           
           db.collection("rooms")
             .doc(roomId)
@@ -49,25 +45,14 @@ function Chat() {
                     doc.data())),
                 setLoading(true)
             ));
-            
+
+            setShowLandingScreenPhoto(false);
         }else{
             setShowLandingScreenPhoto(true);
             history.push('/');
         }
-
     }, [roomId, history]);
 
-    // useEffect(() => {
-    //     if(roomId){
-    //         if(roomIdFromDb !== roomId){
-    //             console.log(" route not matched ");
-    //             history.push('/');
-    //         }
-    //         console.log("room id", roomId);
-    //         console.log("room id from db", roomIdFromDb);
-    //     }
-    // }, [roomId, roomIdFromDb])
-    
     return (
         <div className="chat">
             {roomId ? 

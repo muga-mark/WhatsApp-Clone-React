@@ -180,31 +180,6 @@ function ChatHeader( { roomCreatedBy, roomOwner, roomName, roomId, messages, db,
             <div className="chat__headerInfo">
                 <h3>{roomName}</h3>
                 <Hidden only={['xs']}>
-                    {/* <p>
-                        {showDate? <>Last seen {" "} </>: null}
-                        {showDate? 
-                            (new Date(messages[messages.length-1].timestamp.toDate()).toLocaleTimeString([], { 
-                                weekday: "long",
-                                year: "numeric",
-                                month:"long",
-                                day:"numeric",
-                                hour: 'numeric', 
-                                hour12: true, 
-                                minute: 'numeric'
-                            }))
-                            :
-                            (new Date().toLocaleTimeString([], { 
-                                weekday: "long",
-                                year: "numeric",
-                                month:"long",
-                                day:"numeric",
-                                hour: 'numeric', 
-                                hour12: true, 
-                                minute: 'numeric'
-                            }))
-                        }
-                    </p> */}
-                    
                         {isLastMessage?
                             <>
                                 {showDate?

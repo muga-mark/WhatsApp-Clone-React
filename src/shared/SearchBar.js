@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import './SearchBar.css';
 

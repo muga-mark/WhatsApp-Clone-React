@@ -37,21 +37,23 @@ function Sidebar( { rooms }) {
         }
     }
     
-    const roomResult = () => {
-        return (
-            <>
-                {rooms.filter(findRoom(search)).map(room => (
-                    <p key={room.id}>
-                        {room.name}
-                    </p>
-                ))}
-            </>
-        )
-    }
+    
 
     useEffect(() => {
         if(rooms.length>0){
             setLoading(true);
+        }
+
+        const roomResult = () => {
+            return (
+                <>
+                    {rooms.filter(findRoom(search)).map(room => (
+                        <p key={room.id}>
+                            {room.name}
+                        </p>
+                    ))}
+                </>
+            )
         }
 
         if(search) {
@@ -82,7 +84,7 @@ function Sidebar( { rooms }) {
             
         }
 
-    }, [search, rooms, roomId]);
+    }, [search, rooms, roomId, history]);
     
     const handleDrawerLeftOpen = () => {
         setMenuSidebar(null);

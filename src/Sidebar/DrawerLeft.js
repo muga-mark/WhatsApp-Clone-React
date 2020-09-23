@@ -19,7 +19,6 @@ import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
-import CloseIcon from '@material-ui/icons/Close';
 //importing styles
 import './DrawerLeft.css';
 
@@ -60,53 +59,15 @@ function DrawerLeft({ drawerLeft, setDrawerLeft, db, auth, storage }) {
     const [photo, setPhoto] = useState("");
 
     useEffect(() => {
-        const errorAbout = "errorAbout";
         setName(user.displayName);
 
-        if(user.uid) {
-          db.collection("users")
-            .doc(user.uid)
-            .get().then(function(doc) {
-                if (doc.exists) {
-                    setAbout(doc.data()?.about)
-                } else {
-                    db.collection("users").doc(user.uid).set({
-                        name: user.displayName,
-                        photoURL: user.photoURL,
-                        about: "Hey there! I am using WhatsApp.",
-                        role: "regular",
-                    },{ merge: true });
-                }
-          }).catch(function(error) {
-                toastInfo(`${error}`, errorAbout, "top-center");
-          });  
-        }
-        
-        if(user.isAnonymous === true) {
-            db.collection("users")
-            .doc(user.uid)
-            .update({
-                name: user.displayName,
-                role: "anonymous",
-            })
-            .then(function() {
-                console.log("Document successfully updated!");
-            })
-            .catch(function(error) {
-                // The document probably doesn't exist.
-                console.error("Error updating document: ", error);
-            });
-        }
-
-        if(user.photoURL){
-            db.collection("users")
-            .doc(user.uid)
-            .onSnapshot(snapshot => (
-                setPhoto(snapshot.data()?.photoURL)
-            ));
-        }
-        
-    }, [user.uid, user.displayName, user.isAnonymous, user.photoURL, db]);
+        db.collection("users")
+        .doc(user.uid)
+        .onSnapshot(function(doc) {
+            setPhoto(doc.data()?.photoURL);
+            setAbout(doc.data()?.about);
+        });
+    }, [user.uid, user.displayName, db]);
 
     const updateName = (e) => {
         e.preventDefault();

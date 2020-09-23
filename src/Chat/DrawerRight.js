@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //importing components
 import SearchBar from '../shared/SearchBar';
-import { toastInfo } from '../shared/toastInfo';
 //importing material-ui
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -36,11 +35,9 @@ const useStyles = makeStyles ((theme) => ({
     },
 }));
 
-function DrawerRight({ drawerRight, setDrawerRight, roomId, messages, db, user }) {
+function DrawerRight({ drawerRight, setDrawerRight, messages, user }) {
     const classes = useStyles();
-    // const [searchedMessage, setSearchedMessage] = useState([]);
     const [search, setSearch] = useState('');
-    // const [errorMessage, setErrorMessage] = useState("");
     const [isFoundMessage, setIsFoundMessage] = useState(false);
     
     const findMessage = function(myMessages){
@@ -50,20 +47,23 @@ function DrawerRight({ drawerRight, setDrawerRight, roomId, messages, db, user }
         }
     }
     
-    const messageResult = () => {
-        return (
-            <>
-                {messages.filter(findMessage(search)).map(message => (
-                    <p key={message.id}>
-                        {message.message}
-                        {message.caption}
-                    </p>
-                ))}
-            </>
-        )
-    }
+    
     
     useEffect(() => {
+
+        const messageResult = () => {
+            return (
+                <>
+                    {messages.filter(findMessage(search)).map(message => (
+                        <p key={message.id}>
+                            {message.message}
+                            {message.caption}
+                        </p>
+                    ))}
+                </>
+            )
+        }
+
         if(search) {
             var result = messageResult();
             // console.log("result", result.props.children)
@@ -75,7 +75,7 @@ function DrawerRight({ drawerRight, setDrawerRight, roomId, messages, db, user }
                 console.log("search message fail");
             }
         }
-    }, [search]);
+    }, [search, messages]);
 
     
     const handleDrawerClose = () => {
@@ -98,7 +98,6 @@ function DrawerRight({ drawerRight, setDrawerRight, roomId, messages, db, user }
                 </div>
 
                 <SearchBar 
-                    // onClick={() => searchMessage()} 
                     search={search} 
                     setSearch={setSearch} 
                     placeholder="Search..." 

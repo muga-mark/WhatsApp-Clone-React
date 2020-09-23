@@ -11,6 +11,7 @@ import Login from './Login';
 import Sidebar from '../src/Sidebar/Sidebar';
 import Chat from '../src/Chat/Chat';
 import { ToastContainer } from 'react-toastify';
+import { toastInfo } from './shared/toastInfo';
 //importing material-ui
 import Hidden from '@material-ui/core/Hidden';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -28,13 +29,6 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if(authUser){
         dispatch(setUser(authUser));
-        
-        if(authUser.isAnonymous === true){
-          auth.currentUser.updateProfile({
-            displayName: "Anonymous" + " " + Math.floor(Math.random() * 1000000),
-          });
-          
-        }
 
         db.collection("rooms")
           .orderBy("timestamp", "desc")
@@ -46,18 +40,85 @@ function App() {
                     }))
                 ),
             setLoading(true)
-        );
+          );
+        
+        if(authUser.isAnonymous === true && authUser.displayName === null){
+          var anonymousName = "Anonymous" + " " + Math.floor(Math.random() * 1000000);
+          
+          auth.currentUser.updateProfile({
+            displayName: anonymousName,
+            photoURL: "",
+          });
+
+          db.collection("users")
+            .doc(authUser.uid)
+            .set({
+                name: anonymousName,
+                about: "Hey there! I am using WhatsApp.",
+                photoURL: "",
+                role: "anonymous",
+            })
+            .then(function() {
+                console.log("Document successfully updated!");
+            })
+            .catch(function(error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+        }
+
+        if(authUser.uid && authUser.isAnonymous === false && authUser.photoURL) {
+            const errorAbout = "errorAbout";
+            db.collection("users")
+              .doc(authUser.uid)
+              .get().then(function(doc) {
+                  if (doc.exists) {
+                      console.log("USER EXIST");
+                  } else {
+                      db.collection("users").doc(authUser.uid).set({
+                          name: authUser.displayName,
+                          about: "Hey there! I am using WhatsApp.",
+                          photoURL: user.photoURL,
+                          role: "regular",
+                      });
+                  }
+            }).catch(function(error) {
+                    toastInfo(`${error}`, errorAbout, "top-center");
+            });  
+            
+      }else if(authUser.uid && authUser.isAnonymous === false && authUser.photoURL === null){
+          const errorAbout = "errorAbout";
+          db.collection("users")
+            .doc(authUser.uid)
+            .get().then(function(doc) {
+                if (doc.exists) {
+                    console.log("USER EXIST");
+                } else {
+                    db.collection("users").doc(authUser.uid).set({
+                        name: authUser.displayName,
+                        about: "Hey there! I am using WhatsApp.",
+                        photoURL: "",
+                        role: "regular",
+                    });
+                }
+          }).catch(function(error) {
+                  toastInfo(`${error}`, errorAbout, "top-center");
+          });  
+        
+      }
+
       }else{
         dispatch(setUser(null));
         setLoading(true);
-      }
+      }      
+
     });
 
     return () => {
       unsubscribe();
     }
 
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   return (
     <div className="app">
