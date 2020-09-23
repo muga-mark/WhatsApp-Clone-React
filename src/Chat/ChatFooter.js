@@ -4,12 +4,14 @@ import { toastInfo } from '../shared/toastInfo';
 //importing components
 import DrawerBottom from './DrawerBottom';
 import TooltipCustom from '../shared/TooltipCustom';
+import { Picker } from "emoji-mart";
 //importing material-ui
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import Slide from '@material-ui/core/Slide';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 //importing material-ui-icons
+import CloseIcon from '@material-ui/icons/Close';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -19,6 +21,7 @@ import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import PersonIcon from '@material-ui/icons/Person';
 //importing styles
+import "emoji-mart/css/emoji-mart.css";
 import './ChatFooter.css';
 
 const attachFileLists = [
@@ -52,10 +55,11 @@ const attachFileLists = [
 function ChatFooter( { roomName, roomId, db, firebase, storage }) {
     const [{ user }] = useStateValue();
     const [input, setInput] = useState('');
-    const [showAttachFile, setShowAttachFile] = useState(false);
+    const [emoji, setEmoji] = useState(false);
     const [fileImageUrl, setFileImageUrl] = useState(null);
     const [fileVideoUrl, setFileVideoUrl] = useState(null);
     const [drawerBottom, setDrawerBottom] = useState(false);
+    const [showAttachFile, setShowAttachFile] = useState(false);
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -103,6 +107,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
             }
         }
         setInput("");
+        setEmoji(false);
     };
 
     const attachFile = () => {
@@ -116,15 +121,25 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
         console.log("attachFile click", attachToastId);
     };
 
-    const emoticons = () => {
-        const emoticonToastId = "emoticon";
-        toastInfo("Emoticons is not yet available!", emoticonToastId, "top-center");
-    }
+    const addEmoji = e => {
+        let emoji = e.native;
+        setInput(input + emoji);
+    };
+
+    const handleEmoticons = () => {
+        setEmoji(true);
+    };
+
+    const handleEmoticonsClose = () => {
+        setEmoji(false);
+    };
+
+    console.log("EMOOOJIIIII > ", emoji);
 
     const voiceMessage = () => {
         const voiceMessageToastId = "voiceMessage";
         toastInfo("Voice Message is not yet available!", voiceMessageToastId, "top-center");
-    }
+    };
 
     const onFileChange = async (e) => {
         const fileSizeToastId = "fileSizeToastId";
@@ -169,8 +184,23 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                 firebase={firebase}
                 storage={storage}
             /> 
+
+           {emoji? 
+                <TooltipCustom 
+                    name="Close" 
+                    icon={<CloseIcon />} onClick={() => handleEmoticonsClose()}
+                />
+            : null }
+
+            <TooltipCustom 
+                name="Emoticons" 
+                icon={<InsertEmoticonIcon />} onClick={() => handleEmoticons()}
+            />
             
-            <TooltipCustom name="Emoticons" icon={<InsertEmoticonIcon />} onClick={() => emoticons()}/>
+            { emoji?
+                <Picker onSelect={addEmoji}/> 
+            :null} 
+
                 <div>
                     <TooltipCustom 
                         name="Attach" 
@@ -220,7 +250,13 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                         Send a message
                     </button>
                 </form>
-            <TooltipCustom name="Voice Message" icon={<MicIcon />} onClick={() => voiceMessage()}/>
+
+            <TooltipCustom 
+                name="Voice Message" 
+                icon={<MicIcon />} 
+                onClick={() => voiceMessage()}
+            />
+
         </div>
     )
 }
