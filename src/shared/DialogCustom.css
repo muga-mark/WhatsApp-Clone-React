@@ -1,0 +1,16 @@
+.MuiDialogContent-root {
+    margin: 0 auto;
+    padding: 0 24px !important;
+    max-width: 100vw !important;
+}
+.DialogCustom__photo {
+    /* max-height: 500px; */
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+@media screen and (max-width: 600px) {
+    #alert-dialog-title-dialogCustom{
+        background-color: #045E54 !important;
+    }
+}

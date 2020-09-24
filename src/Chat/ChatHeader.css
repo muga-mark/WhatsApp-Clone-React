@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid lightgray;
+    transition: 1s;
 }
 .chat__headerRight {
     display: flex;

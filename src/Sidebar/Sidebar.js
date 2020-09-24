@@ -20,7 +20,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 //importing styles
 import './Sidebar.css';
 
-function Sidebar( { rooms }) {
+function Sidebar( { rooms, setIsRoomExist }) {
     const history = useHistory();
     const { roomId } = useParams();
     const [{ user }] = useStateValue();
@@ -37,8 +37,6 @@ function Sidebar( { rooms }) {
         }
     }
     
-    
-
     useEffect(() => {
         if(rooms.length>0){
             setLoading(true);
@@ -68,18 +66,20 @@ function Sidebar( { rooms }) {
             }
         } 
 
-        //checks if room exists, else will redirect to landing screen
-        var roomExist = rooms;
-        if(roomExist){ 
-
-            //checks if the current route(roomId) exist in rooms
-            const index = roomExist.findIndex(function(id, index){
+        //checks if room exists, else will be redirect to landing screen
+        var roomList = rooms;
+        if(roomList){ 
+            //checks if the current route(roomId) exists in roomList(array)
+            const index = roomList.findIndex(function(id, index){
                 return id.id === roomId
             })
             
             if(index === -1){
                 history.push('/');
                 // console.log("ROOM DOES NOT EXIST");
+            }else if(index>=0){
+                setIsRoomExist(index);
+                // console.log("ROOM EXISTS");
             }
             
         }
@@ -115,7 +115,7 @@ function Sidebar( { rooms }) {
     }
     
     const logout = () => {
-        if(user.isAnonymous){
+        if(user.isAnonymous === true){
             auth.currentUser.delete().then(function() {
               history.push('/');
             }).catch(function(error) {

@@ -4,7 +4,7 @@
     align-items: center;
     height: 62px;
     border-top: 1px solid lightgray;
-    transition: 2s;
+    transition: 1s;
 }
 .chat__footer > form {
     flex: 1;
@@ -28,6 +28,9 @@
 }
 
 
+.chat__footer_emoji {
+    display: none;
+}
 .emoji-mart{
     position: absolute !important;
     bottom: 60px;

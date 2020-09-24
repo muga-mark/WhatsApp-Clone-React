@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 //importing component
 import DialogCustom from '../shared/DialogCustom';
+//importing material-ui
+import CircularProgress from '@material-ui/core/CircularProgress';
 //importing material-ui-icon
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import AlarmIcon from '@material-ui/icons/Alarm';
@@ -9,12 +11,21 @@ import DoneIcon from '@material-ui/icons/Done';
 //importing styles
 import './ChatBody.css'
 
-function ChatBody({ messages, user, roomId }) {
+function ChatBody({ messages, user, roomId, isRoomExist }) {
     const messagesEndRef = useRef(null);
     // const { roomId } = useParams();
     const [playing, setPlaying] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     
+    useEffect(() => {
+        //listens when room is changed, then it sets playing to false 
+        //so timestamp in ReactPlayer will display again
+        if(isRoomExist>=0){
+            setPlaying(false);
+        }
+
+    }, [isRoomExist])
+
     const handlePlay = () => {
         setPlaying(true);
     }
@@ -29,7 +40,6 @@ function ChatBody({ messages, user, roomId }) {
     
     const handleDialogClose = () => {
         setShowDialog(false);
-        console.log("CLICK CLOSE");
     }
 
     const scrollToBottom = () => {
@@ -61,13 +71,18 @@ function ChatBody({ messages, user, roomId }) {
                     <div className="chat__body_image_container">
                         {message.photo? 
                             <>
-                            <img className="chat__body_image"src={message.photo} alt="" onClick={handleDialogOpen} />
-                            <DialogCustom 
-                                open={showDialog}
-                                close={handleDialogClose}
-                                photo={message.photo}
-                                user={user}
-                            />
+                                <img alt=""  
+                                    className="chat__body_image"
+                                    src={message.photo}
+                                    onClick={handleDialogOpen} /> 
+
+                                {/* <DialogCustom 
+                                    open={showDialog}
+                                    close={handleDialogClose}
+                                    photo={message.photo}
+                                    user={user}
+                                /> */}
+                                
                             </>
                         : null}
                     </div>  
@@ -92,7 +107,7 @@ function ChatBody({ messages, user, roomId }) {
                     </div>
 
                     <div className="chat__message_box">
-                        <div>
+                        <div className="chat__message_box_text">
                             {message.message? message.message :null}
                             {message.caption? message.caption :null}
                             {message.url?
@@ -108,7 +123,7 @@ function ChatBody({ messages, user, roomId }) {
                                     ${(message.photo && !message.caption) && "chat__timestamp_media_photo"}  
                                     ${(message.video && !message.caption) && "chat__timestamp_media_video"}
                                     ${(message.video && !message.caption && playing===true) 
-                                    && "chat__timestamp_media_display"}`}>
+                                    && "chat__timestamp_media_displayNone"}`}> 
 
                                     <span>
                                         {new Date(message.timestamp.toDate())

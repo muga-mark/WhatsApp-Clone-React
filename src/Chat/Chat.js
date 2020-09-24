@@ -15,7 +15,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import 'react-toastify/dist/ReactToastify.css';
 import './Chat.css';
 
-function Chat() {
+function Chat({ isRoomExist }) {
     const history = useHistory();
     const [{ user }] = useStateValue();
     const { roomId } = useParams();
@@ -42,8 +42,7 @@ function Chat() {
             .orderBy("timestamp", "asc")
             .onSnapshot(snapshot => (
                 setMessages(snapshot.docs.map((doc) => 
-                    doc.data())),
-                setLoading(true)
+                    doc.data()))
             ));
 
             setShowLandingScreenPhoto(false);
@@ -52,6 +51,12 @@ function Chat() {
             history.push('/');
         }
     }, [roomId, history]);
+
+    useEffect(() => {
+        if(messages.length>0){
+            setLoading(true);
+        }
+    }, [messages])
 
     return (
         <div className="chat">
@@ -76,6 +81,7 @@ function Chat() {
                                 roomId={roomId}
                                 messages={messages} 
                                 user={user} 
+                                isRoomExist={isRoomExist}
                             />
                         :
                             <div className="chat__body_loading">

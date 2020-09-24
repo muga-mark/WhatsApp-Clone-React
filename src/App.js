@@ -3,7 +3,7 @@ import { useStateValue } from './StateProvider';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 //importing firebase
 import db from './firebase';
-import { auth } from './firebase';
+import { auth, firebase } from './firebase';
 //importing actions
 import { setUser } from './actions/userAction';
 //importing components
@@ -23,6 +23,7 @@ import './App.css';
 function App() {
   const [{ user },  dispatch] = useStateValue();
   const [rooms, setRooms] = useState([]);
+  const [isRoomExist, setIsRoomExist] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -57,6 +58,7 @@ function App() {
                 about: "Hey there! I am using WhatsApp.",
                 photoURL: "",
                 role: "anonymous",
+                dateJoined: firebase.firestore.FieldValue.serverTimestamp()
             })
             .then(function() {
                 console.log("Document successfully updated!");
@@ -67,7 +69,7 @@ function App() {
             });
         }
 
-        if(authUser.uid && authUser.isAnonymous === false && authUser.photoURL) {
+        if(authUser.uid && authUser.isAnonymous === false && authUser.photoURL !== null) {
             const errorAbout = "errorAbout";
             db.collection("users")
               .doc(authUser.uid)
@@ -80,6 +82,7 @@ function App() {
                           about: "Hey there! I am using WhatsApp.",
                           photoURL: user.photoURL,
                           role: "regular",
+                          dateJoined: firebase.firestore.FieldValue.serverTimestamp()
                       });
                   }
             }).catch(function(error) {
@@ -99,6 +102,7 @@ function App() {
                         about: "Hey there! I am using WhatsApp.",
                         photoURL: "",
                         role: "regular",
+                        dateJoined: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
           }).catch(function(error) {
@@ -140,17 +144,17 @@ function App() {
                 <Switch>
 
                   <Route exact path="/">
-                    <Sidebar rooms={rooms} loading={loading} /> 
+                    <Sidebar rooms={rooms} setIsRoomExist={setIsRoomExist} /> 
                     <Hidden only={['xs']}> {/* Chat component will be hidden in mobile view */}
-                      <Chat />
+                      <Chat isRoomExist={isRoomExist} />
                     </Hidden>
                   </Route>
 
                   <Route exact path="/rooms/:roomId">  
                     <Hidden only={['xs']}> {/* Sidebar component will be hidden in mobile view */}
-                      <Sidebar rooms={rooms} loading={loading} />
+                      <Sidebar rooms={rooms} setIsRoomExist={setIsRoomExist} /> 
                     </Hidden>
-                    <Chat />
+                    <Chat isRoomExist={isRoomExist} />
                   </Route>
 
                   <Route path="*">

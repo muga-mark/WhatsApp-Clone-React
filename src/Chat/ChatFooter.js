@@ -6,6 +6,7 @@ import DrawerBottom from './DrawerBottom';
 import TooltipCustom from '../shared/TooltipCustom';
 import { Picker } from "emoji-mart";
 //importing material-ui
+import Hidden from '@material-ui/core/Hidden';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import Slide from '@material-ui/core/Slide';
@@ -136,7 +137,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
         } else {
             setShowAttachFile(false);
         }
-        console.log("attachFile click", attachToastId);
+        // console.log("attachFile click", attachToastId);
     };
 
     const addEmoji = e => {
@@ -151,8 +152,6 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
     const handleEmoticonsClose = () => {
         setEmoji(false);
     };
-
-    console.log("EMOOOJIIIII > ", emoji);
 
     const voiceMessage = () => {
         const voiceMessageToastId = "voiceMessage";
@@ -216,7 +215,16 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
             />
             
             { emoji?
-                <Picker onSelect={addEmoji}/> 
+                <>
+                    <Hidden only={['xs']}>
+                        <Picker onSelect={addEmoji}/> 
+                    </Hidden>
+                    <Hidden smUp>
+                        <ClickAwayListener onClickAway={handleEmoticonsClose}>
+                            <Picker onSelect={addEmoji}/> 
+                        </ClickAwayListener>
+                    </Hidden>
+                </>
             :null} 
 
                 <div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import ReactPlayer from 'react-player';
 //importing material-ui
 import Zoom from '@material-ui/core/Zoom';
@@ -9,11 +9,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 //importing material-ui-icons
 import CloseIcon from '@material-ui/icons/Close';
-
-
+//importing styles
+import './DialogCustom.css'
 
 function DialogCustom({ open, close, user, photo }) {
-
+    
     return (
         <Dialog
             open={open}
@@ -22,7 +22,7 @@ function DialogCustom({ open, close, user, photo }) {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             >
-            <DialogTitle id="alert-dialog-title">
+            <DialogTitle id="alert-dialog-title-dialogCustom">
                 <div>
                     <Avatar src={user.photoURL}/>
                 </div>
@@ -34,7 +34,7 @@ function DialogCustom({ open, close, user, photo }) {
             </DialogTitle>
             <DialogContent>
                 <Zoom in={open} style={{ transitionDelay: open ? '300ms' : '0ms' }}>
-                    <img src={photo} alt="" className="drawerLeft__content_photo_img"/>
+                    <img src={photo} alt="" className="DialogCustom__photo"/>
                 </Zoom>
             </DialogContent>
         </Dialog>
