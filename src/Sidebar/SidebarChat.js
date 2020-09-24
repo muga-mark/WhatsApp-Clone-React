@@ -39,6 +39,8 @@ function SidebarChat({ id, name }) {
                         </div>
                     :null}
                     <p>{messages[0]?.message}</p>
+                    <p>{messages[0]?.caption}</p>
+                    <p>{messages[0]?.url}</p>
                 </div>
             </div>
         </Link>

@@ -93,8 +93,13 @@ function ChatBody({ messages, user, roomId }) {
 
                     <div className="chat__message_box">
                         <div>
-                            {message.message}
-                            {message.caption}
+                            {message.message? message.message :null}
+                            {message.caption? message.caption :null}
+                            {message.url?
+                                <a target="_blank" href={`${message.url}`} rel="noopener noreferrer">
+                                    {message.url}
+                                </a>
+                            :null}
                         </div>
                         
                         <div className="chat__timestamp_container">

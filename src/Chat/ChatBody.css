@@ -100,10 +100,11 @@
     color: #EEEEE3 !important;
     font-weight: 600;
     font-size: 12px;
-    right: 2px;
+    right: 0;
+    bottom: 0;
     border-radius: 0 0 8px 8px;
     background-color: rgba(133, 136, 139, 0.438) !important;
-    width: 98%;
+    width: 100%;
 }
 .chat__timestamp_media_video {
     color: #EEEEE3 !important;

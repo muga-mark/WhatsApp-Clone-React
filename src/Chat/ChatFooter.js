@@ -68,6 +68,7 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
         const vimeoLink =  /(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
         const soundcloudLink = /^https?:\/\/(soundcloud\.com|snd\.sc)\/(.*)$/;
         const dailymotionLink = /^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
+        const urlLink = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
         if(roomId){
             if(youtubeLink.test(input) || facebookVideoLink.test(input) || vimeoLink.test(input) || soundcloudLink.test(input) || dailymotionLink.test(input)){
@@ -75,6 +76,23 @@ function ChatFooter( { roomName, roomId, db, firebase, storage }) {
                 db.collection("rooms").doc(roomId).collection('messages').add({
                     message: "",
                     video: input,
+                    name: user.displayName,
+                    uid: user.uid,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                })
+                .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                    db.collection("rooms").doc(roomId).collection('messages').doc(docRef.id).set({
+                        id: docRef.id
+                    },{ merge: true });
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+            }else if(urlLink.test(input)){
+                db.collection("rooms").doc(roomId).collection('messages').add({
+                    message: "",
+                    url: input,
                     name: user.displayName,
                     uid: user.uid,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
