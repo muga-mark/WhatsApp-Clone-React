@@ -40,10 +40,10 @@ function Chat({ isRoomExist }) {
             .doc(roomId)
             .collection("messages")
             .orderBy("timestamp", "asc")
-            .onSnapshot(snapshot => (
-                setMessages(snapshot.docs.map((doc) => 
-                    doc.data()))
-            ));
+            .onSnapshot(function(doc) {
+                setMessages(doc.docs.map((doc) => doc.data()));
+                setLoading(true);
+            });
 
             setShowLandingScreenPhoto(false);
         }else{
@@ -51,12 +51,6 @@ function Chat({ isRoomExist }) {
             history.push('/');
         }
     }, [roomId, history]);
-
-    useEffect(() => {
-        if(messages.length>0){
-            setLoading(true);
-        }
-    }, [messages])
 
     return (
         <div className="chat">
@@ -76,20 +70,25 @@ function Chat({ isRoomExist }) {
                     </div>
         
                     <div className="chat__body">
+                        
                         {loading?
                             <ChatBody 
+                                roomCreatedBy={roomCreatedBy} 
+                                roomOwner={roomOwner}
                                 roomId={roomId}
                                 messages={messages} 
                                 user={user} 
                                 isRoomExist={isRoomExist}
                             />
-                        :
+                        :   
                             <div className="chat__body_loading">
                                 <div>
-                                <CircularProgress />
+                                    <CircularProgress />
                                 </div>
                             </div>
                         }
+                            
+
                     </div>
         
                     <div>

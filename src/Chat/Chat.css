@@ -43,6 +43,7 @@ h3, p {
 .chat__body_loading > div {
     display: table-cell; 
     vertical-align: middle;
+    color: #4a4a4a;
 }
 ::-webkit-scrollbar {
     width: 8px;

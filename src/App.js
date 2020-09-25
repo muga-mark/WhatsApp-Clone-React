@@ -30,6 +30,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if(authUser){
         dispatch(setUser(authUser));
+        setLoading(true);
 
         db.collection("rooms")
           .orderBy("timestamp", "desc")
@@ -39,8 +40,7 @@ function App() {
                         id: doc.id,
                         data: doc.data(),
                     }))
-                ),
-            setLoading(true)
+                )
           );
         
         if(authUser.isAnonymous === true && authUser.displayName === null){
@@ -144,7 +144,7 @@ function App() {
                 <Switch>
 
                   <Route exact path="/">
-                    <Sidebar rooms={rooms} setIsRoomExist={setIsRoomExist} /> 
+                    <Sidebar rooms={rooms} setIsRoomExist={setIsRoomExist} isRoomExist={isRoomExist} /> 
                     <Hidden only={['xs']}> {/* Chat component will be hidden in mobile view */}
                       <Chat isRoomExist={isRoomExist} />
                     </Hidden>
@@ -152,7 +152,7 @@ function App() {
 
                   <Route exact path="/rooms/:roomId">  
                     <Hidden only={['xs']}> {/* Sidebar component will be hidden in mobile view */}
-                      <Sidebar rooms={rooms} setIsRoomExist={setIsRoomExist} /> 
+                      <Sidebar rooms={rooms} setIsRoomExist={setIsRoomExist} isRoomExist={isRoomExist} /> 
                     </Hidden>
                     <Chat isRoomExist={isRoomExist} />
                   </Route>

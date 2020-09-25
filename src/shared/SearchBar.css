@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     background-color: #f6f6f6;
-    height: 39px;
-    padding: 10px;
+    height: 49px;
+    padding: 2px 10px 2px 10px;
     margin-bottom: 2px;
 }
 .search__bgColorChange {
@@ -19,6 +19,7 @@
     width: 100%;
     border-radius: 20px;
     transition: 4.5s;
+    height: 40px;
 }
 .search__container > input {
     border: none;

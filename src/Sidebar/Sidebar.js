@@ -20,12 +20,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 //importing styles
 import './Sidebar.css';
 
-function Sidebar( { rooms, setIsRoomExist }) {
+function Sidebar( { rooms, setIsRoomExist, isRoomExist }) {
     const history = useHistory();
     const { roomId } = useParams();
     const [{ user }] = useStateValue();
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
+    const [noRooms, setNoRooms] = useState(false);
     const [drawerLeft, setDrawerLeft] = useState(false);
     const [menuSidebar, setMenuSidebar] = useState(null);
     const [isSearchFound, setIsSetSearchFound] = useState(false);
@@ -38,8 +39,12 @@ function Sidebar( { rooms, setIsRoomExist }) {
     }
     
     useEffect(() => {
-        if(rooms.length>0){
+        if(rooms.length>0 && isRoomExist>=0){
             setLoading(true);
+            setNoRooms(false);
+        }else if(rooms.length===0 && isRoomExist>=0){
+            setNoRooms(true);
+            // setLoading(true);
         }
 
         const roomResult = () => {
@@ -74,12 +79,13 @@ function Sidebar( { rooms, setIsRoomExist }) {
                 return id.id === roomId
             })
             
-            if(index === -1){
-                history.push('/');
-                // console.log("ROOM DOES NOT EXIST");
-            }else if(index>=0){
+            if(index >= 0){
                 setIsRoomExist(index);
                 // console.log("ROOM EXISTS");
+            }else if(index === -1){
+                
+                history.push('/');
+                // console.log("ROOM DOES NOT EXIST");
             }
             
         }
@@ -201,44 +207,37 @@ function Sidebar( { rooms, setIsRoomExist }) {
 
             <div className="sidebar__chats">
                 {loading ?
-                <>
-                    {rooms.length>0 ?          
+                <>  
+                    {search?
                         <>
-                            {search?
-                                <>
-                                    {isSearchFound ? 
-                                        <div>
-                                            {rooms.filter(findRoom(search)).map(room => (
-                                                <SidebarChat 
-                                                    key={room.id} 
-                                                    id={room.id} 
-                                                    name={room.data.name} 
-                                                />
-                                            ))}
-                                        </div>  
-                                    : 
-                                        <div className="sidebar__chatsContainer_empty">
-                                            <span>No chat room found</span>
-                                        </div>  
-                                    }
-                                </>
-                            :
-                                <>
-                                    {rooms.map(room => (
+                            {isSearchFound ? 
+                                <div>
+                                    {rooms.filter(findRoom(search)).map(room => (
                                         <SidebarChat 
                                             key={room.id} 
                                             id={room.id} 
                                             name={room.data.name} 
                                         />
                                     ))}
-                                </>
+                                </div>  
+                            : 
+                                <div className="sidebar__chatsContainer_empty">
+                                    <span>No chat room found</span>
+                                </div>  
                             }
                         </>
                     :
-                        <div className="sidebar__chatsContainer_empty">
-                            <span>No chats</span>
-                        </div>
-                    }     
+                        <>
+                            {rooms.map(room => (
+                                <SidebarChat 
+                                    key={room.id} 
+                                    id={room.id} 
+                                    name={room.data.name} 
+                                />
+                            ))}
+                        </>
+                    }
+                           
                 </>
                 :  
                     <div className="sidebar__chatsContainer_loading">
@@ -247,6 +246,13 @@ function Sidebar( { rooms, setIsRoomExist }) {
                         </div>
                     </div>
                 }
+                
+                {noRooms? 
+                    <div className="sidebar__chatsContainer_empty">
+                        <span>No chats</span>
+                    </div>
+                :null}
+
             </div>
 
         </div>

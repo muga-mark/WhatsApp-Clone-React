@@ -4,12 +4,16 @@
     padding: 5px 10px 5px 10px ;
     border-radius: 5px;
     width: fit-content ;
-    margin-bottom: 70px !important;
+    margin-bottom: 15px !important;
     margin: auto;
 }
 .chat__message_reminder > .MuiSvgIcon-root {
     color: #4a4a4a;
     font-size: small;
+}
+.chat__createdBy {
+    margin-bottom: 70px !important;
+    background-color: #E1F3FB !important;
 }
 
 

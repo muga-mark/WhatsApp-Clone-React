@@ -7,8 +7,7 @@
 .sidebar__header {
     display: flex;
     justify-content: space-between;
-    /* padding: 10px; */
-    padding: 5px;
+    padding: 8px;
     border-right: 1px solid lightgray;
 }
 .sidebar__header > div > .MuiAvatar-root {

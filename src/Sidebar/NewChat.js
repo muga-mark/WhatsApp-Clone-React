@@ -27,7 +27,7 @@ function NewChat({ user, db, firebase }) {
         e.preventDefault();
 
         if(roomName) {
-          db.collection('rooms')
+          db.collection("rooms")
             .add({
                 roomOwner: user.uid,
                 createdBy: user.displayName,

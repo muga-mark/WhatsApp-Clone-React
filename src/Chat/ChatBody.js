@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 //importing component
-import DialogCustom from '../shared/DialogCustom';
-//importing material-ui
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import DialogCustom from '../shared/DialogCustom';
 //importing material-ui-icon
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import AlarmIcon from '@material-ui/icons/Alarm';
@@ -11,12 +9,12 @@ import DoneIcon from '@material-ui/icons/Done';
 //importing styles
 import './ChatBody.css'
 
-function ChatBody({ messages, user, roomId, isRoomExist }) {
+function ChatBody({ roomOwner, roomCreatedBy, messages, user, roomId, isRoomExist }) {
     const messagesEndRef = useRef(null);
     // const { roomId } = useParams();
     const [playing, setPlaying] = useState(false);
-    const [showDialog, setShowDialog] = useState(false);
-    
+    // const [showDialog, setShowDialog] = useState(false);
+
     useEffect(() => {
         //listens when room is changed, then it sets playing to false 
         //so timestamp in ReactPlayer will display again
@@ -34,13 +32,13 @@ function ChatBody({ messages, user, roomId, isRoomExist }) {
         setPlaying(false);
     }
 
-    const handleDialogOpen = () => {
-        setShowDialog(true);
-    }
+    // const handleDialogOpen = () => {
+    //     setShowDialog(true);
+    // }
     
-    const handleDialogClose = () => {
-        setShowDialog(false);
-    }
+    // const handleDialogClose = () => {
+    //     setShowDialog(false);
+    // }
 
     const scrollToBottom = () => {
         if(roomId){
@@ -51,11 +49,14 @@ function ChatBody({ messages, user, roomId, isRoomExist }) {
     
     return (
         <div>
-            {messages.length>0 ?
-                <p className="chat__message_reminder">
-                    <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
-                </p>
-            :null}
+            <p className="chat__message_reminder">
+                <NoEncryptionIcon /> This is a whatsapp clone. Messages are not encrpyted.
+            </p>
+            <p className="chat__message_reminder chat__createdBy">
+                {roomOwner === user.uid?
+                    "You created this rooom" : `${roomCreatedBy} created this room`
+                }
+            </p>
                
             {messages.map((message) => (
                 <div key={message.id} className={`chat__message 
@@ -74,7 +75,8 @@ function ChatBody({ messages, user, roomId, isRoomExist }) {
                                 <img alt=""  
                                     className="chat__body_image"
                                     src={message.photo}
-                                    onClick={handleDialogOpen} /> 
+                                    // onClick={handleDialogOpen} 
+                                    /> 
 
                                 {/* <DialogCustom 
                                     open={showDialog}
