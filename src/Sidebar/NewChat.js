@@ -74,7 +74,7 @@ function NewChat({ user, db, firebase }) {
                 <Button onClick={handleNewChatClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={createChat} color="primary">
+                <Button onClick={createChat} color="primary" disabled={!roomName}>
                     Create
                 </Button>
                 </DialogActions>
