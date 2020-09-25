@@ -146,9 +146,10 @@
 @media screen and (max-width: 600px) {
     .chat__message_reminder {
         font-size: 12px;
+    }
+    .chat__createdBy {
         margin-bottom: 50px !important;
     }
-
 
     .chat__message {
         font-size: 12px;
