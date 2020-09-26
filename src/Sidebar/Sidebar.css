@@ -35,6 +35,9 @@
 .sidebar__chats::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+.sidebar__chatsContainer_empty_displayNone {
+    display: none;
+}
 .sidebar__chatsContainer_empty {
     text-align: center;
     height: 100%;

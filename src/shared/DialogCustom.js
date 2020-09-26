@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 // import ReactPlayer from 'react-player';
 //importing material-ui
 import Zoom from '@material-ui/core/Zoom';

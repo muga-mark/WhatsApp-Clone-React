@@ -76,7 +76,7 @@
 }
 .player-wrapper {
     position: relative;
-    width: 35vw;
+    width: 30vw;
     padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
 }  
 .react-player {
@@ -91,8 +91,14 @@
 }
 .chat__message_box_text {
     padding-left: 5px;
+    max-width: 40vw;
 }
+
 .chat__timestamp_container {
+    margin-left: 45px;
+    /* margin-right: 5px; */
+}
+.chat__timestamp_container_sender {
     margin-left: 65px;
 }
 .chat__timestamp {
@@ -151,15 +157,23 @@
         margin-bottom: 50px !important;
     }
 
+
     .chat__message {
         font-size: 12px;
         padding: 4px 5px 6px 7px ;
+        max-width: 75vw;
     }
     .chat__message_media {
         padding: 4px !important;
         border-radius: 4px !important;
     }
 
+
+    .chat__message_box_text {
+        padding-left: 5px;
+        max-width: 60vw;
+    }
+    
 
     .chat__body_image {
         max-height: 150px;
@@ -169,8 +183,13 @@
     .player-wrapper {
         width: 75vw;
     }
+
+
     .chat__timestamp_container {
-        margin-left: 65px;
+        margin-left: 45px;
         margin-right: 5px;
+    }
+    .chat__timestamp_container_sender {
+        margin-left: 55px;
     }
 }

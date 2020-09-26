@@ -119,7 +119,7 @@ function ChatBody({ roomOwner, roomCreatedBy, messages, user, roomId, isRoomExis
                             :null}
                         </div>
                         
-                        <div className="chat__timestamp_container">
+                        <div className={`chat__timestamp_container ${ message.uid === user.uid && "chat__timestamp_container_sender"}`} >
                             {message.timestamp?
                                 <div className={`chat__timestamp 
                                     ${(message.photo && !message.caption) && "chat__timestamp_media_photo"}  

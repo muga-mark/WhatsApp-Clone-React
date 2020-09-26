@@ -33,16 +33,17 @@ function App() {
         setLoading(true);
 
         db.collection("rooms")
-          .orderBy("timestamp", "desc")
-          .onSnapshot((snapshot) => 
-            setRooms(snapshot.docs.map(doc => 
-                    ({
-                        id: doc.id,
-                        data: doc.data(),
-                    }))
-                )
-          );
-        
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => 
+          setRooms(snapshot.docs.map(doc => 
+                  ({
+                      id: doc.id,
+                      data: doc.data(),
+                  }))
+              ),
+          
+        );
+
         if(authUser.isAnonymous === true && authUser.displayName === null){
           var anonymousName = "Anonymous" + " " + Math.floor(Math.random() * 1000000);
           
@@ -75,7 +76,7 @@ function App() {
               .doc(authUser.uid)
               .get().then(function(doc) {
                   if (doc.exists) {
-                      console.log("USER EXIST");
+                      // console.log("USER EXIST");
                   } else {
                       db.collection("users").doc(authUser.uid).set({
                           name: authUser.displayName,

@@ -8,7 +8,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ChatIcon from '@material-ui/icons/Chat';
-// import { firebase } from '../firebase';
 
 function NewChat({ user, db, firebase }) {
     const [roomName, setRoomName] = useState("");
@@ -35,7 +34,7 @@ function NewChat({ user, db, firebase }) {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
             .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
+                // console.log("Document written with ID: ", docRef.id);
                 db.collection("rooms").doc(docRef.id).set({
                     id: docRef.id
                 },{ merge: true });

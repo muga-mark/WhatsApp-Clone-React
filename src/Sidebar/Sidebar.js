@@ -39,14 +39,6 @@ function Sidebar( { rooms, setIsRoomExist, isRoomExist }) {
     }
     
     useEffect(() => {
-        if(rooms.length>0 && isRoomExist>=0){
-            setLoading(true);
-            setNoRooms(false);
-        }else if(rooms.length===0 && isRoomExist>=0){
-            setNoRooms(true);
-            // setLoading(true);
-        }
-
         const roomResult = () => {
             return (
                 <>
@@ -83,14 +75,29 @@ function Sidebar( { rooms, setIsRoomExist, isRoomExist }) {
                 setIsRoomExist(index);
                 // console.log("ROOM EXISTS");
             }else if(index === -1){
-                
+                setIsRoomExist(index);
                 history.push('/');
                 // console.log("ROOM DOES NOT EXIST");
             }
             
         }
 
-    }, [search, rooms, roomId, history]);
+    }, [search, rooms, roomId, history, setIsRoomExist]);
+
+    useEffect(() => {
+        if(rooms){
+            if(rooms.length>0){
+                setNoRooms(false);
+                setLoading(true);
+            }else if(rooms.length===0 && isRoomExist===-1){
+                setNoRooms(true);
+                setLoading(true);
+            }
+        }
+    }, [rooms])
+
+    console.log("ROOMS> >",noRooms);
+    console.log("ROOMS EXIST> >",isRoomExist);
     
     const handleDrawerLeftOpen = () => {
         setMenuSidebar(null);
@@ -240,6 +247,7 @@ function Sidebar( { rooms, setIsRoomExist, isRoomExist }) {
                            
                 </>
                 :  
+                    
                     <div className="sidebar__chatsContainer_loading">
                         <div>
                             <CircularProgress />
@@ -260,4 +268,3 @@ function Sidebar( { rooms, setIsRoomExist, isRoomExist }) {
 }
 
 export default Sidebar
-
