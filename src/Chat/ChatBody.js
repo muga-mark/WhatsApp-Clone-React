@@ -126,7 +126,16 @@ function ChatBody({
           </div>
 
           <div className="chat__message_box">
-            <div className="chat__message_box_text">
+            <div
+              className={`chat__message_box_text ${
+                message.uid === user.uid && "chat__message_box_text_sender"
+              }
+              ${
+                message.photo &&
+                !message.caption &&
+                "chat__message_box_text_no_caption"
+              } `}
+            >
               {message.message ? message.message : null}
               {message.caption ? message.caption : null}
               {message.url ? (
@@ -138,16 +147,15 @@ function ChatBody({
                   {message.url}
                 </a>
               ) : null}
-            </div>
 
-            <div
-              className={`chat__timestamp_container ${
-                message.uid === user.uid && "chat__timestamp_container_sender"
-              }`}
-            >
-              {message.timestamp ? (
-                <div
-                  className={`chat__timestamp 
+              <div
+                className={`chat__timestamp_container ${
+                  message.uid === user.uid && "chat__timestamp_container_sender"
+                }`}
+              >
+                {message.timestamp ? (
+                  <div
+                    className={`chat__timestamp 
                                     ${
                                       message.photo &&
                                       !message.caption &&
@@ -164,31 +172,32 @@ function ChatBody({
                                       playing === true &&
                                       "chat__timestamp_media_displayNone"
                                     }`}
-                >
-                  <span>
-                    {new Date(message.timestamp.toDate()).toLocaleTimeString(
-                      "en-US",
-                      {
+                  >
+                    <span>
+                      {new Date(message.timestamp.toDate()).toLocaleTimeString(
+                        "en-US",
+                        {
+                          hour: "numeric",
+                          hour12: true,
+                          minute: "numeric",
+                        }
+                      )}
+                      {message.uid === user.uid ? <DoneIcon /> : null}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="chat__timestamp">
+                    <span>
+                      {new Date().toLocaleTimeString("en-US", {
                         hour: "numeric",
                         hour12: true,
                         minute: "numeric",
-                      }
-                    )}
-                    {message.uid === user.uid ? <DoneIcon /> : null}
-                  </span>
-                </div>
-              ) : (
-                <div className="chat__timestamp">
-                  <span>
-                    {new Date().toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      hour12: true,
-                      minute: "numeric",
-                    })}
-                    {message.uid === user.uid ? <AlarmIcon /> : null}
-                  </span>
-                </div>
-              )}
+                      })}
+                      {message.uid === user.uid ? <AlarmIcon /> : null}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
