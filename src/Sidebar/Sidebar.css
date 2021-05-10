@@ -1,74 +1,84 @@
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    flex: 0.30 !important;
-    width: 30vw;
+  display: flex;
+  flex-direction: column;
+  flex: 0.3;
+  max-width: 30vw;
+  min-width: 20vw;
+  position: relative;
 }
 .sidebar__header {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    border-right: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-right: 1px solid lightgray;
 }
 .sidebar__header > div > .MuiAvatar-root {
-    margin-left: 10px;
-    margin-top: 5px;
-    cursor: pointer;
+  margin-left: 10px;
+  margin-top: 5px;
+  cursor: pointer;
 }
 .sidebar__headerRight {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 10vw;
 }
 .sidebar__headerRight > .MuiSvgIcon-root {
-    margin-right: 2vw;
-    font-size: 24px !important;
+  margin-right: 2vw;
+  font-size: 24px !important;
 }
 .sidebar__chats {
-    background-color: white;
-    flex: 1;
-    overflow: scroll;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none; 
+  background-color: white;
+  flex: 1;
+  overflow: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
 }
-.sidebar__chats::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+.sidebar__chats::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 .sidebar__chatsContainer_empty_displayNone {
-    display: none;
+  display: none;
 }
 .sidebar__chatsContainer_empty {
-    text-align: center;
-    height: 100%;
-    width: 100%;
-    display: table;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: table;
 }
 .sidebar__chatsContainer_empty > span {
-    display: table-cell;
-    vertical-align: middle;
-    color: #A7A7A7;
-    font-size: 14px;
+  display: table-cell;
+  vertical-align: middle;
+  color: #a7a7a7;
+  font-size: 14px;
 }
 .sidebar__chatsContainer_loading {
-    display: table;
-    text-align: center;
-    width:100%;
-    height: 100%;
+  display: table;
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 .sidebar__chatsContainer_loading > div {
-    display: table-cell; 
-    vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
+/* @media screen and (min-device-width: 600px) and (max-device-width: 800px) {
+  .sidebar {
+    min-width: 20vw;
+    max-width: 40vw;
+  }
+} */
+
 @media screen and (max-width: 600px) {
-    .sidebar {
-        flex: 1 !important;
-        width: 100vw;
-        height: 100%;
-        background-color: #045E54;
-    }
-    .sidebar__headerRight {
-        min-width: 40vw;
-    }
+  .sidebar {
+    flex: 1 !important;
+    width: 100vw;
+    min-width: 100vw;
+    height: 100%;
+    background-color: #045e54;
+  }
+  .sidebar__headerRight {
+    min-width: 40vw;
+  }
 }

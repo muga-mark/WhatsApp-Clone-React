@@ -1,42 +1,47 @@
-.drawerLeft__header {
-  background-color: #00bfa5;
-  height: 107px;
-  padding-left: 15px;
-}
-.drawerLeft__header_container {
+/* Start: Drawer Right */
+.drawer-right-info__header {
+  background-color: #ededed;
+  height: 65px;
+  padding-left: 8px;
   display: flex;
   align-items: center;
-  margin-top: 50px;
 }
-.drawerLeft__header_container > .MuiIconButton-root {
-  color: white;
+.drawerRight__header_container {
+  display: flex;
+  align-items: center;
+  /* margin-top: 50px; */
+}
+.drawer-right-info > .MuiIconButton-root {
+  color: black;
   font-size: 18px;
 }
-.drawerLeft__header_container > p {
-  color: white;
-  font-weight: 600;
-  font-size: 18px;
+.drawer-right-info > p {
+  color: black;
+  font-weight: 400;
+  font-size: 16px;
   margin-left: 10px;
 }
-.drawerLeft__content {
+.drawer-right-info-content {
   display: flex;
   flex-direction: column;
   overflow: scroll;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none;
-  background-color: #ededed;
+  background-color: white;
   flex: 1;
+  min-width: 340px;
+  /* max-width: 340px; */
 }
-.drawerLeft__content::-webkit-scrollbar {
+.drawer-right-info-content::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
-.drawerLeft__content_photo {
+.drawer-right-info-content__photo {
   height: 200px;
   padding-top: 8px;
   padding-bottom: 30px;
   margin: 0 auto;
 }
-.drawerLeft__content_photo > .MuiAvatar-root {
+.drawer-right-info-content__photo > .MuiAvatar-root {
   height: 200px;
   width: 200px;
 }
@@ -170,6 +175,9 @@
 .MuiTypography-h6 > div > .MuiAvatar-root {
   margin-left: 6px !important;
 }
+.MuiAvatar-root > .MuiSvgIcon-root {
+  font-size: 130px !important;
+}
 .profileMenu_uploadPhoto > label {
   cursor: pointer;
 }
@@ -204,8 +212,12 @@
 #form-dialog-content {
   padding: 0 !important;
 }
+
 @media screen and (max-width: 600px) {
-  .MuiDialogContent-root {
-    padding: 25px 24px !important;
+  .drawer-right-info__header {
+    background-color: #045e54;
+  }
+  .drawer-right-info__headers > p {
+    color: white;
   }
 }

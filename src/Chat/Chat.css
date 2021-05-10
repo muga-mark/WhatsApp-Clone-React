@@ -1,106 +1,104 @@
-h3, p {
-    margin: 0;
+h3,
+p {
+  margin: 0;
 }
 .chat {
-    flex: 0.70;
-    display: flex;
-    flex-direction: column;
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 .Toastify__toast {
-    font-size: 14px;
-    min-height: 30px!important;
-    max-height: 80px!important;
-    top: 60px;
+  font-size: 14px;
+  min-height: 30px !important;
+  max-height: 80px !important;
+  top: 60px;
 }
 
 /* Start: Chat Header */
 .chat__header {
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid lightgray;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
 }
 /* End: Chat Header */
 
-
 /* Start: Chat Body */
 .chat__body {
-    flex: 1;
-    /* background-image: url('../images/whatsapp-chat-bg.png'); */
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-d4817.appspot.com/o/whatsapp-chat-bg.png?alt=media&token=e3a0e229-1c1e-4128-8e3f-ef37b3742590');
-    background-repeat: repeat;
-    background-position: center;
-    padding: 40px 90px 0px 90px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  flex: 1;
+  background-image: url("../images/whatsapp-chat-bg.png");
+  /* background-image: url("https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-d4817.appspot.com/o/whatsapp-chat-bg.png?alt=media&token=e3a0e229-1c1e-4128-8e3f-ef37b3742590"); */
+  background-repeat: repeat;
+  background-position: center;
+  padding: 40px 90px 0px 90px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .chat__body_loading {
-    display: table;
-    text-align: center;
-    width:100%;
-    height: 100%;
+  display: table;
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 .chat__body_loading > div {
-    display: table-cell; 
-    vertical-align: middle;
-    color: #4a4a4a;
+  display: table-cell;
+  vertical-align: middle;
+  color: #4a4a4a;
 }
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
-}
+} */
 ::-webkit-scrollbar-thumb {
-    background: #B0ABA6; 
+  background: #b0aba6;
 }
 .chat__body-2::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #737272;
   border: 1px solid #000;
 }
 /* End: Chat Body */
 
-
 @media screen and (max-width: 600px) {
-    .chat {
-        flex: 1;
-        height: 100vh;
-        width: 100vw;
-    }  
-    .Toastify__toast {
-        font-size: 12px;
-        min-height: 30px!important;
-        max-height: 50px!important;
-        max-width: 80vw;
-        /* margin-bottom: 10px !important; */
-        margin-top: 20px !important;
-        /* margin-left: 80px; */
-        margin: 0 auto;
-    }
+  .chat {
+    flex: 1;
+    height: 100vh;
+    width: 100vw;
+  }
+  .Toastify__toast {
+    font-size: 12px;
+    min-height: 30px !important;
+    max-height: 50px !important;
+    max-width: 80vw;
+    /* margin-bottom: 10px !important; */
+    margin-top: 20px !important;
+    /* margin-left: 80px; */
+    margin: 0 auto;
+  }
 
-    /* Start: Chat Header */
-    .chat__header {
-        padding: 6px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background-color: #045E54;
-    }
-    /* End: Chat Header */
+  /* Start: Chat Header */
+  .chat__header {
+    padding: 6px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #045e54;
+  }
+  /* End: Chat Header */
 
-    /* Start: Chat Body */
-    .chat__body {
-        padding: 40px 12px 0px 12px !important;
-    }
-    /* End: Chat Body */
+  /* Start: Chat Body */
+  .chat__body {
+    padding: 40px 12px 0px 12px !important;
+  }
+  /* End: Chat Body */
 }
 
 @media screen and (max-width: 800px) {
-    .chat__body {
-        padding: 40px 30px 0px 30px;
-    }
+  .chat__body {
+    padding: 40px 30px 0px 30px;
+  }
 }
-
-

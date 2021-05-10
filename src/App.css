@@ -1,16 +1,30 @@
 .app {
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #dadbd3;
   height: 100vh;
+  z-index: 100;
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
 }
 
 .app__body {
   display: flex;
+  /* position: absolute; */
+  /* bottom: 0; */
+  position: fixed;
+  /* justify-content: center; */
+  /* align-content: center; */
+  /* margin: 0 auto; */
   background-color: #ededed;
   height: 100vh;
+  max-height: 900px;
   width: 100vw;
-  /* margin-top: -50px; */
+  max-width: 1400px;
+  /* margin-top: -30px; */
+  /* margin-top: 30px; */
   box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.7);
 }
 
@@ -22,11 +36,11 @@
 }
 
 .app__loading > div {
-  display: table-cell; 
+  display: table-cell;
   vertical-align: middle;
 }
 
-.app__loading > div > .app__loading_circular  {
+.app__loading > div > .app__loading_circular {
   margin-top: 100px !important;
 }
 
@@ -39,14 +53,37 @@
 }
 
 .MuiLinearProgress-barColorPrimary {
-  background-color: #15C39A !important;
+  background-color: #15c39a !important;
+}
+
+.app-no-bg {
+  z-index: auto;
 }
 
 @media screen and (max-width: 600px) {
   .app__body {
-      display: inline;
+    display: inline;
   }
   .app__loading {
     width: 200px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .app__body {
+    max-height: 100vh;
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .app::after {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 127px;
+    content: "";
+    background-color: #009688;
   }
 }

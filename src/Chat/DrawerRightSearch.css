@@ -1,0 +1,153 @@
+/* Start: Drawer Right */
+.drawerRight__header {
+  background-color: #ededed;
+  height: 65px;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+}
+.drawerRight__header_container {
+  display: flex;
+  align-items: center;
+  /* margin-top: 50px; */
+}
+.drawerRight__header > .MuiIconButton-root {
+  color: black;
+  font-size: 18px;
+}
+.drawerRight__header > p {
+  color: black;
+  font-weight: 400;
+  font-size: 16px;
+  margin-left: 10px;
+}
+.drawerRight__search {
+  display: flex;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 39px;
+  padding: 10px;
+}
+.drawerRight__searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  border-radius: 20px;
+}
+.drawerRight__searchContainer > input {
+  border: none;
+  margin-left: 10px;
+  outline: 0;
+}
+.drawerRight__searchContainer > .MuiSvgIcon-root {
+  color: grey;
+  padding: 10px;
+  /* cursor: pointer; */
+}
+.drawerRight__content {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  background-color: white;
+  flex: 1;
+  padding: 50px;
+  text-align: center;
+  min-width: 240px;
+  max-width: 240px;
+}
+.drawerRight__content > p {
+  color: gray;
+}
+.drawerRight__content::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.drawerRight__content_searched {
+  padding: 0;
+  min-width: 240px;
+  max-width: 340px;
+}
+.drawerRight__content_searched_message {
+  margin: 10px 0 10px 0;
+  text-align: left;
+}
+.drawerRight__content_searched_message > p {
+  padding-left: 10px;
+  color: gray;
+  font-size: 14px;
+}
+.drawerRight__content_searched_message > .MuiDivider-root {
+  margin-top: 10px;
+}
+#last_p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#last_p > .MuiSvgIcon-root {
+  font-size: 14px;
+  margin-right: 2px;
+}
+.drawerRight__content_photo {
+  height: 180px;
+  /* align-items: center; */
+  padding: 8px 112px 50px 112px;
+}
+.drawerRight__content_photo > .MuiAvatar-root {
+  height: 200px;
+  width: 200px;
+}
+.drawerRight__content_name {
+  height: 85px;
+  padding: 14px 35px 15px 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin-bottom: 20px;
+}
+.drawerRight__content_name > p {
+  color: #57bab1;
+  margin-bottom: 25px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.drawerRight__content_name > form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.drawerRight__content_name > form > input {
+  border: none;
+  font-size: 17px;
+  color: #666666;
+  width: 100%;
+}
+.drawerRight__content_name > form > input:focus {
+  outline: 0 !important;
+}
+.drawerRight__content_name > form > .MuiSvgIcon-root {
+  color: #919191;
+  font-size: 20px !important;
+  cursor: pointer;
+}
+.sidebar__header_drawerNote {
+  height: 50px;
+  background-color: #ededed;
+  padding: 0 40px 28px 30px;
+}
+.sidebar__header_drawerNote > span {
+  font-size: 14px;
+  color: #adadad;
+}
+/* End: Drawer Right */
+
+@media screen and (max-width: 600px) {
+  .drawerRight__header {
+    background-color: #045e54;
+  }
+  .drawerRight__header > p {
+    color: white;
+  }
+}
